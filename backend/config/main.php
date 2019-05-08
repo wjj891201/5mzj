@@ -9,7 +9,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'defaultRoute' => "index",
+    'defaultRoute' => "home",
     'modules' => [],
     'components' => [
         'request' => [
