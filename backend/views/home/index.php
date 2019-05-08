@@ -47,6 +47,7 @@ use yii\helpers\Url;
                                     <i class="Hui-iconfont">&#xe6d5;</i>
                                 </a>
                                 <ul class="dropDown-menu menu radius box-shadow">
+                                    <li><a href="">修改密码</a></li>
                                     <li><a href="jsvascript:void(0);" class="quit">退出</a></li>
                                 </ul>
                             </li>
@@ -187,6 +188,7 @@ use yii\helpers\Url;
         <script type="text/javascript" src="/public/static/h-ui/js/H-ui.min.js"></script>
         <script type="text/javascript" src="/public/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
         <!--请在下方写此页面业务相关的脚本-->
+        <script type="text/javascript" src="/public/lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
         <script>
             $(function () {
                 $('.quit').click(function () {
