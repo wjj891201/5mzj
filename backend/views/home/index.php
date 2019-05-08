@@ -47,7 +47,7 @@ use yii\helpers\Url;
                                     <i class="Hui-iconfont">&#xe6d5;</i>
                                 </a>
                                 <ul class="dropDown-menu menu radius box-shadow">
-                                    <li><a href="">修改密码</a></li>
+                                    <li><a href="jsvascript:void(0);" onclick="operate_small('修改密码', '<?= Url::to(['manage/psw']) ?>', '', '500')">修改密码</a></li>
                                     <li><a href="jsvascript:void(0);" class="quit">退出</a></li>
                                 </ul>
                             </li>
@@ -182,14 +182,16 @@ use yii\helpers\Url;
                 <li id="closeall">关闭全部 </li>
             </ul>
         </div>
-        <!--_footer 作为公共模版分离出去-->
+        <!-- footer 作为公共模版分离出去-->
         <script type="text/javascript" src="/public/lib/jquery/1.9.1/jquery.min.js"></script> 
         <script type="text/javascript" src="/public/lib/layer/2.4/layer.js"></script>
         <script type="text/javascript" src="/public/static/h-ui/js/H-ui.min.js"></script>
         <script type="text/javascript" src="/public/static/h-ui.admin/js/H-ui.admin.js"></script> 
-        <!--_footer 作为公共模版分离出去-->
-        <!--请在下方写此页面业务相关的脚本-->
         <script type="text/javascript" src="/public/lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
+        <!-- footer 作为公共模版分离出去-->
+        <!--自己写的js-->
+        <script type="text/javascript" src="/public/js/common.js"></script> 
+        <!--请在下方写此页面业务相关的脚本-->
         <script>
             $(function () {
                 $('.quit').click(function () {

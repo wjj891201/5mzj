@@ -7,9 +7,9 @@ use Yii;
 class ManageController extends CommonController
 {
 
-    public function actionIndex()
+    public function actionPsw()
     {
-        return $this->render('index');
+        return $this->render('psw');
     }
 
 }
