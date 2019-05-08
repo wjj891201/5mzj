@@ -44,4 +44,14 @@ class LoginController extends Controller
         }
     }
 
+    /**
+     * Logs out the current user.
+     *
+     */
+    public function actionLogout()
+    {
+        Yii::$app->backend_user->logout();
+        $this->redirect(['login/login']);
+    }
+
 }

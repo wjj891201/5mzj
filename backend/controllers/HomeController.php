@@ -3,9 +3,9 @@
 namespace backend\controllers;
 
 use Yii;
-use yii\web\Controller;
+//use yii\web\Controller;
 
-class HomeController extends Controller
+class HomeController extends CommonController
 {
 
     public function actionIndex()
