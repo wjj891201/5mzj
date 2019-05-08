@@ -15,8 +15,9 @@ return [
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
-        'user' => [
-            'identityClass' => 'common\models\Adminuser',
+        'backend_user' => [
+            'class' => 'yii\web\User',
+            'identityClass' => 'backend\models\BackendUser',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
