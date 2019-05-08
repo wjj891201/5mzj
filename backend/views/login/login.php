@@ -39,20 +39,20 @@ use yii\helpers\Url;
                 <div class="row cl" style="margin-top: 0px;">
                     <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
                     <div class="formControls col-xs-8">
-                        <?= $form->field($model, 'username', ['errorOptions' => ['style' => 'height:20px;']])->textInput(['class' => 'input-text size-L', 'placeholder' => '账户'])->label(false); ?>
+                        <?= $form->field($model, 'username', ['errorOptions' => ['style' => 'height:20px;color:#FF5722;']])->textInput(['class' => 'input-text size-L', 'placeholder' => '账户'])->label(false); ?>
                     </div>
                 </div>
                 <div class="row cl" style="margin-top: 0px;">
                     <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
                     <div class="formControls col-xs-8">
-                        <?= $form->field($model, 'password', ['errorOptions' => ['style' => 'height:20px;']])->passwordInput(['class' => 'input-text size-L', 'placeholder' => '密码'])->label(false); ?>
+                        <?= $form->field($model, 'password', ['errorOptions' => ['style' => 'height:20px;color:#FF5722;']])->passwordInput(['class' => 'input-text size-L', 'placeholder' => '密码'])->label(false); ?>
                     </div>
                 </div>
                 <div class="row cl" style="margin-top: 0px;">
                     <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe70d;</i></label>
                     <div class="formControls col-xs-8">
                         <?=
-                        $form->field($model, 'verifyCode', ['errorOptions' => ['style' => 'height:20px;']])->widget(Captcha::className(), [
+                        $form->field($model, 'verifyCode', ['errorOptions' => ['style' => 'height:20px;color:#FF5722;']])->widget(Captcha::className(), [
                             'template' => '{input}{image}',
                             'captchaAction' => '/login/captcha',
                             'options' => ['class' => 'input-text size-L', 'placeholder' => '验证码', 'style' => 'width:150px;'],

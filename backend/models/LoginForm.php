@@ -31,7 +31,7 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-                [['username', 'password', 'verifyCode'], 'required', 'message' => '请填写该项'],
+                [['username', 'password', 'verifyCode'], 'required', 'message' => '请填写{attribute}'],
                 ['verifyCode', 'captcha', 'message' => '{attribute}错误', 'captchaAction' => '/login/captcha'],
                 ['rememberMe', 'boolean'],
                 ['password', 'validatePassword'],
