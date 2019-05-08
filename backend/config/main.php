@@ -9,6 +9,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'defaultRoute' => "index",
     'modules' => [],
     'components' => [
         'request' => [
@@ -35,14 +36,13 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-    /*
-      'urlManager' => [
-      'enablePrettyUrl' => true,
-      'showScriptName' => false,
-      'rules' => [
-      ],
-      ],
-     */
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+            ],
+        ],
     ],
     'params' => $params,
 ];
