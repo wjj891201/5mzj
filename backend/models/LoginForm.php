@@ -11,8 +11,18 @@ class LoginForm extends Model
 
     public $username;
     public $password;
+    public $verifyCode;
     public $rememberMe = false;
     private $_user = false;
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => '账户',
+            'password' => '密码',
+            'verifyCode' => '验证码'
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -21,7 +31,8 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-                [['username', 'password'], 'required', 'message' => '请填写该项'],
+                [['username', 'password', 'verifyCode'], 'required', 'message' => '请填写该项'],
+                ['verifyCode', 'captcha', 'message' => '{attribute}错误', 'captchaAction' => '/login/captcha'],
                 ['rememberMe', 'boolean'],
                 ['password', 'validatePassword'],
         ];

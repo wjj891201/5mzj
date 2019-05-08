@@ -9,6 +9,21 @@ use backend\models\LoginForm;
 class LoginController extends Controller
 {
 
+    public function actions()
+    {
+        return [
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'backColor' => 0x51ACFF,
+                'foreColor' => 0xffffff,
+                'height' => 42,
+                'width' => 76,
+                'minLength' => 4,
+                'maxLength' => 4
+            ],
+        ];
+    }
+
     public function actionLogin()
     {
         // 判断用户是访客还是认证用户 

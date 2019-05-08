@@ -1,6 +1,7 @@
 <?php
 
 use yii\bootstrap\ActiveForm;
+use yii\captcha\Captcha;
 use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
@@ -29,47 +30,62 @@ use yii\helpers\Url;
         <meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
     </head>
     <body>
-        <input type="hidden" id="TenantId" name="TenantId" value="" />
         <div class="header"></div>
         <div class="loginWraper">
             <div id="loginform" class="loginBox">
-                <form class="form form-horizontal" action="index.html" method="post">
-                    <div class="row cl">
-                        <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
-                        <div class="formControls col-xs-8">
-                            <input id="" name="" type="text" placeholder="账户" class="input-text size-L">
-                        </div>
+                <?php
+                $form = ActiveForm::begin(['options' => ['class' => 'form form-horizontal']]);
+                ?>
+                <div class="row cl" style="margin-top: 0px;">
+                    <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
+                    <div class="formControls col-xs-8">
+                        <?= $form->field($model, 'username', ['errorOptions' => ['style' => 'height:20px;']])->textInput(['class' => 'input-text size-L', 'placeholder' => '账户'])->label(false); ?>
                     </div>
-                    <div class="row cl">
-                        <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
-                        <div class="formControls col-xs-8">
-                            <input id="" name="" type="password" placeholder="密码" class="input-text size-L">
-                        </div>
+                </div>
+                <div class="row cl" style="margin-top: 0px;">
+                    <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
+                    <div class="formControls col-xs-8">
+                        <?= $form->field($model, 'password', ['errorOptions' => ['style' => 'height:20px;']])->passwordInput(['class' => 'input-text size-L', 'placeholder' => '密码'])->label(false); ?>
                     </div>
-                    <div class="row cl">
-                        <div class="formControls col-xs-8 col-xs-offset-3">
-                            <input class="input-text size-L" type="text" placeholder="验证码" value="验证码:" style="width:150px;">
-                            <img src="/public/"> <a id="kanbuq" href="/public/javascript:;">看不清，换一张</a> 
-                        </div>
+                </div>
+                <div class="row cl" style="margin-top: 0px;">
+                    <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe70d;</i></label>
+                    <div class="formControls col-xs-8">
+                        <?=
+                        $form->field($model, 'verifyCode', ['errorOptions' => ['style' => 'height:20px;']])->widget(Captcha::className(), [
+                            'template' => '{input}{image}',
+                            'captchaAction' => '/login/captcha',
+                            'options' => ['class' => 'input-text size-L', 'placeholder' => '验证码', 'style' => 'width:150px;'],
+                            'imageOptions' => ['alt' => '点击换图', 'title' => '点击换图', 'style' => 'cursor:pointer;margin-left:10px;']
+                        ])->label(false);
+                        ?>
                     </div>
-                    <div class="row cl">
-                        <div class="formControls col-xs-8 col-xs-offset-3">
-                            <label for="online">
-                                <input type="checkbox" name="online" id="online" value="">
-                                使我保持登录状态</label>
-                        </div>
+                </div>
+                <div class="row cl" style="margin-top: 0px;">
+                    <div class="formControls col-xs-8 col-xs-offset-3">
+                        <?= $form->field($model, 'rememberMe')->checkbox(['id' => 'online', 'template' => "<label for=\"online\">{input} 使我保持登录状态</label>"])->label(false); ?>
                     </div>
-                    <div class="row cl">
-                        <div class="formControls col-xs-8 col-xs-offset-3">
-                            <input name="" type="submit" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
-                            <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
-                        </div>
+                </div>
+                <div class="row cl">
+                    <div class="formControls col-xs-8 col-xs-offset-3">
+                        <?= Html::submitButton('&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;', ["class" => "btn btn-success radius size-L"]); ?>
+                        <?= Html::resetButton('&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;', ["class" => "btn btn-default radius size-L"]); ?>
                     </div>
-                </form>
+                </div>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
         <div class="footer">Copyright 你的公司名称 by H-ui.admin v3.1</div>
         <script type="text/javascript" src="/public/lib/jquery/1.9.1/jquery.min.js"></script> 
         <script type="text/javascript" src="/public/static/h-ui/js/H-ui.min.js"></script>
+        <script>
+            $(function () {
+                $("#loginform-verifycode-image").click(function () {
+                    $.get('<?= Url::to(['login/captcha', 'refresh' => '']) ?>', function (res) {
+                        $("#loginform-verifycode-image").attr('src', res.url);
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
