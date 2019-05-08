@@ -1,3 +1,9 @@
+<?php
+
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
+?>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -7,15 +13,15 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <!--[if lt IE 9]>
-        <script type="text/javascript" src="lib/html5shiv.js"></script>
-        <script type="text/javascript" src="lib/respond.min.js"></script>
+        <script type="text/javascript" src="/public/lib/html5shiv.js"></script>
+        <script type="text/javascript" src="/public/lib/respond.min.js"></script>
         <![endif]-->
-        <link href="static/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
-        <link href="static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
-        <link href="static/h-ui.admin/css/style.css" rel="stylesheet" type="text/css" />
-        <link href="lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
+        <link href="/public/static/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+        <link href="/public/static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
+        <link href="/public/static/h-ui.admin/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="/public/lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
         <!--[if IE 6]>
-        <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+        <script type="text/javascript" src="/public/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
         <script>DD_belatedPNG.fix('*');</script>
         <![endif]-->
         <title>后台登录 - H-ui.admin v3.1</title>
@@ -43,7 +49,7 @@
                     <div class="row cl">
                         <div class="formControls col-xs-8 col-xs-offset-3">
                             <input class="input-text size-L" type="text" placeholder="验证码" value="验证码:" style="width:150px;">
-                            <img src=""> <a id="kanbuq" href="javascript:;">看不清，换一张</a> 
+                            <img src="/public/"> <a id="kanbuq" href="/public/javascript:;">看不清，换一张</a> 
                         </div>
                     </div>
                     <div class="row cl">
@@ -63,7 +69,7 @@
             </div>
         </div>
         <div class="footer">Copyright 你的公司名称 by H-ui.admin v3.1</div>
-        <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
-        <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+        <script type="text/javascript" src="/public/lib/jquery/1.9.1/jquery.min.js"></script> 
+        <script type="text/javascript" src="/public/static/h-ui/js/H-ui.min.js"></script>
     </body>
 </html>

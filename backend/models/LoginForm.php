@@ -4,7 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\base\Model;
-use app\models\ApproveUser;
+use backend\models\BackendUser;
 
 class LoginForm extends Model
 {
@@ -54,7 +54,7 @@ class LoginForm extends Model
     {
         if ($this->validate())
         {
-            return Yii::$app->approvr_user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            return Yii::$app->backend_user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         else
         {
@@ -70,7 +70,7 @@ class LoginForm extends Model
     {
         if ($this->_user === false)
         {
-            $this->_user = ApproveUser::findByUsername($this->username);
+            $this->_user = BackendUser::findByUsername($this->username);
         }
         return $this->_user;
     }
