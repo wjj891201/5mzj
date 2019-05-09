@@ -17,7 +17,7 @@ use yii\helpers\Url;
                 <i class="Hui-iconfont">&#xe6e2;</i> 
                 批量删除
             </a>
-            <a class="btn btn-primary radius" href="javascript:;" onclick="operate_small('添加角色', '<?= Url::to(['role/add']) ?>', '', '400')">
+            <a class="btn btn-primary radius" href="javascript:;" onclick="operate_full('添加角色', '<?= Url::to(['role/add']) ?>')">
                 <i class="Hui-iconfont">&#xe600;</i> 
                 添加角色
             </a> 
