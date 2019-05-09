@@ -5,7 +5,12 @@ use yii\helpers\Html;
 ?>
 <article class="page-container">
     <?php
-    $form = ActiveForm::begin(['options' => ['class' => 'form form-horizontal', 'id' => 'form-change-password']]);
+    $form = ActiveForm::begin([
+                'options' => ['class' => 'form form-horizontal', 'id' => 'form-change-password'],
+                'fieldConfig' => [
+                    'errorOptions' => ['class' => 'error_info'],
+                ]
+    ]);
     ?>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>原始密码：</label>

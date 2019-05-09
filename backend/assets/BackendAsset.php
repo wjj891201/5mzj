@@ -18,7 +18,8 @@ class BackendAsset extends AssetBundle
         'static/h-ui.admin/css/H-ui.admin.css',
         'lib/Hui-iconfont/1.0.8/iconfont.css',
         'static/h-ui.admin/skin/default/skin.css',
-        'static/h-ui.admin/css/style.css'
+        'static/h-ui.admin/css/style.css',
+        'css/common.css'
     ];
     public $js = [
         'lib/jquery/1.9.1/jquery.min.js',
