@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\approve;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
-use app\models\ApproveUser;
+use backend\models\BackendUser;
 
 /**
  * Signup form
@@ -44,11 +44,11 @@ class SignupForm extends Model
     {
         return [
                 [['username', 'email'], 'filter', 'filter' => 'trim', 'on' => ['signup', 'edit']],
-                ['username', 'unique', 'targetClass' => '\app\models\ApproveUser', 'message' => '{attribute}已存在', 'on' => 'signup'],
+                ['username', 'unique', 'targetClass' => '\backend\models\BackendUser', 'message' => '{attribute}已存在', 'on' => 'signup'],
                 ['username', 'string', 'min' => 2, 'max' => 255, 'on' => ['signup', 'edit']],
                 [['username', 'belong', 'email', 'telphone'], 'required', 'message' => '{attribute}不可以为空', 'on' => ['signup', 'edit']],
                 ['email', 'email', 'on' => ['signup', 'edit']],
-                ['email', 'unique', 'targetClass' => '\app\models\ApproveUser', 'message' => '{attribute}已经被设置了', 'on' => 'signup'],
+                ['email', 'unique', 'targetClass' => '\backend\models\BackendUser', 'message' => '{attribute}已经被设置了', 'on' => 'signup'],
                 ['telphone', 'match', 'pattern' => '/^[1][358][0-9]{9}$/', 'message' => '{attribute}号码格式错误', 'on' => ['signup', 'edit']],
                 ['oldpass', 'required', 'message' => '{attribute}不可以为空', 'on' => 'psw'],
                 ['oldpass', 'validateOldpass', 'on' => 'psw'],
@@ -67,7 +67,7 @@ class SignupForm extends Model
     {
         if (!$this->hasErrors())
         {
-            $user = ApproveUser::findOne(['id' => Yii::$app->approvr_user->id]);
+            $user = BackendUser::findOne(['id' => Yii::$app->backend_user->id]);
             if (!$user || !$user->validatePassword($this->oldpass))
             {
                 $this->addError($attribute, '原始密码错误');
@@ -77,7 +77,7 @@ class SignupForm extends Model
 
     public static function getLists()
     {
-        $list = ApproveUser::find()->orderBy(['id' => SORT_DESC])->asArray()->all();
+        $list = BackendUser::find()->orderBy(['id' => SORT_DESC])->asArray()->all();
         return $list;
     }
 
@@ -90,7 +90,7 @@ class SignupForm extends Model
         $this->scenario = 'signup';
         if ($this->load($data) && $this->validate())
         {
-            $user = new ApproveUser();
+            $user = new BackendUser();
             $user->username = $this->username;
             $user->belong = $this->belong;
             $user->email = $this->email;
@@ -111,7 +111,7 @@ class SignupForm extends Model
         $this->scenario = 'edit';
         if ($this->load($data) && $this->validate())
         {
-            $user = ApproveUser::findOne(['id' => $this->id]);
+            $user = BackendUser::findOne(['id' => $this->id]);
             $user->username = $this->username;
             $user->belong = $this->belong;
             $user->email = $this->email;
@@ -128,7 +128,7 @@ class SignupForm extends Model
         $this->scenario = 'psw';
         if ($this->load($data) && $this->validate())
         {
-            $user = ApproveUser::findOne(['id' => Yii::$app->approvr_user->id]);
+            $user = BackendUser::findOne(['id' => Yii::$app->backend_user->id]);
             $user->setPassword($this->password);
             $user->generateAuthKey();
             return $user->save(false);

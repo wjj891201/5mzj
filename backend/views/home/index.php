@@ -47,7 +47,7 @@ use yii\helpers\Url;
                                     <i class="Hui-iconfont">&#xe6d5;</i>
                                 </a>
                                 <ul class="dropDown-menu menu radius box-shadow">
-                                    <li><a href="jsvascript:void(0);" onclick="operate_small('修改密码', '<?= Url::to(['manage/psw']) ?>', '', '500')">修改密码</a></li>
+                                    <li><a href="jsvascript:void(0);" onclick="operate_small('修改密码', '<?= Url::to(['manage/psw']) ?>', '', '400')">修改密码</a></li>
                                     <li><a href="jsvascript:void(0);" class="quit">退出</a></li>
                                 </ul>
                             </li>

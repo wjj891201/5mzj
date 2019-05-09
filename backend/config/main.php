@@ -44,6 +44,15 @@ return [
             'rules' => [
             ],
         ],
+        //去除 JQuery 脚本
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'js' => [], // 去除 jquery.js
+                    'sourcePath' => null, // 防止在/web/asset 下生产文件
+                ],
+            ],
+        ]
     ],
     'params' => $params,
 ];
