@@ -18,9 +18,4 @@ class HomeController extends CommonController
         return "欢迎来到o2o主后台首页!";
     }
 
-    public function actionArticle()
-    {
-        return $this->render('article');
-    }
-
 }
