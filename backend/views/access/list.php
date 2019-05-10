@@ -47,7 +47,10 @@ $this->registerJsFile('@web/public/js/treeTable/jquery.treeTable.js', ['depends'
                     </td>
                     <td><?= $vo['created_time'] ?></td>
                     <td><?= $vo['sort'] ?></td>
-                    <td><a title="编辑" href="javascript:;" onclick="admin_permission_edit('角色编辑', 'admin-permission-add.html', '1', '', '310')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_permission_del(this, '1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                    <td>
+                        <a title="编辑" href="javascript:;" onclick="operate_small('权限编辑', '<?= Url::to(['access/mod', 'id' => $vo['id']]); ?>')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                        <a title="删除" href="javascript:;" onclick="access_del(this,<?= $vo['id'] ?>)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -57,9 +60,8 @@ $this->registerJsFile('@web/public/js/treeTable/jquery.treeTable.js', ['depends'
     $(function () {
         var option = {
             theme: 'default',
-            expandLevel: 1,
+            expandLevel: 2,
             beforeExpand: function ($treeTable, id) {
-                //判断id是否已经有了孩子节点，如果有了就不再加载，这样就可以起到缓存的作用
                 if ($('.' + id, $treeTable).length) {
                     return;
                 }
@@ -71,9 +73,24 @@ $this->registerJsFile('@web/public/js/treeTable/jquery.treeTable.js', ['depends'
         };
         $('#treeTable_1').treeTable(option);
 //        parent.layer.closeAll();//关闭所有layer窗口
-//        parent.layer.close(layer.index);
-//        parent.layer.closeAll('iframe');
-//        var index = parent.layer.getFrameIndex(window.name);
-//        parent.layer.close(index);
     });
+    function access_del(obj, id) {
+        layer.confirm('确认要删除吗？', {icon: 3}, function (index) {
+            $.ajax({
+                type: "GET",
+                url: "<?= URL::to(['access/del']); ?>",
+                data: "id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    if (data == 404) {
+                        layer.msg('sorry，您没有权限！', {icon: 2, time: 1000});
+                    }
+                    if (data == 1) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已成功删除!', {icon: 1, time: 1000});
+                    }
+                }
+            });
+        });
+    }
 </script>
