@@ -34,7 +34,7 @@ use yii\helpers\Url;
                     <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/public/aboutHui.shtml">H-ui.admin</a> 
                     <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/public/aboutHui.shtml">H-ui</a> 
                     <span class="logo navbar-slogan f-l mr-10 hidden-xs">v3.1</span> 
-                    <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+                    <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:void(0);">&#xe667;</a>
                     <nav class="nav navbar-nav">
                         <ul class="cl"></ul>
                     </nav>
@@ -52,14 +52,14 @@ use yii\helpers\Url;
                                 </ul>
                             </li>
                             <li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
-                            <li id="Hui-skin" class="dropDown right dropDown_hover"> <a href="javascript:;" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
+                            <li id="Hui-skin" class="dropDown right dropDown_hover"> <a href="javascript:void(0);" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
-                                    <li><a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
-                                    <li><a href="javascript:;" data-val="blue" title="蓝色">蓝色</a></li>
-                                    <li><a href="javascript:;" data-val="green" title="绿色">绿色</a></li>
-                                    <li><a href="javascript:;" data-val="red" title="红色">红色</a></li>
-                                    <li><a href="javascript:;" data-val="yellow" title="黄色">黄色</a></li>
-                                    <li><a href="javascript:;" data-val="orange" title="橙色">橙色</a></li>
+                                    <li><a href="javascript:void(0);" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
+                                    <li><a href="javascript:void(0);" data-val="blue" title="蓝色">蓝色</a></li>
+                                    <li><a href="javascript:void(0);" data-val="green" title="绿色">绿色</a></li>
+                                    <li><a href="javascript:void(0);" data-val="red" title="红色">红色</a></li>
+                                    <li><a href="javascript:void(0);" data-val="yellow" title="黄色">黄色</a></li>
+                                    <li><a href="javascript:void(0);" data-val="orange" title="橙色">橙色</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -73,7 +73,7 @@ use yii\helpers\Url;
                     <dt><i class="Hui-iconfont">&#xe616;</i> 资讯管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                     <dd>
                         <ul>
-                            <li><a data-href="<?= Url::to(['home/article']) ?>" data-title="资讯管理" href="javascript:void(0)">资讯管理</a></li>
+                            <li><a data-href="<?= Url::to(['home/article']) ?>" data-title="资讯管理" href="javascript:void(0);">资讯管理</a></li>
                         </ul>
                     </dd>
                 </dl>
@@ -81,7 +81,7 @@ use yii\helpers\Url;
                     <dt><i class="Hui-iconfont">&#xe613;</i> 图片管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                     <dd>
                         <ul>
-                            <li><a data-href="picture-list.html" data-title="图片管理" href="javascript:void(0)">图片管理</a></li>
+                            <li><a data-href="picture-list.html" data-title="图片管理" href="javascript:void(0);">图片管理</a></li>
                         </ul>
                     </dd>
                 </dl>
@@ -89,9 +89,9 @@ use yii\helpers\Url;
                     <dt><i class="Hui-iconfont">&#xe620;</i> 产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                     <dd>
                         <ul>
-                            <li><a data-href="product-brand.html" data-title="品牌管理" href="javascript:void(0)">品牌管理</a></li>
-                            <li><a data-href="product-category.html" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
-                            <li><a data-href="product-list.html" data-title="产品管理" href="javascript:void(0)">产品管理</a></li>
+                            <li><a data-href="product-brand.html" data-title="品牌管理" href="javascript:void(0);">品牌管理</a></li>
+                            <li><a data-href="product-category.html" data-title="分类管理" href="javascript:void(0);">分类管理</a></li>
+                            <li><a data-href="product-list.html" data-title="产品管理" href="javascript:void(0);">产品管理</a></li>
                         </ul>
                     </dd>
                 </dl>
@@ -99,22 +99,16 @@ use yii\helpers\Url;
                     <dt><i class="Hui-iconfont">&#xe622;</i> 评论管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                     <dd>
                         <ul>
-                            <li><a data-href="http:/h-ui.duoshuo.com/admin/" data-title="评论列表" href="javascript:;">评论列表</a></li>
-                            <li><a data-href="feedback-list.html" data-title="意见反馈" href="javascript:void(0)">意见反馈</a></li>
+                            <li><a data-href="http:/h-ui.duoshuo.com/admin/" data-title="评论列表" href="javascript:void(0);">评论列表</a></li>
+                            <li><a data-href="feedback-list.html" data-title="意见反馈" href="javascript:void(0);">意见反馈</a></li>
                         </ul>
                     </dd>
                 </dl>
                 <dl id="menu-member">
-                    <dt><i class="Hui-iconfont">&#xe60d;</i> 会员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                    <dt><i class="Hui-iconfont">&#xe67f;</i> 房源管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                     <dd>
                         <ul>
-                            <li><a data-href="member-list.html" data-title="会员列表" href="javascript:;">会员列表</a></li>
-                            <li><a data-href="member-del.html" data-title="删除的会员" href="javascript:;">删除的会员</a></li>
-                            <li><a data-href="member-level.html" data-title="等级管理" href="javascript:;">等级管理</a></li>
-                            <li><a data-href="member-scoreoperation.html" data-title="积分管理" href="javascript:;">积分管理</a></li>
-                            <li><a data-href="member-record-browse.html" data-title="浏览记录" href="javascript:void(0)">浏览记录</a></li>
-                            <li><a data-href="member-record-download.html" data-title="下载记录" href="javascript:void(0)">下载记录</a></li>
-                            <li><a data-href="member-record-share.html" data-title="分享记录" href="javascript:void(0)">分享记录</a></li>
+                            <li><a data-href="<?= Url::to(['village/list']) ?>" data-title="小区信息管理" href="javascript:void(0);">小区信息管理</a></li>
                         </ul>
                     </dd>
                 </dl>
@@ -122,9 +116,9 @@ use yii\helpers\Url;
                     <dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                     <dd>
                         <ul>
-                            <li><a data-href="<?= Url::to(['role/list']) ?>" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-                            <li><a data-href="<?= Url::to(['access/list']) ?>" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
-                            <li><a data-href="<?= Url::to(['manage/list']) ?>" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
+                            <li><a data-href="<?= Url::to(['role/list']) ?>" data-title="角色管理" href="javascript:void(0);">角色管理</a></li>
+                            <li><a data-href="<?= Url::to(['access/list']) ?>" data-title="权限管理" href="javascript:void(0);">权限管理</a></li>
+                            <li><a data-href="<?= Url::to(['manage/list']) ?>" data-title="管理员列表" href="javascript:void(0);">管理员列表</a></li>
                         </ul>
                     </dd>
                 </dl>
@@ -132,13 +126,13 @@ use yii\helpers\Url;
                     <dt><i class="Hui-iconfont">&#xe61a;</i> 系统统计<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                     <dd>
                         <ul>
-                            <li><a data-href="charts-1.html" data-title="折线图" href="javascript:void(0)">折线图</a></li>
-                            <li><a data-href="charts-2.html" data-title="时间轴折线图" href="javascript:void(0)">时间轴折线图</a></li>
-                            <li><a data-href="charts-3.html" data-title="区域图" href="javascript:void(0)">区域图</a></li>
-                            <li><a data-href="charts-4.html" data-title="柱状图" href="javascript:void(0)">柱状图</a></li>
-                            <li><a data-href="charts-5.html" data-title="饼状图" href="javascript:void(0)">饼状图</a></li>
-                            <li><a data-href="charts-6.html" data-title="3D柱状图" href="javascript:void(0)">3D柱状图</a></li>
-                            <li><a data-href="charts-7.html" data-title="3D饼状图" href="javascript:void(0)">3D饼状图</a></li>
+                            <li><a data-href="charts-1.html" data-title="折线图" href="javascript:void(0);">折线图</a></li>
+                            <li><a data-href="charts-2.html" data-title="时间轴折线图" href="javascript:void(0);">时间轴折线图</a></li>
+                            <li><a data-href="charts-3.html" data-title="区域图" href="javascript:void(0);">区域图</a></li>
+                            <li><a data-href="charts-4.html" data-title="柱状图" href="javascript:void(0);">柱状图</a></li>
+                            <li><a data-href="charts-5.html" data-title="饼状图" href="javascript:void(0);">饼状图</a></li>
+                            <li><a data-href="charts-6.html" data-title="3D柱状图" href="javascript:void(0);">3D柱状图</a></li>
+                            <li><a data-href="charts-7.html" data-title="3D饼状图" href="javascript:void(0);">3D饼状图</a></li>
                         </ul>
                     </dd>
                 </dl>
@@ -146,11 +140,11 @@ use yii\helpers\Url;
                     <dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                     <dd>
                         <ul>
-                            <li><a data-href="system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
-                            <li><a data-href="system-category.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
-                            <li><a data-href="system-data.html" data-title="数据字典" href="javascript:void(0)">数据字典</a></li>
-                            <li><a data-href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li>
-                            <li><a data-href="system-log.html" data-title="系统日志" href="javascript:void(0)">系统日志</a></li>
+                            <li><a data-href="system-base.html" data-title="系统设置" href="javascript:void(0);">系统设置</a></li>
+                            <li><a data-href="system-category.html" data-title="栏目管理" href="javascript:void(0);">栏目管理</a></li>
+                            <li><a data-href="system-data.html" data-title="数据字典" href="javascript:void(0);">数据字典</a></li>
+                            <li><a data-href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0);">屏蔽词</a></li>
+                            <li><a data-href="system-log.html" data-title="系统日志" href="javascript:void(0);">系统日志</a></li>
                         </ul>
                     </dd>
                 </dl>
@@ -167,7 +161,7 @@ use yii\helpers\Url;
                         </li>
                     </ul>
                 </div>
-                <div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d7;</i></a></div>
+                <div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:void(0);"><i class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:void(0);"><i class="Hui-iconfont">&#xe6d7;</i></a></div>
             </div>
             <div id="iframe_box" class="Hui-article">
                 <div class="show_iframe">
