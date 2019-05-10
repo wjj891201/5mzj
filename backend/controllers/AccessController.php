@@ -31,8 +31,8 @@ class AccessController extends CommonController
             $post = Yii::$app->request->post();
             if ($model->add($post))
             {
-//                Yii::$app->session->setFlash("success", "添加成功");
-                return $this->redirect(['access/list']);
+                Yii::$app->session->setFlash("success", "添加成功");
+//                return $this->redirect(['access/list']);
             }
         }
         return $this->render('add', ['model' => $model, 'list' => $list]);

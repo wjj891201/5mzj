@@ -19,7 +19,7 @@ class Access extends ActiveRecord
                 ['title', 'required', 'message' => '权限标题不能为空', 'on' => ['add', 'modify']],
                 ['sort', 'required', 'message' => '排序不能为空', 'on' => ['add', 'modify']],
                 ['sort', 'integer', 'message' => '请填写整数', 'on' => ['add', 'modify']],
-                ['urls', 'required', 'message' => 'Urls不能为空！', 'on' => ['add', 'modify']],
+                ['urls', 'required', 'message' => 'Urls不能为空', 'on' => ['add', 'modify']],
                 [['pid'], 'safe']
         ];
     }

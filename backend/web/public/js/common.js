@@ -23,3 +23,9 @@ function operate_del(id, url) {
         window.location.href = url;
     });
 }
+
+$(function () {
+    $('.close_down').click(function () {
+        $(this).parent().hide();
+    });
+});

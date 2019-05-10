@@ -4,11 +4,10 @@ use yii\helpers\Url;
 ?>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span class="c-gray en">&gt;</span> 权限管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <div class="Huialert Huialert-success"><i class="Hui-iconfont">&#xe6a6;</i>成功状态提示</div>
-    <div class="Huialert Huialert-danger"><i class="Hui-iconfont">&#xe6a6;</i>危险状态提示</div>
+    <?= $this->render('../set/prompt.php'); ?>
     <div class="cl pd-5 bg-1 bk-gray mt-20"> 
         <span class="l">
-            <a href="javascript:;" onclick="operate_full('添加权限节点', '<?= Url::to(['access/add']) ?>')" class="btn btn-primary radius">
+            <a href="javascript:;" onclick="operate_small('添加权限节点', '<?= Url::to(['access/add']) ?>')" class="btn btn-primary radius">
                 <i class="Hui-iconfont">&#xe600;</i>
                 添加权限节点
             </a>
@@ -39,6 +38,10 @@ use yii\helpers\Url;
 </div>
 <script>
     $(function () {
-        parent.layer.closeAll();//关闭所有layer窗口
+//        parent.layer.closeAll();//关闭所有layer窗口
+//        parent.layer.close(layer.index);
+//        parent.layer.closeAll('iframe');
+//        var index = parent.layer.getFrameIndex(window.name);
+//        parent.layer.close(index);
     });
 </script>
