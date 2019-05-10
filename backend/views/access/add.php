@@ -4,6 +4,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 ?>
 <article class="page-container">
+    <?= $this->render('../set/prompt.php'); ?>
     <?php
     $form = ActiveForm::begin([
                 'options' => ['class' => 'form form-horizontal', 'id' => 'form-member-add'],
@@ -31,7 +32,7 @@ use yii\helpers\Html;
         </div>
     </div>
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3">Urls：</label>
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>Urls：</label>
         <div class="formControls col-xs-8 col-sm-9">
             <?= $form->field($model, 'urls', ['options' => ['class' => false]])->textarea(['class' => 'textarea'])->label(false); ?>
         </div>

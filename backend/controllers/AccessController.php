@@ -32,7 +32,7 @@ class AccessController extends CommonController
             if ($model->add($post))
             {
                 Yii::$app->session->setFlash("success", "添加成功");
-//                return $this->redirect(['access/list']);
+                return $this->redirect(['access/add']);
             }
         }
         return $this->render('add', ['model' => $model, 'list' => $list]);
