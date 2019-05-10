@@ -13,9 +13,9 @@ class AccessController extends CommonController
      */
     public function actionList()
     {
-
-
-        return $this->render("list");
+        $model = new Access();
+        $access = $model->getTreeList();
+        return $this->render("list", ['access' => $access]);
     }
 
     /**
