@@ -10,91 +10,91 @@ use yii\helpers\Url;
     $form = ActiveForm::begin([
                 'options' => ['class' => 'form form-horizontal', 'id' => 'form-article-add'],
                 'fieldConfig' => [
-                    'errorOptions' => ['class' => 'error_info'],
+                    'errorOptions' => ['tag' => 'span', 'class' => 'error_info', 'style' => 'padding-left:10px;'],
                 ]
     ]);
     ?>
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>小区名称：</label>
+        <label class="form-label col-xs-4 col-sm-2">小区名称：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'vill_name', ['options' => ['class' => false]])->textInput(['class' => 'input-text'])->label(false); ?>
+            <?= $form->field($model, 'vill_name', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">详细地址：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'vill_add', ['options' => ['class' => false]])->textInput(['class' => 'input-text'])->label(false); ?>
+            <?= $form->field($model, 'vill_add', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">物业公司：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'prop_comp', ['options' => ['class' => false]])->textInput(['class' => 'input-text'])->label(false); ?>
+            <?= $form->field($model, 'prop_comp', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属区域：</label>
+        <label class="form-label col-xs-4 col-sm-2">所属区域：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'vill_region', ['template' => "<span class=\"select-box\">{input}</span>{error}", 'options' => ['class' => false]])->dropDownList($area, ['class' => 'select', 'id' => 'area_here'])->label(false); ?>
+            <?= $form->field($model, 'vill_region', ['template' => "<span class=\"select-box\" style=\"width:70%;\">{input}</span>{error}", 'options' => ['class' => false]])->dropDownList($area, ['class' => 'select', 'id' => 'area_here'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所在街道：</label>
+        <label class="form-label col-xs-4 col-sm-2">所在街道：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'vill_street', ['template' => "<span class=\"select-box\">{input}</span>{error}", 'options' => ['class' => false]])->dropDownList($street, ['class' => 'select', 'id' => 'street_here'])->label(false); ?>
+            <?= $form->field($model, 'vill_street', ['template' => "<span class=\"select-box\" style=\"width:70%;\">{input}</span>{error}", 'options' => ['class' => false]])->dropDownList($street, ['class' => 'select', 'id' => 'street_here'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所在板块：</label>
+        <label class="form-label col-xs-4 col-sm-2">所在板块：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'plate_id', ['template' => "<span class=\"select-box\">{input}</span>{error}", 'options' => ['class' => false]])->dropDownList($plate, ['class' => 'select', 'id' => 'plate_here'])->label(false); ?>
+            <?= $form->field($model, 'plate_id', ['template' => "<span class=\"select-box\" style=\"width:70%;\">{input}</span>{error}", 'options' => ['class' => false]])->dropDownList($plate, ['class' => 'select', 'id' => 'plate_here'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">建筑年代：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'build_age', ['options' => ['class' => false]])->textInput(['class' => 'input-text'])->label(false); ?>
+            <?= $form->field($model, 'build_age', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">总户数：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'to_hou_holds', ['options' => ['class' => false]])->textInput(['class' => 'input-text'])->label(false); ?>
+            <?= $form->field($model, 'to_hou_holds', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">总楼栋数：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'to_building', ['options' => ['class' => false]])->textInput(['class' => 'input-text'])->label(false); ?>
+            <?= $form->field($model, 'to_building', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">停车位：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'park_space', ['options' => ['class' => false]])->textInput(['class' => 'input-text'])->label(false); ?>
+            <?= $form->field($model, 'park_space', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">绿化率：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'green_rate', ['options' => ['class' => false]])->textInput(['class' => 'input-text'])->label(false); ?>
+            <?= $form->field($model, 'green_rate', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">容积率：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'plot_rate', ['options' => ['class' => false]])->textInput(['class' => 'input-text'])->label(false); ?>
+            <?= $form->field($model, 'plot_rate', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">物业费：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'vill_cost', ['options' => ['class' => false]])->textInput(['class' => 'input-text'])->label(false); ?>
+            <?= $form->field($model, 'vill_cost', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-            <button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 确定</button>
+            <?= Html::submitButton('<i class="Hui-iconfont">&#xe632;</i> 确定', ['class' => 'btn btn-secondary radius']); ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
@@ -104,11 +104,19 @@ use yii\helpers\Url;
         $('#area_here').change(function () {
             $.ajax({
                 type: 'post',
-                url: '<?= Url::to(['claims-right/ajax-get-region']) ?>',
+                url: '<?= Url::to(['village/ajax-get-street-plate']) ?>',
                 dataType: "json",
-                data: {_csrf: '<?= Yii::$app->request->csrfToken ?>', type: type, parent_id: id},
+                data: {_csrf: '<?= Yii::$app->request->csrfToken ?>', area_id: $(this).val()},
                 success: function (data) {
-
+                    var street = palte = "<option value=''>请选择</option>";
+                    $.each(data.street, function (idx, item) {
+                        street += "<option value=" + item.streetID + ">" + item.street + "</option>";
+                    });
+                    $('#street_here').empty().append(street);
+                    $.each(data.plate, function (idx, item) {
+                        palte += "<option value=" + item.id + ">" + item.plate_name + "</option>";
+                    });
+                    $('#plate_here').empty().append(palte);
                 }
             });
         });
