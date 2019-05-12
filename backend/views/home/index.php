@@ -108,6 +108,7 @@ use yii\helpers\Url;
                     <dt><i class="Hui-iconfont">&#xe67f;</i> 房源管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                     <dd>
                         <ul>
+                            <li><a data-href="<?= Url::to(['sec-hand/list']) ?>" data-title="二手房管理" href="javascript:void(0);">二手房管理</a></li>
                             <li><a data-href="<?= Url::to(['village/list']) ?>" data-title="小区信息管理" href="javascript:void(0);">小区信息管理</a></li>
                         </ul>
                     </dd>
