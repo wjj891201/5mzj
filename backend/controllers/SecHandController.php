@@ -3,6 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
+use common\models\House;
+use common\models\DicItem;
 
 class SecHandController extends CommonController
 {
@@ -13,6 +15,30 @@ class SecHandController extends CommonController
     public function actionList()
     {
         return $this->render("list");
+    }
+
+    /**
+     * 二手房管理
+     */
+    public function actionAdd()
+    {
+        $model = new House;
+        # 朝向
+        $direction = DicItem::getDicItem(['p_id' => 1008000]);
+        # 装修类型
+        $decoration = DicItem::getDicItem(['p_id' => 1006000]);
+        # 房屋类别
+        $house_type = DicItem::getDicItem(['p_id' => 1040000]);
+        if (Yii::$app->request->isPost)
+        {
+            $post = Yii::$app->request->post();
+            if ($model->add($post))
+            {
+                Yii::$app->session->setFlash("success", "添加成功");
+                return $this->redirect(['house/list']);
+            }
+        }
+        return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type]);
     }
 
 }

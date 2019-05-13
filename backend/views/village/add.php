@@ -89,7 +89,7 @@ use yii\helpers\Url;
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">物业费：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'vill_cost', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
+            <?= $form->field($model, 'vill_cost', ['template' => "{input}&nbsp;元/平方米{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
