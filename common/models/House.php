@@ -13,6 +13,7 @@ class House extends ActiveRecord
     public $house_owner, $mob_phonel;
     public $lab;
     public $is_mortgage;
+    public $recommend, $user_grade, $high_quality;
 
     public static function tableName()
     {

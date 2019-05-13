@@ -99,11 +99,11 @@ use yii\helpers\Url;
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">房源标签：</label>
-        <div class="formControls col-xs-8 col-sm-9">
+        <div class="formControls col-xs-8 col-sm-9 skin-minimal">
             <?=
             $form->field($model, 'lab')->checkboxList($build_lab, [
                 'item' => function($index, $label, $name, $checked, $value) {
-                    $return = '<label style="display:block;width:15%;float:left;"><input type="checkbox" name="' . $name . '" id="_' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="_' . $index . '" style="margin-left:5px;">' . $label . '</label></label>';
+                    $return = '<div class="check-box" style="width:15%;"><input type="checkbox" name="' . $name . '" id="_' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="_' . $index . '">' . $label . '</label></div>';
                     return $return;
                 },
                 'style' => 'width:70%;'
@@ -116,6 +116,36 @@ use yii\helpers\Url;
         <div class="formControls col-xs-8 col-sm-9 skin-minimal">
             <?=
             $form->field($model, 'is_mortgage')->inline()->radioList([1 => '是', 0 => '否'], [
+                'item' => function($index, $label, $name, $checked, $value) {
+                    $return = '<div class="radio-box"><input type="radio" name="' . $name . '" id="mortgage-' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="mortgage-' . $index . '">' . $label . '</label></div>';
+                    return $return;
+                }
+            ])->label(false);
+            ?>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">是否推荐：</label>
+        <div class="formControls col-xs-8 col-sm-2 skin-minimal">
+            <?=
+            $form->field($model, 'recommend')->inline()->radioList([1 => '是', 0 => '否'], [
+                'item' => function($index, $label, $name, $checked, $value) {
+                    $return = '<div class="radio-box"><input type="radio" name="' . $name . '" id="mortgage-' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="mortgage-' . $index . '">' . $label . '</label></div>';
+                    return $return;
+                }
+            ])->label(false);
+            ?>
+        </div>
+        <label class="form-label col-xs-4 col-sm-1">推荐指数：</label>
+        <div class="formControls col-xs-8 col-sm-2">
+            <?= $form->field($model, 'user_grade')->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">是否优选：</label>
+        <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+            <?=
+            $form->field($model, 'high_quality')->inline()->radioList([1 => '是', 0 => '否'], [
                 'item' => function($index, $label, $name, $checked, $value) {
                     $return = '<div class="radio-box"><input type="radio" name="' . $name . '" id="mortgage-' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="mortgage-' . $index . '">' . $label . '</label></div>';
                     return $return;

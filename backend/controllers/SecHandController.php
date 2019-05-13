@@ -24,6 +24,8 @@ class SecHandController extends CommonController
     {
         $model = new House;
         $model->is_mortgage = 0;
+        $model->recommend = 0;
+        $model->high_quality = 0;
         # 朝向
         $direction = DicItem::getDicItem(['p_id' => 1008000]);
         # 装修类型
