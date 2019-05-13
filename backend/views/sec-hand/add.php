@@ -80,131 +80,63 @@ use yii\helpers\Url;
         </div>
     </div>
     <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">称呼：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <?= $form->field($model, 'house_owner', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">手机号：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <?= $form->field($model, 'mob_phonel', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
+        </div>
+    </div>
+    <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">描述：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <textarea name="" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this, 200)"></textarea>
+            <?= $form->field($model, 'hou_remark', ['options' => ['class' => false]])->textArea(['class' => 'textarea', 'style' => 'width:70%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">产品规格：</label>
+        <label class="form-label col-xs-4 col-sm-2">房源标签：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" name="" id="" placeholder="输入长度" value="" class="input-text" style=" width:25%">
-            MM
-            <input type="text" name="" id="" placeholder="输入宽度" value="" class="input-text" style=" width:25%">
-            MM
-            <input type="text" name="" id="" placeholder="输入高度" value="" class="input-text" style=" width:25%">
-            MM </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">所属供应商：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" name="" id="" placeholder="" value="" class="input-text">
+            <?=
+            $form->field($model, 'lab')->checkboxList($build_lab, [
+                'item' => function($index, $label, $name, $checked, $value) {
+                    $return = '<label style="display:block;width:15%;float:left;"><input type="checkbox" name="' . $name . '" id="_' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="_' . $index . '" style="margin-left:5px;">' . $label . '</label></label>';
+                    return $return;
+                },
+                'style' => 'width:70%;'
+            ])->label(false);
+            ?>
         </div>
     </div>
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">价格计算单位：</label>
-        <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-                <select class="select">
-                    <option>请选择</option>
-                    <option value="1">件</option>
-                    <option value="2">斤</option>
-                    <option value="3">KG</option>
-                    <option value="4">吨</option>
-                    <option value="5">套</option>
-                </select>
-            </span> </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">产品重量：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-            kg</div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">产品展示价格：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-            元</div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">市场价格：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-            元</div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">成本价格：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-            元</div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">最低销售价格：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-            元</div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">销售开始时间：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:180px;">
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">销售结束时间：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', minDate: '#F{$dp.$D(\'datemin\')}'})" id="datemax" class="input-text Wdate" style="width:180px;">
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">产品关键字：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="text" name="" id="" placeholder="多个关键字用英文逗号隔开，限10个关键字" value="" class="input-text">
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">缩略图：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <div class="uploader-thum-container">
-                <div id="fileList" class="uploader-list"></div>
-                <div id="filePicker">选择图片</div>
-                <button id="btn-star" class="btn btn-default btn-uploadstar radius ml-10">开始上传</button>
-            </div>
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">图片上传：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <div class="uploader-list-container">
-                <div class="queueList">
-                    <div id="dndArea" class="placeholder">
-                        <div id="filePicker-2"></div>
-                        <p>或将照片拖到这里，单次最多可选300张</p>
-                    </div>
-                </div>
-                <div class="statusBar" style="display:none;">
-                    <div class="progress"> <span class="text">0%</span> <span class="percentage"></span> </div>
-                    <div class="info"></div>
-                    <div class="btns">
-                        <div id="filePicker2"></div>
-                        <div class="uploadBtn">开始上传</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">详细内容：</label>
-        <div class="formControls col-xs-8 col-sm-9"> 
-            <script id="editor" type="text/plain" style="width:100%;height:400px;"></script> 
+        <label class="form-label col-xs-4 col-sm-2">是否解压：</label>
+        <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+            <?=
+            $form->field($model, 'is_mortgage')->inline()->radioList([1 => '是', 0 => '否'], [
+                'item' => function($index, $label, $name, $checked, $value) {
+                    $return = '<div class="radio-box"><input type="radio" name="' . $name . '" id="mortgage-' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="mortgage-' . $index . '">' . $label . '</label></div>';
+                    return $return;
+                }
+            ])->label(false);
+            ?>
         </div>
     </div>
     <div class="row cl">
         <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-            <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
-            <button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button>
-            <button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+            <?= Html::submitButton('<i class="Hui-iconfont">&#xe632;</i> 确定', ['class' => 'btn btn-secondary radius']); ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+    });
+</script>

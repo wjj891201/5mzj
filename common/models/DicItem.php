@@ -16,12 +16,15 @@ class DicItem extends ActiveRecord
     /**
      * 获取字典数据
      */
-    public static function getDicItem($where = [])
+    public static function getDicItem($where = [], $mark = true)
     {
         $dicItem = self::find()->where($where)->all();
         $dicItem = ArrayHelper::toArray($dicItem);
         $dicItem = ArrayHelper::map($dicItem, 'id', 'name');
-        $options = ['' => '请选择'];
+        if ($mark)
+        {
+            $options = ['' => '请选择'];
+        }
         foreach ($dicItem as $key => $vo)
         {
             $options[$key] = $vo;
