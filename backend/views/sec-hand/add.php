@@ -10,7 +10,7 @@ use yii\helpers\Url;
     $form = ActiveForm::begin([
                 'options' => ['class' => 'form form-horizontal', 'id' => 'form-article-add'],
                 'fieldConfig' => [
-                    'errorOptions' => ['tag' => 'span', 'class' => 'error_info', 'style' => 'padding-left:10px;'],
+                    'errorOptions' => ['class' => 'error_info'],
                 ]
     ]);
     ?>
