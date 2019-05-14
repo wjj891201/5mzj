@@ -3,8 +3,10 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\data\Pagination;
 use common\models\House;
 use common\models\DicItem;
+use common\models\ObjLab;
 
 class SecHandController extends CommonController
 {
@@ -14,11 +16,19 @@ class SecHandController extends CommonController
      */
     public function actionList()
     {
-        return $this->render("list");
+        $model = House::find()->alias('h')
+                ->select(['h.id', 'h.hou_account', 'h.hou_name', 'h.vill_id', 's.price1', 's.to_price1', 'h.hou_area', 's.hou_pub_state', 'h.cre_time', 'h.mod_time'])
+                ->leftJoin('{{%house_sales}} s', 's.house_id=h.id')
+                ->orderBy(['cre_time' => SORT_DESC]);
+        $count = $model->count();
+        $pageSize = 10;
+        $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
+        $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
+        return $this->render("list", ['data' => $data, 'pages' => $pages]);
     }
 
     /**
-     * 二手房管理
+     * 二手房添加
      */
     public function actionAdd()
     {
@@ -26,14 +36,6 @@ class SecHandController extends CommonController
         $model->is_mortgage = 0;
         $model->recommend = 0;
         $model->high_quality = 0;
-        # 朝向
-        $direction = DicItem::getDicItem(['p_id' => 1008000]);
-        # 装修类型
-        $decoration = DicItem::getDicItem(['p_id' => 1006000]);
-        # 房屋类别
-        $house_type = DicItem::getDicItem(['p_id' => 1040000]);
-        # 房源标签
-        $build_lab = DicItem::getDicItem(['p_id' => 1004011], false);
         if (Yii::$app->request->isPost)
         {
             $post = Yii::$app->request->post();
@@ -43,6 +45,76 @@ class SecHandController extends CommonController
                 return $this->redirect(['sec-hand/list']);
             }
         }
+        # 朝向
+        $direction = DicItem::getDicItem(['p_id' => 1008000]);
+        # 装修类型
+        $decoration = DicItem::getDicItem(['p_id' => 1006000]);
+        # 房屋类别
+        $house_type = DicItem::getDicItem(['p_id' => 1040000]);
+        # 房源标签
+        $build_lab = DicItem::getDicItem(['p_id' => 1004011], false);
+        return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type, 'build_lab' => $build_lab]);
+    }
+
+    /**
+     * 二手房编辑
+     */
+    public function actionEdit()
+    {
+        $id = Yii::$app->request->get("id");
+        $model = House::find()->where(['id' => $id])->one();
+        if (Yii::$app->request->isPost)
+        {
+            $post = Yii::$app->request->post();
+            if ($model->edit($post))
+            {
+                Yii::$app->session->setFlash("success", "编辑成功");
+                return $this->redirect(['sec-hand/list']);
+            }
+        }
+        # 朝向
+        $direction = DicItem::getDicItem(['p_id' => 1008000]);
+        # 装修类型
+        $decoration = DicItem::getDicItem(['p_id' => 1006000]);
+        # 房屋类别
+        $house_type = DicItem::getDicItem(['p_id' => 1040000]);
+        # 房源标签
+        $build_lab = DicItem::getDicItem(['p_id' => 1004011], false);
+        # 初始数据
+        // 1.0 房源出售信息
+        $model->price1 = $model['houseSales']['price1'];
+        $model->to_price1 = $model['houseSales']['to_price1'];
+        $model->is_mortgage = $model['houseSales']['is_mortgage'];
+        $model->user_grade = $model['houseSales']['user_grade'];
+        $is_recomm = $model['houseSales']['is_recomm'];
+        switch ($is_recomm)
+        {
+            case 0:
+                $model->recommend = 0;
+                $model->high_quality = 0;
+                break;
+            case 1:
+                $model->recommend = 1;
+                $model->high_quality = 0;
+                break;
+            case 2:
+                $model->recommend = 0;
+                $model->high_quality = 1;
+                break;
+            case 3:
+                $model->recommend = 1;
+                $model->high_quality = 1;
+                break;
+        }
+        // 2.0 户型信息
+        $model->type_hab = $model['houseType']['type_hab'];
+        $model->type_hall = $model['houseType']['type_hall'];
+        $model->type_toilet = $model['houseType']['type_toilet'];
+        // 3.0 房源出售人信息
+        $model->house_owner = $model['houseSalOwner']['house_owner'];
+        $model->mob_phone = $model['houseSalOwner']['mob_phone'];
+        // 4.0 房源标签
+        $model->lab = ObjLab::find()->select('obj_lab')->where(['tab_id' => $model['houseSales']['id']])->asArray()->column();
         return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type, 'build_lab' => $build_lab]);
     }
 

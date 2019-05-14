@@ -9,12 +9,10 @@ use yii\helpers\ArrayHelper;
 class House extends ActiveRecord
 {
 
-    public $price1, $to_price1;
+    public $price1, $to_price1, $is_mortgage, $recommend, $user_grade, $high_quality;
     public $type_hab, $type_hall, $type_toilet;
     public $house_owner, $mob_phone;
     public $lab;
-    public $is_mortgage;
-    public $recommend, $user_grade, $high_quality;
 
     public static function tableName()
     {
@@ -107,6 +105,30 @@ class House extends ActiveRecord
             $is_recomm = 2;
         }
         return $is_recomm;
+    }
+
+    /**
+     * 获取房源出售信息
+     */
+    public function getHouseSales()
+    {
+        return $this->hasOne(HouseSales::className(), ['house_id' => 'id']);
+    }
+
+    /**
+     * 获取户型
+     */
+    public function getHouseType()
+    {
+        return $this->hasOne(HouseType::className(), ['id' => 'house_type_id']);
+    }
+
+    /**
+     * 获取房源出售人信息
+     */
+    public function getHouseSalOwner()
+    {
+        return $this->hasOne(HouseSalOwner::className(), ['house_id' => 'id']);
     }
 
 }
