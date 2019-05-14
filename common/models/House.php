@@ -83,7 +83,7 @@ class House extends ActiveRecord
             {
                 $temp[$key] = ['tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
             }
-            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab'], $temp)->execute();
+            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
             return true;
         }
         return false;
@@ -102,6 +102,19 @@ class House extends ActiveRecord
             # 房源出售信息
             $is_recomm = self::handRecomm($this->recommend, $this->high_quality);
             Yii::$app->db->createCommand()->update("{{%house_sales}}", ['is_mortgage' => $this->is_mortgage, 'price1' => $this->price1, 'to_price1' => $this->to_price1, 'is_recomm' => $is_recomm, 'user_grade' => $this->user_grade, 'mod_time' => date('Y-m-d H:i:s')], ['house_id' => $house_id])->execute();
+            # 房源出售人信息
+            Yii::$app->db->createCommand()->update("{{%house_sal_owner}}", ['mob_phone' => $this->mob_phone, 'house_owner' => $this->house_owner], ['house_id' => $house_id])->execute();
+            # 户型
+            Yii::$app->db->createCommand()->update("{{%house_type}}", ['type_hab' => $this->type_hab, 'type_hall' => $this->type_hall, 'type_toilet' => $this->type_toilet, 'cover_area' => $this->hou_area], ['id' => $this->house_type_id])->execute();
+            # 对象标签
+            $house_sales_id = HouseSales::find()->select('id')->where(['house_id' => $house_id])->scalar();
+            ObjLab::deleteAll(['tab_id' => $house_sales_id]);
+            $temp = [];
+            foreach ($this->lab as $key => $vo)
+            {
+                $temp[$key] = ['tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
+            }
+            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
             return true;
         }
         return false;
