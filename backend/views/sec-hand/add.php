@@ -17,7 +17,7 @@ use yii\helpers\Url;
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">标题：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'hou_name', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
+            <?= $form->field($model, 'hou_name', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
@@ -31,19 +31,19 @@ use yii\helpers\Url;
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">房屋面积：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'hou_area', ['template' => "{input}&nbsp;平米{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
+            <?= $form->field($model, 'hou_area', ['template' => "{input}&nbsp;平米{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">售价：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'to_price1', ['template' => "{input}&nbsp;万元{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
+            <?= $form->field($model, 'to_price1', ['template' => "{input}&nbsp;万元{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">单价：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'price1', ['template' => "{input}&nbsp;元{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
+            <?= $form->field($model, 'price1', ['template' => "{input}&nbsp;元{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
@@ -82,19 +82,19 @@ use yii\helpers\Url;
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">称呼：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'house_owner', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
+            <?= $form->field($model, 'house_owner', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">手机号：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'mob_phonel', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
+            <?= $form->field($model, 'mob_phone', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">描述：</label>
         <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'hou_remark', ['options' => ['class' => false]])->textArea(['class' => 'textarea', 'style' => 'width:70%;'])->label(false); ?>
+            <?= $form->field($model, 'hou_remark', ['options' => ['class' => false]])->textArea(['class' => 'textarea', 'style' => 'width:90%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
@@ -103,10 +103,9 @@ use yii\helpers\Url;
             <?=
             $form->field($model, 'lab')->checkboxList($build_lab, [
                 'item' => function($index, $label, $name, $checked, $value) {
-                    $return = '<div class="check-box" style="width:15%;"><input type="checkbox" name="' . $name . '" id="_' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="_' . $index . '">' . $label . '</label></div>';
+                    $return = '<div class="check-box" style="width:18%;"><input type="checkbox" name="' . $name . '" id="_' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="_' . $index . '">' . $label . '</label></div>';
                     return $return;
-                },
-                'style' => 'width:70%;'
+                }
             ])->label(false);
             ?>
         </div>
@@ -136,7 +135,7 @@ use yii\helpers\Url;
             ])->label(false);
             ?>
         </div>
-        <label class="form-label col-xs-4 col-sm-1">推荐指数：</label>
+        <label class="form-label col-xs-4 col-sm-2">推荐指数：</label>
         <div class="formControls col-xs-8 col-sm-2">
             <?= $form->field($model, 'user_grade')->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
         </div>

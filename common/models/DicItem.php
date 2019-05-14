@@ -20,7 +20,7 @@ class DicItem extends ActiveRecord
     {
         $dicItem = self::find()->where($where)->all();
         $dicItem = ArrayHelper::toArray($dicItem);
-        $dicItem = ArrayHelper::map($dicItem, 'id', 'name');
+        $dicItem = ArrayHelper::map($dicItem, 'code', 'name');
         if ($mark)
         {
             $options = ['' => '请选择'];

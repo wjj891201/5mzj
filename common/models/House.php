@@ -11,7 +11,7 @@ class House extends ActiveRecord
 
     public $price1, $to_price1;
     public $type_hab, $type_hall, $type_toilet;
-    public $house_owner, $mob_phonel;
+    public $house_owner, $mob_phone;
     public $lab;
     public $is_mortgage;
     public $recommend, $user_grade, $high_quality;
@@ -40,7 +40,7 @@ class House extends ActiveRecord
             'hou_floor' => '所在楼层',
             'hou_floor_acc' => '总楼层',
             'house_owner' => '称呼',
-            'mob_phonel' => '手机号',
+            'mob_phone' => '手机号',
             'hou_remark' => '描述',
             'lab' => '房源标签',
             'user_grade' => '推荐指数'
@@ -52,7 +52,7 @@ class House extends ActiveRecord
         return [
                 [['hou_name', 'hou_building', 'hou_cell', 'hou_room', 'type_hab', 'type_hall', 'type_toilet', 'hou_turn', 'hou_fix_state', 'hou_usetype'], 'required', 'message' => '{attribute}为必填项'],
                 [['hou_area', 'to_price1', 'price1'], 'required', 'message' => '{attribute}为必填项'],
-                [['hou_floor', 'hou_floor_acc', 'house_owner', 'mob_phonel', 'hou_remark', 'lab'], 'required', 'message' => '{attribute}为必填项'],
+                [['hou_floor', 'hou_floor_acc', 'house_owner', 'mob_phone', 'hou_remark', 'lab'], 'required', 'message' => '{attribute}为必填项'],
                 [['user_grade'], 'required', 'message' => '{attribute}为必填项'],
                 ['cre_time', 'default', 'value' => date('Y-m-d H:i:s')],
                 [['is_mortgage', 'recommend', 'high_quality'], 'safe']
@@ -69,13 +69,44 @@ class House extends ActiveRecord
         if ($this->load($data) && $this->save())
         {
             $house_id = Yii::$app->db->getLastInsertID();
-            Yii::$app->db->createCommand()->insert("{{%house_sales}}", ['house_id' => $house_id, 'price1' => $this->price1, 'to_price1' => $this->to_price1, 'cre_time' => date('Y-m-d H:i:s')])->execute();
+            # 房源出售信息
+            $is_recomm = self::handRecomm($this->recommend, $this->high_quality);
+            Yii::$app->db->createCommand()->insert("{{%house_sales}}", ['house_id' => $house_id, 'is_mortgage' => $this->is_mortgage, 'price1' => $this->price1, 'to_price1' => $this->to_price1, 'is_recomm' => $is_recomm, 'user_grade' => $this->user_grade, 'cre_time' => date('Y-m-d H:i:s')])->execute();
             $house_sales_id = Yii::$app->db->getLastInsertID();
-            var_dump($house_sales_id);
-            exit;
+            # 房源出售人信息
+            Yii::$app->db->createCommand()->insert("{{%house_sal_owner}}", ['house_sales_id' => $house_sales_id, 'house_id' => $house_id, 'mob_phone' => $this->mob_phone, 'house_owner' => $this->house_owner, 'cre_time' => date('Y-m-d H:i:s')])->execute();
+            # 户型
+            Yii::$app->db->createCommand()->insert("{{%house_type}}", ['type_hab' => $this->type_hab, 'type_hall' => $this->type_hall, 'type_toilet' => $this->type_toilet, 'cover_area' => $this->hou_area])->execute();
+            $house_type_id = Yii::$app->db->getLastInsertID();
+            self::updateAll(['house_type_id' => $house_type_id], ['id' => $house_id]);
+            # 对象标签
+            $temp = [];
+            foreach ($this->lab as $key => $vo)
+            {
+                $temp[$key] = ['tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
+            }
+            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab'], $temp)->execute();
             return true;
         }
         return false;
+    }
+
+    public static function handRecomm($recommend, $high_quality)
+    {
+        $is_recomm = 0;
+        if ($recommend == 1 && $high_quality == 1)
+        {
+            $is_recomm = 3;
+        }
+        elseif ($recommend == 1 && $high_quality == 0)
+        {
+            $is_recomm = 1;
+        }
+        elseif ($recommend == 0 && $high_quality == 1)
+        {
+            $is_recomm = 2;
+        }
+        return $is_recomm;
     }
 
 }

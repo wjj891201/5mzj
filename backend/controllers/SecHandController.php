@@ -40,7 +40,7 @@ class SecHandController extends CommonController
             if ($model->add($post))
             {
                 Yii::$app->session->setFlash("success", "添加成功");
-                return $this->redirect(['house/list']);
+                return $this->redirect(['sec-hand/list']);
             }
         }
         return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type, 'build_lab' => $build_lab]);
