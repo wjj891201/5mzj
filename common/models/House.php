@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
 class House extends ActiveRecord
 {
 
+    public $vill_name;
     public $price1, $to_price1, $is_mortgage, $recommend, $user_grade, $high_quality;
     public $type_hab, $type_hall, $type_toilet;
     public $house_owner, $mob_phone;
@@ -23,6 +24,7 @@ class House extends ActiveRecord
     {
         return [
             'hou_name' => '标题',
+            'vill_name' => '小区名称',
             'hou_building' => '栋',
             'hou_cell' => '单元',
             'hou_room' => '室',
@@ -48,13 +50,35 @@ class House extends ActiveRecord
     public function rules()
     {
         return [
-                [['hou_name', 'hou_building', 'hou_cell', 'hou_room', 'type_hab', 'type_hall', 'type_toilet', 'hou_turn', 'hou_fix_state', 'hou_usetype'], 'required', 'message' => '{attribute}为必填项'],
+                [['hou_name', 'vill_name', 'hou_building', 'hou_cell', 'hou_room', 'type_hab', 'type_hall', 'type_toilet', 'hou_turn', 'hou_fix_state', 'hou_usetype'], 'required', 'message' => '{attribute}为必填项'],
+                ['vill_name', 'validateVillName'],
                 [['hou_area', 'to_price1', 'price1'], 'required', 'message' => '{attribute}为必填项'],
                 [['hou_floor', 'hou_floor_acc', 'house_owner', 'mob_phone', 'hou_remark', 'lab'], 'required', 'message' => '{attribute}为必填项'],
                 [['user_grade'], 'required', 'message' => '{attribute}为必填项'],
                 ['cre_time', 'default', 'value' => date('Y-m-d H:i:s')],
                 [['is_mortgage', 'recommend', 'high_quality'], 'safe']
         ];
+    }
+
+    /**
+     * 自定义验证方法（小区合法性）
+     * @param type $attribute
+     * @param type $params
+     */
+    public function validateVillName($attribute, $params)
+    {
+        if (!$this->hasErrors())
+        {
+            $data = Village::find()->where('vill_name = :vill_name', [":vill_name" => $this->vill_name])->one();
+            if (is_null($data))
+            {
+                $this->addError($attribute, "小区不存在，请至小区信息管理中添加");
+            }
+            else
+            {
+                $this->vill_id = $data['id'];
+            }
+        }
     }
 
     /**
@@ -136,6 +160,14 @@ class House extends ActiveRecord
             $is_recomm = 2;
         }
         return $is_recomm;
+    }
+
+    /**
+     * 获取小区信息
+     */
+    public function getVillage()
+    {
+        return $this->hasOne(Village::className(), ['id' => 'vill_id']);
     }
 
     /**

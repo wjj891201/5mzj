@@ -7,6 +7,7 @@ use yii\data\Pagination;
 use common\models\House;
 use common\models\DicItem;
 use common\models\ObjLab;
+use common\models\Village;
 
 class SecHandController extends CommonController
 {
@@ -81,7 +82,9 @@ class SecHandController extends CommonController
         # 房源标签
         $build_lab = DicItem::getDicItem(['p_id' => 1004011], false);
         # 初始数据
-        // 1.0 房源出售信息
+        // 1.0 小区信息
+        $model->vill_name = $model['village']['vill_name'];
+        // 2.0 房源出售信息
         $model->price1 = $model['houseSales']['price1'];
         $model->to_price1 = $model['houseSales']['to_price1'];
         $model->is_mortgage = $model['houseSales']['is_mortgage'];
@@ -106,16 +109,52 @@ class SecHandController extends CommonController
                 $model->high_quality = 1;
                 break;
         }
-        // 2.0 户型信息
+        // 3.0 户型信息
         $model->type_hab = $model['houseType']['type_hab'];
         $model->type_hall = $model['houseType']['type_hall'];
         $model->type_toilet = $model['houseType']['type_toilet'];
-        // 3.0 房源出售人信息
+        // 4.0 房源出售人信息
         $model->house_owner = $model['houseSalOwner']['house_owner'];
         $model->mob_phone = $model['houseSalOwner']['mob_phone'];
-        // 4.0 房源标签
+        // 5.0 房源标签
         $model->lab = ObjLab::find()->select('obj_lab')->where(['tab_id' => $model['houseSales']['id']])->asArray()->column();
         return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type, 'build_lab' => $build_lab]);
+    }
+
+    /**
+     * 通过数据库获取小区
+     */
+    public function actionGetVillage()
+    {
+        $params = Yii::$app->request->get('params');
+        $page = Yii::$app->request->get('page');
+        $limit = Yii::$app->request->get('limit');
+        $village = Village::find()->alias('v')
+                        ->select(['v.id', 'v.vill_name', 'v.vill_add', 'v.vill_region', 'a.area', 'v.vill_long', 'v.vill_lat'])
+                        ->leftJoin("{{%area}} a", 'a.areaID=v.vill_region')
+                        ->where(['LIKE', 'v.vill_name', $params])
+                        ->offset(($page - 1) * $limit)->limit($limit)->asArray()->all();
+        $count = Village::find()->where(['LIKE', 'vill_name', $params])->count();
+        $data = [];
+        if ($count > 0)
+        {
+            foreach ($village as $key => $vo)
+            {
+                $data[] = [
+                    'vill_name' => $vo['vill_name'],
+                    'vill_add' => $vo['vill_add'],
+                    'vill_region' => $vo['area'],
+                    'location' => $vo['vill_long'] . ',' . $vo['vill_lat']
+                ];
+            }
+        }
+        $result = [
+            'code' => 0,
+            'msg' => '',
+            'count' => $count,
+            'data' => $data
+        ];
+        return json_encode($result);
     }
 
 }

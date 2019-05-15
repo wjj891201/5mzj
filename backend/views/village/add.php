@@ -135,7 +135,7 @@ $this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\a
             id: "vill_name",
             limits: "10",
             limit: "10",
-            height: "400",
+            height: "300",
             cols: [
                 [{
                         field: 'vill_name',

@@ -3,6 +3,10 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\View;
+
+$this->registerCssFile('@web/public/js/layui/css/layui.css', ['depends' => ['backend\assets\BackendAsset']]);
+$this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\assets\BackendAsset'], 'position' => View::POS_HEAD]);
 ?>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 二手房管理 <span class="c-gray en">&gt;</span> 添加二手房 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
@@ -18,6 +22,12 @@ use yii\helpers\Url;
         <label class="form-label col-xs-4 col-sm-2">标题：</label>
         <div class="formControls col-xs-8 col-sm-9">
             <?= $form->field($model, 'hou_name', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">小区名称：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <?= $form->field($model, 'vill_name', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'id' => 'vill_name', 'style' => 'width:90%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
@@ -166,6 +176,36 @@ use yii\helpers\Url;
             checkboxClass: 'icheckbox-blue',
             radioClass: 'iradio-blue',
             increaseArea: '20%'
+        });
+    });
+    //引入自定义插件
+    layui.config({
+        base: '/public/js/yutons-mods/'
+    }).use(['yutons_sug'], function () {
+        var yutons_sug = layui.yutons_sug;
+        sessionStorage.setItem("url", "<?= Url::to(['sec-hand/get-village']) ?>");
+        yutons_sug.render({
+            id: "vill_name",
+            limits: "10",
+            limit: "10",
+            height: "300",
+            cols: [
+                [{
+                        field: 'vill_name',
+                        title: '小区名称'
+                    }, {
+                        field: 'vill_add',
+                        title: '地址'
+                    }, {
+                        field: 'vill_region',
+                        title: '区域'
+                    }, {
+                        field: 'location',
+                        title: '经/纬度'
+                    }]
+            ],
+            type: 'sugTable',
+            url: sessionStorage.getItem("url") + "?params="
         });
     });
 </script>
