@@ -19,9 +19,9 @@ class SecHandController extends CommonController
     {
         $model = House::find()->alias('h')
                 ->select(['h.id', 'h.hou_account', 'h.hou_name', 'v.vill_name', 's.price1', 's.to_price1', 'h.hou_area', 's.hou_pub_state', 'h.cre_time', 'h.mod_time'])
-                ->leftJoin('{{%village}} v', 'v.id=h.vill_id')
-                ->leftJoin('{{%house_sales}} s', 's.house_id=h.id')
-                ->where(['h.is_del' => 0])
+                ->innerJoin('{{%village}} v', 'v.id=h.vill_id')
+                ->innerJoin('{{%house_sales}} s', 's.house_id=h.id')
+                ->where(['AND', ['h.is_del' => 0], ['s.sales_type' => 100]])
                 ->orderBy(['cre_time' => SORT_DESC]);
         $count = $model->count();
         $pageSize = 20;
