@@ -38,7 +38,7 @@ use yii\widgets\LinkPager;
                     <tr class="text-c">
                         <td><?= $vo['hou_account'] ?></td>
                         <td><?= $vo['hou_name'] ?></td>
-                        <td><?= $vo['vill_id'] ?></td>
+                        <td><?= $vo['vill_name'] ?></td>
                         <td><?= $vo['price1'] ?></td>
                         <td><?= $vo['to_price1'] ?></td>
                         <td><?= $vo['hou_area'] ?></td>

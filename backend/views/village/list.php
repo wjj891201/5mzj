@@ -28,23 +28,27 @@ use yii\helpers\Url;
                     <th width="130">物业公司</th>
                     <th>创建人</th>
                     <th>修改时间</th>
-                    <th>状态</th>
                     <th width="60">操作</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="text-c">
-                    <td>1</td>
-                    <td>张三</td>
-                    <td>192.168.0.2</td>
-                    <td>2015.01.16 22:12:24</td>
-                    <td class="text-l">http://www.h-ui,net/</td>
-                    <td>192.168.0.2</td>
-                    <td>192.168.0.2</td>
-                    <td>192.168.0.2</td>
-                    <td>192.168.0.2</td>
-                    <td class="f-14"><a title="删除" href="javascript:;" onclick="user_del(this, '1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-                </tr>
+                <?php foreach ($data as $key => $vo): ?>
+                    <tr class="text-c">
+                        <td>1</td>
+                        <td>张三</td>
+                        <td>192.168.0.2</td>
+                        <td>2015.01.16 22:12:24</td>
+                        <td class="text-l">http://www.h-ui,net/</td>
+                        <td>192.168.0.2</td>
+                        <td>192.168.0.2</td>
+                        <td>192.168.0.2</td>
+                        <td class="f-14">
+                            <a title="删除" href="javascript:;" onclick="user_del(this, '1')" class="ml-5" style="text-decoration:none">
+                                <i class="Hui-iconfont">&#xe6e2;</i>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>

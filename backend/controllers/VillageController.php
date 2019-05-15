@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\data\Pagination;
 use backend\libs\Tool;
 use common\models\Village;
 use common\models\Area;
@@ -17,8 +18,16 @@ class VillageController extends CommonController
      */
     public function actionList()
     {
-
-        return $this->render("list");
+        $model = Village::find()->alias('v')
+                ->select(['v.id', 'v.vill_name', 'a.area', 'p.plate_name', 'v.cre_time', 'v.mod_time', 'v.vill_add', 'v.prop_comp'])
+                ->leftJoin('{{%area}} a', 'a.areaID=v.vill_region')
+                ->leftJoin('{{%plate}} p', 'p.id=v.plate_id')
+                ->orderBy(['cre_time' => SORT_DESC]);
+        $count = $model->count();
+        $pageSize = 10;
+        $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
+        $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
+        return $this->render("list", ['data' => $data, 'pages' => $pages]);
     }
 
     /**

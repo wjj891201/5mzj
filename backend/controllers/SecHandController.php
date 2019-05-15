@@ -18,7 +18,8 @@ class SecHandController extends CommonController
     public function actionList()
     {
         $model = House::find()->alias('h')
-                ->select(['h.id', 'h.hou_account', 'h.hou_name', 'h.vill_id', 's.price1', 's.to_price1', 'h.hou_area', 's.hou_pub_state', 'h.cre_time', 'h.mod_time'])
+                ->select(['h.id', 'h.hou_account', 'h.hou_name', 'v.vill_name', 's.price1', 's.to_price1', 'h.hou_area', 's.hou_pub_state', 'h.cre_time', 'h.mod_time'])
+                ->leftJoin('{{%village}} v', 'v.id=h.vill_id')
                 ->leftJoin('{{%house_sales}} s', 's.house_id=h.id')
                 ->orderBy(['cre_time' => SORT_DESC]);
         $count = $model->count();
