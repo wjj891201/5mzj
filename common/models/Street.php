@@ -17,7 +17,7 @@ class Street extends ActiveRecord
     {
         $allStreet = self::find()->where($where)->all();
         $allStreet = ArrayHelper::toArray($allStreet);
-        $allStreet = ArrayHelper::map($allStreet, 'streetID', 'area');
+        $allStreet = ArrayHelper::map($allStreet, 'streetID', 'street');
         $options = ['' => '请选择'];
         foreach ($allStreet as $key => $vo)
         {

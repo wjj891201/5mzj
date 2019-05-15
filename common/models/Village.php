@@ -38,6 +38,7 @@ class Village extends ActiveRecord
                 [['vill_name', 'vill_add', 'prop_comp', 'build_age', 'to_hou_holds', 'to_building', 'park_space', 'green_rate', 'plot_rate', 'vill_cost'], 'required', 'message' => '{attribute}为必填项'],
                 [['vill_region', 'vill_street', 'plate_id'], 'required', 'message' => '{attribute}为必选项'],
                 ['vill_name', 'unique', 'message' => '{attribute}已存在'],
+                ['cre_time', 'default', 'value' => date('Y-m-d H:i:s')],
         ];
     }
 

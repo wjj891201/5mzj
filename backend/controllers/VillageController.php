@@ -19,12 +19,12 @@ class VillageController extends CommonController
     public function actionList()
     {
         $model = Village::find()->alias('v')
-                ->select(['v.id', 'v.vill_name', 'a.area', 'p.plate_name', 'v.cre_time', 'v.mod_time', 'v.vill_add', 'v.prop_comp'])
+                ->select(['v.id', 'v.vill_name', 'a.area', 'p.plate_name', 'v.vill_add', 'v.prop_comp', 'v.cre_time', 'v.mod_time'])
                 ->leftJoin('{{%area}} a', 'a.areaID=v.vill_region')
                 ->leftJoin('{{%plate}} p', 'p.id=v.plate_id')
                 ->orderBy(['cre_time' => SORT_DESC]);
         $count = $model->count();
-        $pageSize = 10;
+        $pageSize = 20;
         $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
         $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
         return $this->render("list", ['data' => $data, 'pages' => $pages]);
@@ -49,6 +49,31 @@ class VillageController extends CommonController
             if ($model->add($post))
             {
                 Yii::$app->session->setFlash("success", "添加成功");
+                return $this->redirect(['village/list']);
+            }
+        }
+        return $this->render("add", ['model' => $model, 'area' => $area, 'street' => $street, 'plate' => $plate]);
+    }
+
+    /**
+     * 编辑小区
+     */
+    public function actionEdit()
+    {
+        $id = Yii::$app->request->get("id");
+        $model = Village::find()->where(['id' => $id])->one();
+        // 所属区域
+        $area = Area::getOption(['father' => 320100]);
+        // 所在街道
+        $street = Street::getOption(['father' => $model->vill_region]);
+        // 所在板块
+        $plate = Plate::getOption(['father' => $model->vill_region]);
+        if (Yii::$app->request->isPost)
+        {
+            $post = Yii::$app->request->post();
+            if ($model->add($post))
+            {
+                Yii::$app->session->setFlash("success", "编辑成功");
                 return $this->redirect(['village/list']);
             }
         }
