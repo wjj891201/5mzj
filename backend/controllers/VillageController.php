@@ -18,16 +18,19 @@ class VillageController extends CommonController
      */
     public function actionList()
     {
+        $vill_name = Yii::$app->request->post('vill_name', '');
         $model = Village::find()->alias('v')
                 ->select(['v.id', 'v.vill_name', 'a.area', 'p.plate_name', 'v.vill_add', 'v.prop_comp', 'v.cre_time', 'v.mod_time'])
                 ->leftJoin('{{%area}} a', 'a.areaID=v.vill_region')
                 ->leftJoin('{{%plate}} p', 'p.id=v.plate_id')
+                ->where(['v.is_del' => 0])
+                ->filterWhere(['LIKE', 'v.vill_name', $vill_name])
                 ->orderBy(['cre_time' => SORT_DESC]);
         $count = $model->count();
         $pageSize = 20;
         $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
         $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
-        return $this->render("list", ['data' => $data, 'pages' => $pages]);
+        return $this->render("list", ['data' => $data, 'pages' => $pages, 'vill_name' => $vill_name]);
     }
 
     /**
@@ -81,6 +84,17 @@ class VillageController extends CommonController
     }
 
     /**
+     * 删除删除
+     */
+    public function actionDel()
+    {
+        $id = Yii::$app->request->get('id');
+        Village::updateAll(['is_del' => 1], ['id' => $id]);
+        Yii::$app->session->setFlash("success", "删除成功");
+        return $this->redirect(['village/list']);
+    }
+
+    /**
      * AJAX获取街道、板块
      */
     public function actionAjaxGetStreetPlate()
@@ -102,7 +116,7 @@ class VillageController extends CommonController
         $village = Village::find()->alias('v')
                         ->select(['v.id', 'v.vill_name', 'v.vill_add', 'v.vill_region', 'a.area', 'v.vill_long', 'v.vill_lat'])
                         ->leftJoin("{{%area}} a", 'a.areaID=v.vill_region')
-                        ->where(['LIKE', 'v.vill_name', $params])
+                        ->where(['AND', ['LIKE', 'v.vill_name', $params], ['v.is_del' => 0]])
                         ->offset(($page - 1) * $limit)->limit($limit)->asArray()->all();
         $count = Village::find()->where(['LIKE', 'vill_name', $params])->count();
         $data = [];

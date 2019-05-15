@@ -13,8 +13,11 @@ use yii\widgets\LinkPager;
             </a>
         </span>
         <div class="text-r">
-            <input type="text" class="input-text" style="width:250px" placeholder="" id="" name="">
-            <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜记录</button>
+            <form action="<?= Url::to(['village/list']) ?>" method="post">
+                <input type="hidden" name="_csrf" id='csrf' value="<?= Yii::$app->request->csrfToken ?>">  
+                <input type="text" class="input-text" value="<?= $vill_name ?>" style="width:250px" placeholder="小区名称" name="vill_name">
+                <button type="submit" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+            </form>
         </div>
     </div>
     <div class="mt-20">
@@ -47,7 +50,7 @@ use yii\widgets\LinkPager;
                             <a style="text-decoration:none" class="ml-5" href="<?= Url::to(['village/edit', 'id' => $vo['id']]) ?>" title="编辑">
                                 <i class="Hui-iconfont">&#xe6df;</i>
                             </a> 
-                            <a title="删除" href="javascript:;" onclick="user_del(this, '1')" class="ml-5" style="text-decoration:none">
+                            <a title="删除" href="javascript:;" onclick="operate_del('<?= Url::to(['village/del', 'id' => $vo['id']]) ?>')" class="ml-5" style="text-decoration:none">
                                 <i class="Hui-iconfont">&#xe6e2;</i>
                             </a>
                         </td>

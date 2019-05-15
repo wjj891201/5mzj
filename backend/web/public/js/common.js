@@ -18,12 +18,13 @@ function operate_small(title, url, w, h) {
 }
 
 /*删除*/
-function operate_del(id, url) {
-    layer.confirm('确认要删除吗？', function (index) {
+function operate_del(url) {
+    layer.confirm('确认要删除吗？', {icon: 2, title: '提示', offset: '200px'}, function (index) {
         window.location.href = url;
     });
 }
 
+/*提示信息关闭*/
 $(function () {
     $('.close_down').click(function () {
         $(this).parent().hide();

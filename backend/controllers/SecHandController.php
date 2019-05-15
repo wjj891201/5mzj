@@ -133,7 +133,7 @@ class SecHandController extends CommonController
         $village = Village::find()->alias('v')
                         ->select(['v.id', 'v.vill_name', 'v.vill_add', 'v.vill_region', 'a.area', 'v.vill_long', 'v.vill_lat'])
                         ->leftJoin("{{%area}} a", 'a.areaID=v.vill_region')
-                        ->where(['LIKE', 'v.vill_name', $params])
+                        ->where(['AND', ['LIKE', 'v.vill_name', $params], ['v.is_del' => 0]])
                         ->offset(($page - 1) * $limit)->limit($limit)->asArray()->all();
         $count = Village::find()->where(['LIKE', 'vill_name', $params])->count();
         $data = [];
