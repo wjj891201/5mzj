@@ -130,10 +130,12 @@ $this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\a
         base: '/public/js/yutons-mods/'
     }).use(['yutons_sug'], function () {
         var yutons_sug = layui.yutons_sug;
-        sessionStorage.setItem("url", "json/yutons_sug.json");
+        sessionStorage.setItem("url", "<?= Url::to(['village/api']) ?>");
         yutons_sug.render({
             id: "vill_name",
-            height: "167",
+            limits: "10",
+            limit: "10",
+            height: "400",
             cols: [
                 [{
                         field: 'vill_name',
