@@ -21,9 +21,10 @@ class SecHandController extends CommonController
                 ->select(['h.id', 'h.hou_account', 'h.hou_name', 'v.vill_name', 's.price1', 's.to_price1', 'h.hou_area', 's.hou_pub_state', 'h.cre_time', 'h.mod_time'])
                 ->leftJoin('{{%village}} v', 'v.id=h.vill_id')
                 ->leftJoin('{{%house_sales}} s', 's.house_id=h.id')
+                ->where(['h.is_del' => 0])
                 ->orderBy(['cre_time' => SORT_DESC]);
         $count = $model->count();
-        $pageSize = 10;
+        $pageSize = 20;
         $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
         $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
         return $this->render("list", ['data' => $data, 'pages' => $pages]);
@@ -120,6 +121,17 @@ class SecHandController extends CommonController
         // 5.0 房源标签
         $model->lab = ObjLab::find()->select('obj_lab')->where(['tab_id' => $model['houseSales']['id']])->asArray()->column();
         return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type, 'build_lab' => $build_lab]);
+    }
+
+    /**
+     * 删除二手房
+     */
+    public function actionDel()
+    {
+        $id = Yii::$app->request->get('id');
+        House::updateAll(['is_del' => 1], ['id' => $id]);
+        Yii::$app->session->setFlash("success", "删除成功");
+        return $this->redirect(['sec-hand/list']);
     }
 
     /**

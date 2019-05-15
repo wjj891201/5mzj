@@ -84,7 +84,7 @@ class VillageController extends CommonController
     }
 
     /**
-     * 删除删除
+     * 删除小区
      */
     public function actionDel()
     {
