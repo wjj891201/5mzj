@@ -69,13 +69,13 @@ class SecHandController extends CommonController
             }
         }
         # 朝向
-        $direction = DicItem::getDicItem(['p_id' => 1008000]);
+        $direction = DicItem::getDicItem('houTurn');
         # 装修类型
-        $decoration = DicItem::getDicItem(['p_id' => 1006000]);
+        $decoration = DicItem::getDicItem('houFixState');
         # 房屋类别
-        $house_type = DicItem::getDicItem(['p_id' => 1040000]);
+        $house_type = DicItem::getDicItem('houUsetype');
         # 房源标签
-        $build_lab = DicItem::getDicItem(['p_id' => 1004011], false);
+        $build_lab = DicItem::getDicItem('houseLab', false);
         return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type, 'build_lab' => $build_lab]);
     }
 
@@ -96,13 +96,13 @@ class SecHandController extends CommonController
             }
         }
         # 朝向
-        $direction = DicItem::getDicItem(['p_id' => 1008000]);
+        $direction = DicItem::getDicItem('houTurn');
         # 装修类型
-        $decoration = DicItem::getDicItem(['p_id' => 1006000]);
+        $decoration = DicItem::getDicItem('houFixState');
         # 房屋类别
-        $house_type = DicItem::getDicItem(['p_id' => 1040000]);
+        $house_type = DicItem::getDicItem('houUsetype');
         # 房源标签
-        $build_lab = DicItem::getDicItem(['p_id' => 1004011], false);
+        $build_lab = DicItem::getDicItem('houseLab', false);
         # 初始数据
         // 1.0 小区信息
         $model->vill_name = $model['village']['vill_name'];

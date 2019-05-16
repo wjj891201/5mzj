@@ -16,9 +16,10 @@ class DicItem extends ActiveRecord
     /**
      * 获取字典数据
      */
-    public static function getDicItem($where = [], $mark = true)
+    public static function getDicItem($code = '', $mark = true)
     {
-        $dicItem = self::find()->where($where)->all();
+        $id = self::find()->select('id')->where(['code' => $code])->scalar();
+        $dicItem = self::find()->where(['p_id' => $id])->all();
         $dicItem = ArrayHelper::toArray($dicItem);
         $dicItem = ArrayHelper::map($dicItem, 'code', 'name');
         if ($mark)

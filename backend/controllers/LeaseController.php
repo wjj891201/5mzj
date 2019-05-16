@@ -23,9 +23,9 @@ class LeaseController extends CommonController
         $price1_e = Yii::$app->request->post('price1_e', '');
         $sales_type = Yii::$app->request->post('sales_type', '');
         # 租赁方式
-        $lease_type = DicItem::getDicItem(['p_id' => 1001010107]);
+        $lease_type = DicItem::getDicItem('tenement');
         # 付款方式
-        $pay_type = DicItem::getDicItem(['p_id' => 1002000000]);
+        $pay_type = DicItem::getDicItem('rentPay');
         $model = House::find()->alias('h')
                 ->select([
                     'h.id', 'h.hou_account', 'h.hou_name', 'h.hou_area', 'v.vill_name', 's.sales_type', 's.price1', 's.price2_remark',
@@ -70,17 +70,17 @@ class LeaseController extends CommonController
             }
         }
         # 朝向
-        $direction = DicItem::getDicItem(['p_id' => 1008000]);
+        $direction = DicItem::getDicItem('houTurn');
         # 装修类型
-        $decoration = DicItem::getDicItem(['p_id' => 1006000]);
+        $decoration = DicItem::getDicItem('houFixState');
         # 房屋类别
-        $house_type = DicItem::getDicItem(['p_id' => 1040000]);
+        $house_type = DicItem::getDicItem('houUsetype');
         # 租赁方式
-        $lease_type = DicItem::getDicItem(['p_id' => 1001010107]);
+        $lease_type = DicItem::getDicItem('tenement');
         # 付款方式
-        $pay_type = DicItem::getDicItem(['p_id' => 1002000000]);
+        $pay_type = DicItem::getDicItem('rentPay');
         # 房源标签
-        $build_lab = DicItem::getDicItem(['p_id' => 1001010110], false);
+        $build_lab = DicItem::getDicItem('LabelByrent', false);
         return $this->render("add", [
                     'model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type,
                     'lease_type' => $lease_type, 'pay_type' => $pay_type, 'build_lab' => $build_lab
@@ -104,17 +104,17 @@ class LeaseController extends CommonController
             }
         }
         # 朝向
-        $direction = DicItem::getDicItem(['p_id' => 1008000]);
+        $direction = DicItem::getDicItem('houTurn');
         # 装修类型
-        $decoration = DicItem::getDicItem(['p_id' => 1006000]);
+        $decoration = DicItem::getDicItem('houFixState');
         # 房屋类别
-        $house_type = DicItem::getDicItem(['p_id' => 1040000]);
+        $house_type = DicItem::getDicItem('houUsetype');
         # 租赁方式
-        $lease_type = DicItem::getDicItem(['p_id' => 1001010107]);
+        $lease_type = DicItem::getDicItem('tenement');
         # 付款方式
-        $pay_type = DicItem::getDicItem(['p_id' => 1002000000]);
+        $pay_type = DicItem::getDicItem('rentPay');
         # 房源标签
-        $build_lab = DicItem::getDicItem(['p_id' => 1001010110], false);
+        $build_lab = DicItem::getDicItem('LabelByrent', false);
         # 初始数据
         // 1.0 小区信息
         $model->vill_name = $model['village']['vill_name'];
