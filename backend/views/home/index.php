@@ -111,6 +111,7 @@ use yii\helpers\Url;
                             <li><a data-href="<?= Url::to(['sec-hand/list']) ?>" data-title="二手房管理" href="javascript:void(0);">二手房管理</a></li>
                             <li><a data-href="<?= Url::to(['lease/list']) ?>" data-title="出租房管理" href="javascript:void(0);">出租房管理</a></li>
                             <li><a data-href="<?= Url::to(['village/list']) ?>" data-title="小区信息管理" href="javascript:void(0);">小区信息管理</a></li>
+                            <li><a data-href="<?= Url::to(['build/list']) ?>" data-title="楼盘信息管理" href="javascript:void(0);">楼盘信息管理</a></li>
                         </ul>
                     </dd>
                 </dl>
