@@ -17,36 +17,37 @@ class LeaseController extends CommonController
      */
     public function actionList()
     {
-        $mob_phone = Yii::$app->request->post('mob_phone', '');
         $hou_name = Yii::$app->request->post('hou_name', '');
         $vill_name = Yii::$app->request->post('vill_name', '');
         $price1_s = Yii::$app->request->post('price1_s', '');
         $price1_e = Yii::$app->request->post('price1_e', '');
-        $to_price1_s = Yii::$app->request->post('to_price1_s', '');
-        $to_price1_e = Yii::$app->request->post('to_price1_e', '');
-
+        $sales_type = Yii::$app->request->post('sales_type', '');
+        # 租赁方式
+        $lease_type = DicItem::getDicItem(['p_id' => 1001010107]);
+        # 付款方式
+        $pay_type = DicItem::getDicItem(['p_id' => 1002000000]);
         $model = House::find()->alias('h')
-                ->select(['h.id', 'h.hou_account', 'h.hou_name', 'v.vill_name', 's.price1', 's.to_price1', 'h.hou_area', 's.hou_pub_state', 'h.cre_time', 'h.mod_time'])
+                ->select([
+                    'h.id', 'h.hou_account', 'h.hou_name', 'h.hou_area', 'v.vill_name', 's.sales_type', 's.price1', 's.price2_remark',
+                    's.hou_pub_state', 'h.cre_time', 'h.mod_time'
+                ])
                 ->innerJoin('{{%village}} v', 'v.id=h.vill_id')
                 ->innerJoin('{{%house_sales}} s', 's.house_id=h.id')
-                ->innerJoin('{{%house_sal_owner}} o', 'o.house_id=h.id')
                 ->where(['AND', ['h.is_del' => 0], ['IN', 's.sales_type', [101, 102]]])
-                ->andFilterWhere(['LIKE', 'o.mob_phone', $mob_phone])
                 ->andFilterWhere(['LIKE', 'h.hou_name', $hou_name])
                 ->andFilterWhere(['LIKE', 'v.vill_name', $vill_name])
                 ->andFilterWhere(['>=', 's.price1', $price1_s])
                 ->andFilterWhere(['<=', 's.price1', $price1_e])
-                ->andFilterWhere(['>=', 's.to_price1', $to_price1_s])
-                ->andFilterWhere(['<=', 's.to_price1', $to_price1_e])
+                ->andFilterWhere(['s.sales_type' => $sales_type])
                 ->orderBy(['h.cre_time' => SORT_DESC]);
         $count = $model->count();
         $pageSize = 20;
         $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
         $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
         return $this->render("list", [
-                    'data' => $data, 'pages' => $pages,
-                    'mob_phone' => $mob_phone, 'hou_name' => $hou_name, 'vill_name' => $vill_name,
-                    'price1_s' => $price1_s, 'price1_e' => $price1_e, 'to_price1_s' => $to_price1_s, 'to_price1_e' => $to_price1_e
+                    'data' => $data, 'pages' => $pages, 'lease_type' => $lease_type, 'pay_type' => $pay_type,
+                    'hou_name' => $hou_name, 'vill_name' => $vill_name,
+                    'price1_s' => $price1_s, 'price1_e' => $price1_e, 'sales_type' => $sales_type
         ]);
     }
 
@@ -123,10 +124,14 @@ class LeaseController extends CommonController
         $model->type_hab = $model['houseType']['type_hab'];
         $model->type_hall = $model['houseType']['type_hall'];
         $model->type_toilet = $model['houseType']['type_toilet'];
-        // 4.0 房源出售人信息
+        // 4.0 租赁方式信息
+        $model->sales_type = $model['houseSales']['sales_type'];
+        // 5.0 付款方式信息
+        $model->price2_remark = $model['houseSales']['price2_remark'];
+        // 6.0 房源出售人信息
         $model->house_owner = $model['houseSalOwner']['house_owner'];
         $model->mob_phone = $model['houseSalOwner']['mob_phone'];
-        // 5.0 房源标签
+        // 7.0 房源标签
         $model->lab = ObjLab::find()->select('obj_lab')->where(['tab_id' => $model['houseSales']['id']])->asArray()->column();
         return $this->render("add", [
                     'model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type,

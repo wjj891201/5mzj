@@ -9,11 +9,17 @@ use yii\widgets\LinkPager;
     <div class="text-c"> 
         <form action="<?= Url::to(['lease/list']) ?>" method="post">
             <input type="hidden" name="_csrf" id='csrf' value="<?= Yii::$app->request->csrfToken ?>">  
-            联系方式：<input type="text" class="input-text" style="width:120px" name="mob_phone" value="<?= $mob_phone ?>">
             标题：<input type="text" class="input-text" style="width:120px" name="hou_name" value="<?= $hou_name ?>">
             所属小区：<input type="text" class="input-text" style="width:120px" name="vill_name" value="<?= $vill_name ?>">
-            单价：<input type="text" class="input-text" style="width:80px;" name="price1_s" value="<?= $price1_s ?>">-<input type="text" class="input-text" style="width:80px;" name="price1_e" value="<?= $price1_e ?>">
-            总价：<input type="text" class="input-text" style="width:80px;" name="to_price1_s" value="<?= $to_price1_s ?>">-<input type="text" class="input-text" style="width:80px;" name="to_price1_e" value="<?= $to_price1_e ?>">
+            租金：<input type="text" class="input-text" style="width:80px;" name="price1_s" value="<?= $price1_s ?>">-<input type="text" class="input-text" style="width:80px;" name="price1_e" value="<?= $price1_e ?>">
+            租赁方式：
+            <span class="select-box inline">
+                <select name="sales_type" class="select">
+                    <?php foreach ($lease_type as $key => $vo): ?>
+                        <option <?php if ($sales_type == $key): ?>selected<?php endif; ?> value="<?= $key ?>"><?= $vo ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </span>
             <button type="submit" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </form>
     </div>
@@ -46,9 +52,9 @@ use yii\widgets\LinkPager;
                         <td><?= $vo['hou_account'] ?></td>
                         <td><?= $vo['hou_name'] ?></td>
                         <td><?= $vo['vill_name'] ?></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><?= $vo['price1'] ?></td>
+                        <td><?= isset($lease_type[$vo['sales_type']]) ? $lease_type[$vo['sales_type']] : ''; ?></td>
+                        <td><?= isset($pay_type[$vo['price2_remark']]) ? $pay_type[$vo['price2_remark']] : ''; ?></td>
                         <td><?= $vo['hou_area'] ?></td>
                         <td><?= $vo['cre_time'] ?></td>
                         <td></td>
