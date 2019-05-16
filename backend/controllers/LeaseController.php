@@ -113,35 +113,12 @@ class LeaseController extends CommonController
         # 付款方式
         $pay_type = DicItem::getDicItem(['p_id' => 1002000000]);
         # 房源标签
-        $build_lab = DicItem::getDicItem(['p_id' => 1004011], false);
+        $build_lab = DicItem::getDicItem(['p_id' => 1001010110], false);
         # 初始数据
         // 1.0 小区信息
         $model->vill_name = $model['village']['vill_name'];
         // 2.0 房源出售信息
         $model->price1 = $model['houseSales']['price1'];
-        $model->to_price1 = $model['houseSales']['to_price1'];
-        $model->is_mortgage = $model['houseSales']['is_mortgage'];
-        $model->user_grade = $model['houseSales']['user_grade'];
-        $is_recomm = $model['houseSales']['is_recomm'];
-        switch ($is_recomm)
-        {
-            case 0:
-                $model->recommend = 0;
-                $model->high_quality = 0;
-                break;
-            case 1:
-                $model->recommend = 1;
-                $model->high_quality = 0;
-                break;
-            case 2:
-                $model->recommend = 0;
-                $model->high_quality = 1;
-                break;
-            case 3:
-                $model->recommend = 1;
-                $model->high_quality = 1;
-                break;
-        }
         // 3.0 户型信息
         $model->type_hab = $model['houseType']['type_hab'];
         $model->type_hall = $model['houseType']['type_hall'];
