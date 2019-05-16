@@ -8,11 +8,12 @@ use yii\widgets\LinkPager;
     <?= $this->render('../set/prompt.php'); ?>
     <div class="text-c"> 
         <form action="<?= Url::to(['sec-hand/list']) ?>" method="post">
-            联系方式：<input type="text" class="input-text" style="width:120px" name="">
-            标题：<input type="text" class="input-text" style="width:120px" name="">
-            所属小区：<input type="text" class="input-text" style="width:120px" name="">
-            单价：<input type="text" class="input-text" style="width:80px;">-<input type="text" class="input-text" style="width:80px;">
-            总价：<input type="text" class="input-text" style="width:80px;">-<input type="text" class="input-text" style="width:80px;">
+            <input type="hidden" name="_csrf" id='csrf' value="<?= Yii::$app->request->csrfToken ?>">  
+            联系方式：<input type="text" class="input-text" style="width:120px" name="mob_phone" value="<?= $mob_phone ?>">
+            标题：<input type="text" class="input-text" style="width:120px" name="hou_name" value="<?= $hou_name ?>">
+            所属小区：<input type="text" class="input-text" style="width:120px" name="vill_name" value="<?= $vill_name ?>">
+            单价：<input type="text" class="input-text" style="width:80px;" name="price1_s" value="<?= $price1_s ?>">-<input type="text" class="input-text" style="width:80px;" name="price1_e" value="<?= $price1_e ?>">
+            总价：<input type="text" class="input-text" style="width:80px;" name="to_price1_s" value="<?= $to_price1_s ?>">-<input type="text" class="input-text" style="width:80px;" name="to_price1_e" value="<?= $to_price1_e ?>">
             <button type="submit" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </form>
     </div>
@@ -45,8 +46,8 @@ use yii\widgets\LinkPager;
                         <td><?= $vo['hou_account'] ?></td>
                         <td><?= $vo['hou_name'] ?></td>
                         <td><?= $vo['vill_name'] ?></td>
-                        <td><?= $vo['price1'] ?></td>
                         <td><?= $vo['to_price1'] ?></td>
+                        <td><?= $vo['price1'] ?></td>
                         <td><?= $vo['hou_area'] ?></td>
                         <td><?= $vo['cre_time'] ?></td>
                         <td><?= $vo['mod_time'] ?></td>

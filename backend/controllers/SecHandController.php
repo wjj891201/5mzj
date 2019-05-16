@@ -17,17 +17,37 @@ class SecHandController extends CommonController
      */
     public function actionList()
     {
+        $mob_phone = Yii::$app->request->post('mob_phone', '');
+        $hou_name = Yii::$app->request->post('hou_name', '');
+        $vill_name = Yii::$app->request->post('vill_name', '');
+        $price1_s = Yii::$app->request->post('price1_s', '');
+        $price1_e = Yii::$app->request->post('price1_e', '');
+        $to_price1_s = Yii::$app->request->post('to_price1_s', '');
+        $to_price1_e = Yii::$app->request->post('to_price1_e', '');
+
         $model = House::find()->alias('h')
                 ->select(['h.id', 'h.hou_account', 'h.hou_name', 'v.vill_name', 's.price1', 's.to_price1', 'h.hou_area', 's.hou_pub_state', 'h.cre_time', 'h.mod_time'])
                 ->innerJoin('{{%village}} v', 'v.id=h.vill_id')
                 ->innerJoin('{{%house_sales}} s', 's.house_id=h.id')
+                ->innerJoin('{{%house_sal_owner}} o', 'o.house_id=h.id')
                 ->where(['AND', ['h.is_del' => 0], ['s.sales_type' => 100]])
-                ->orderBy(['cre_time' => SORT_DESC]);
+                ->andFilterWhere(['LIKE', 'o.mob_phone', $mob_phone])
+                ->andFilterWhere(['LIKE', 'h.hou_name', $hou_name])
+                ->andFilterWhere(['LIKE', 'v.vill_name', $vill_name])
+                ->andFilterWhere(['>=', 's.price1', $price1_s])
+                ->andFilterWhere(['<=', 's.price1', $price1_e])
+                ->andFilterWhere(['>=', 's.to_price1', $to_price1_s])
+                ->andFilterWhere(['<=', 's.to_price1', $to_price1_e])
+                ->orderBy(['h.cre_time' => SORT_DESC]);
         $count = $model->count();
         $pageSize = 20;
         $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
         $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
-        return $this->render("list", ['data' => $data, 'pages' => $pages]);
+        return $this->render("list", [
+                    'data' => $data, 'pages' => $pages,
+                    'mob_phone' => $mob_phone, 'hou_name' => $hou_name, 'vill_name' => $vill_name,
+                    'price1_s' => $price1_s, 'price1_e' => $price1_e, 'to_price1_s' => $to_price1_s, 'to_price1_e' => $to_price1_e
+        ]);
     }
 
     /**
