@@ -39,24 +39,6 @@ $this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\a
         </div>
     </div>
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">房屋面积：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'hou_area', ['template' => "{input}&nbsp;平米{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">售价：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'to_price1', ['template' => "{input}&nbsp;万元{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">单价：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'price1', ['template' => "{input}&nbsp;元{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
-        </div>
-    </div>
-    <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">户型：</label>
         <div class="formControls col-xs-8 col-sm-9">
             <?= $form->field($model, 'type_hab', ['template' => "{input}&nbsp;室{error}"])->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
@@ -83,6 +65,30 @@ $this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\a
         </div>
     </div>
     <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">租金：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <?= $form->field($model, 'price1', ['template' => "{input}&nbsp;元{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">租赁方式：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <?= $form->field($model, 'sales_type', ['template' => "<span class=\"select-box\" style=\"width:70%;\">{input}</span>{error}", 'options' => ['class' => false]])->dropDownList($lease_type, ['class' => 'select'])->label(false); ?>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">付款方式：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <?= $form->field($model, 'price2_remark', ['template' => "<span class=\"select-box\" style=\"width:70%;\">{input}</span>{error}", 'options' => ['class' => false]])->dropDownList($pay_type, ['class' => 'select'])->label(false); ?>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">面积：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <?= $form->field($model, 'hou_area', ['template' => "{input}&nbsp;平米{error}", 'options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
+        </div>
+    </div>
+    <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">楼层：</label>
         <div class="formControls col-xs-8 col-sm-9">
             <?= $form->field($model, 'hou_floor', ['template' => "{input}&nbsp;层{error}"])->textInput(['class' => 'input-text', 'placeholder' => '所在楼层', 'style' => 'width:70%;'])->label(false); ?>
@@ -102,12 +108,6 @@ $this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\a
         </div>
     </div>
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">描述：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <?= $form->field($model, 'hou_remark', ['options' => ['class' => false]])->textArea(['class' => 'textarea', 'style' => 'width:90%;'])->label(false); ?>
-        </div>
-    </div>
-    <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">房源标签：</label>
         <div class="formControls col-xs-8 col-sm-9 skin-minimal">
             <?=
@@ -121,46 +121,9 @@ $this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\a
         </div>
     </div>
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">是否解压：</label>
-        <div class="formControls col-xs-8 col-sm-9 skin-minimal">
-            <?=
-            $form->field($model, 'is_mortgage')->inline()->radioList([1 => '是', 0 => '否'], [
-                'item' => function($index, $label, $name, $checked, $value) {
-                    $return = '<div class="radio-box"><input type="radio" name="' . $name . '" id="mortgage-' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="mortgage-' . $index . '">' . $label . '</label></div>';
-                    return $return;
-                }
-            ])->label(false);
-            ?>
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">是否推荐：</label>
-        <div class="formControls col-xs-8 col-sm-2 skin-minimal">
-            <?=
-            $form->field($model, 'recommend')->inline()->radioList([1 => '是', 0 => '否'], [
-                'item' => function($index, $label, $name, $checked, $value) {
-                    $return = '<div class="radio-box"><input type="radio" name="' . $name . '" id="mortgage-' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="mortgage-' . $index . '">' . $label . '</label></div>';
-                    return $return;
-                }
-            ])->label(false);
-            ?>
-        </div>
-        <label class="form-label col-xs-4 col-sm-2">推荐指数：</label>
-        <div class="formControls col-xs-8 col-sm-2">
-            <?= $form->field($model, 'user_grade')->textInput(['class' => 'input-text', 'style' => 'width:70%;'])->label(false); ?>
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">是否优选：</label>
-        <div class="formControls col-xs-8 col-sm-9 skin-minimal">
-            <?=
-            $form->field($model, 'high_quality')->inline()->radioList([1 => '是', 0 => '否'], [
-                'item' => function($index, $label, $name, $checked, $value) {
-                    $return = '<div class="radio-box"><input type="radio" name="' . $name . '" id="mortgage-' . $index . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '><label for="mortgage-' . $index . '">' . $label . '</label></div>';
-                    return $return;
-                }
-            ])->label(false);
-            ?>
+        <label class="form-label col-xs-4 col-sm-2">描述：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <?= $form->field($model, 'hou_remark', ['options' => ['class' => false]])->textArea(['class' => 'textarea', 'style' => 'width:90%;'])->label(false); ?>
         </div>
     </div>
     <div class="row cl">
@@ -183,7 +146,7 @@ $this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\a
         base: '/public/js/yutons-mods/'
     }).use(['yutons_sug'], function () {
         var yutons_sug = layui.yutons_sug;
-        sessionStorage.setItem("url", "<?= Url::to(['sec-hand/get-village']) ?>");
+        sessionStorage.setItem("url", "<?= Url::to(['lease/get-village']) ?>");
         yutons_sug.render({
             id: "vill_name",
             limits: "10",

@@ -14,6 +14,7 @@ class House extends ActiveRecord
     public $type_hab, $type_hall, $type_toilet;
     public $house_owner, $mob_phone;
     public $lab;
+    public $sales_type, $price2_remark;
 
     public static function tableName()
     {
@@ -23,14 +24,17 @@ class House extends ActiveRecord
     public function attributeLabels()
     {
         return [
+            // 公共
             'hou_name' => '标题',
             'vill_name' => '小区名称',
             'hou_building' => '栋',
             'hou_cell' => '单元',
             'hou_room' => '室',
             'hou_area' => '房屋面积',
+            // 二手房
             'to_price1' => '售价',
             'price1' => '单价',
+            // 公共 
             'type_hab' => '室',
             'type_hall' => '厅',
             'type_toilet' => '卫',
@@ -43,20 +47,27 @@ class House extends ActiveRecord
             'mob_phone' => '手机号',
             'hou_remark' => '描述',
             'lab' => '房源标签',
-            'user_grade' => '推荐指数'
+            // 二手房
+            'user_grade' => '推荐指数',
+            // 租房
+            'sales_type' => '租赁方式',
+            'price2_remark' => '付款方式'
         ];
     }
 
     public function rules()
     {
         return [
-                [['hou_name', 'vill_name', 'hou_building', 'hou_cell', 'hou_room', 'type_hab', 'type_hall', 'type_toilet', 'hou_turn', 'hou_fix_state', 'hou_usetype'], 'required', 'message' => '{attribute}为必填项'],
-                ['vill_name', 'validateVillName'],
-                [['hou_area', 'to_price1', 'price1'], 'required', 'message' => '{attribute}为必填项'],
-                [['hou_floor', 'hou_floor_acc', 'house_owner', 'mob_phone', 'hou_remark', 'lab'], 'required', 'message' => '{attribute}为必填项'],
-                [['user_grade'], 'required', 'message' => '{attribute}为必填项'],
-                ['cre_time', 'default', 'value' => date('Y-m-d H:i:s')],
-                [['is_mortgage', 'recommend', 'high_quality'], 'safe']
+                [['hou_name', 'vill_name', 'hou_building', 'hou_cell', 'hou_room', 'type_hab', 'type_hall', 'type_toilet', 'hou_turn', 'hou_fix_state', 'hou_usetype'], 'required', 'message' => '{attribute}为必填项', 'on' => ['sec-hand', 'lease']],
+                ['vill_name', 'validateVillName', 'on' => ['sec-hand', 'lease']],
+                ['hou_area', 'required', 'message' => '房屋面积为必填项', 'on' => 'sec-hand'],
+                ['hou_area', 'required', 'message' => '面积为必填项', 'on' => 'lease'],
+                ['price1', 'required', 'message' => '单价为必填项', 'on' => 'sec-hand'],
+                ['price1', 'required', 'message' => '租金为必填项', 'on' => 'lease'],
+                [['to_price1', 'user_grade'], 'required', 'message' => '{attribute}为必填项', 'on' => ['sec-hand']],
+                [['hou_floor', 'hou_floor_acc', 'house_owner', 'mob_phone', 'hou_remark', 'lab'], 'required', 'message' => '{attribute}为必填项', 'on' => ['sec-hand', 'lease']],
+                [['sales_type', 'price2_remark'], 'required', 'message' => '{attribute}为必填项', 'on' => ['lease']],
+                [['is_mortgage', 'recommend', 'high_quality'], 'safe', 'on' => ['sec-hand']]
         ];
     }
 
@@ -88,6 +99,8 @@ class House extends ActiveRecord
      */
     public function add($data)
     {
+        $this->scenario = 'sec-hand';
+        $this->cre_time = date('Y-m-d H:i:s');
         if ($this->load($data) && $this->save())
         {
             $house_id = Yii::$app->db->getLastInsertID();
@@ -120,6 +133,8 @@ class House extends ActiveRecord
      */
     public function edit($data)
     {
+        $this->scenario = 'sec-hand';
+        $this->mod_time = date('Y-m-d H:i:s');
         if ($this->load($data) && $this->save())
         {
             $house_id = $this->id;
@@ -160,6 +175,71 @@ class House extends ActiveRecord
             $is_recomm = 2;
         }
         return $is_recomm;
+    }
+
+    /**
+     * 租房添加方法
+     * @param type $data
+     * @return boolean
+     */
+    public function lease_add($data)
+    {
+        $this->scenario = 'lease';
+        $this->cre_time = date('Y-m-d H:i:s');
+        if ($this->load($data) && $this->save())
+        {
+            $house_id = Yii::$app->db->getLastInsertID();
+            # 房源出售信息
+            Yii::$app->db->createCommand()->insert("{{%house_sales}}", ['house_id' => $house_id, 'sales_type' => $this->sales_type, 'price1' => $this->price1, 'price2_remark' => $this->price2_remark, 'cre_time' => date('Y-m-d H:i:s')])->execute();
+            $house_sales_id = Yii::$app->db->getLastInsertID();
+            # 房源出售人信息
+            Yii::$app->db->createCommand()->insert("{{%house_sal_owner}}", ['house_sales_id' => $house_sales_id, 'house_id' => $house_id, 'mob_phone' => $this->mob_phone, 'house_owner' => $this->house_owner, 'cre_time' => date('Y-m-d H:i:s')])->execute();
+            # 户型
+            Yii::$app->db->createCommand()->insert("{{%house_type}}", ['type_hab' => $this->type_hab, 'type_hall' => $this->type_hall, 'type_toilet' => $this->type_toilet, 'cover_area' => $this->hou_area])->execute();
+            $house_type_id = Yii::$app->db->getLastInsertID();
+            self::updateAll(['house_type_id' => $house_type_id], ['id' => $house_id]);
+            # 对象标签
+            $temp = [];
+            foreach ($this->lab as $key => $vo)
+            {
+                $temp[$key] = ['tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
+            }
+            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 租房编辑方法
+     * @param type $data
+     * @return boolean
+     */
+    public function lease_edit($data)
+    {
+        $this->scenario = 'lease';
+        $this->mod_time = date('Y-m-d H:i:s');
+        if ($this->load($data) && $this->save())
+        {
+            $house_id = $this->id;
+            # 房源出售信息
+            Yii::$app->db->createCommand()->update("{{%house_sales}}", ['sales_type' => $this->sales_type, 'price1' => $this->price1, 'price2_remark' => $this->price2_remark, 'mod_time' => date('Y-m-d H:i:s')], ['house_id' => $house_id])->execute();
+            # 房源出售人信息
+            Yii::$app->db->createCommand()->update("{{%house_sal_owner}}", ['mob_phone' => $this->mob_phone, 'house_owner' => $this->house_owner], ['house_id' => $house_id])->execute();
+            # 户型
+            Yii::$app->db->createCommand()->update("{{%house_type}}", ['type_hab' => $this->type_hab, 'type_hall' => $this->type_hall, 'type_toilet' => $this->type_toilet, 'cover_area' => $this->hou_area], ['id' => $this->house_type_id])->execute();
+            # 对象标签
+            $house_sales_id = HouseSales::find()->select('id')->where(['house_id' => $house_id])->scalar();
+            ObjLab::deleteAll(['tab_id' => $house_sales_id]);
+            $temp = [];
+            foreach ($this->lab as $key => $vo)
+            {
+                $temp[$key] = ['tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
+            }
+            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
+            return true;
+        }
+        return false;
     }
 
     /**

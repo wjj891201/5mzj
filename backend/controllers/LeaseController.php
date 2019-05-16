@@ -62,10 +62,10 @@ class LeaseController extends CommonController
         if (Yii::$app->request->isPost)
         {
             $post = Yii::$app->request->post();
-            if ($model->add($post))
+            if ($model->lease_add($post))
             {
                 Yii::$app->session->setFlash("success", "添加成功");
-                return $this->redirect(['sec-hand/list']);
+                return $this->redirect(['lease/list']);
             }
         }
         # 朝向
@@ -74,9 +74,16 @@ class LeaseController extends CommonController
         $decoration = DicItem::getDicItem(['p_id' => 1006000]);
         # 房屋类别
         $house_type = DicItem::getDicItem(['p_id' => 1040000]);
+        # 租赁方式
+        $lease_type = DicItem::getDicItem(['p_id' => 1001010107]);
+        # 付款方式
+        $pay_type = DicItem::getDicItem(['p_id' => 1002000000]);
         # 房源标签
-        $build_lab = DicItem::getDicItem(['p_id' => 1004011], false);
-        return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type, 'build_lab' => $build_lab]);
+        $build_lab = DicItem::getDicItem(['p_id' => 1001010110], false);
+        return $this->render("add", [
+                    'model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type,
+                    'lease_type' => $lease_type, 'pay_type' => $pay_type, 'build_lab' => $build_lab
+        ]);
     }
 
     /**
@@ -89,10 +96,10 @@ class LeaseController extends CommonController
         if (Yii::$app->request->isPost)
         {
             $post = Yii::$app->request->post();
-            if ($model->edit($post))
+            if ($model->lease_edit($post))
             {
                 Yii::$app->session->setFlash("success", "编辑成功");
-                return $this->redirect(['sec-hand/list']);
+                return $this->redirect(['lease/list']);
             }
         }
         # 朝向
@@ -101,6 +108,10 @@ class LeaseController extends CommonController
         $decoration = DicItem::getDicItem(['p_id' => 1006000]);
         # 房屋类别
         $house_type = DicItem::getDicItem(['p_id' => 1040000]);
+        # 租赁方式
+        $lease_type = DicItem::getDicItem(['p_id' => 1001010107]);
+        # 付款方式
+        $pay_type = DicItem::getDicItem(['p_id' => 1002000000]);
         # 房源标签
         $build_lab = DicItem::getDicItem(['p_id' => 1004011], false);
         # 初始数据
@@ -140,7 +151,10 @@ class LeaseController extends CommonController
         $model->mob_phone = $model['houseSalOwner']['mob_phone'];
         // 5.0 房源标签
         $model->lab = ObjLab::find()->select('obj_lab')->where(['tab_id' => $model['houseSales']['id']])->asArray()->column();
-        return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type, 'build_lab' => $build_lab]);
+        return $this->render("add", [
+                    'model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type,
+                    'lease_type' => $lease_type, 'pay_type' => $pay_type, 'build_lab' => $build_lab
+        ]);
     }
 
     /**
@@ -151,7 +165,7 @@ class LeaseController extends CommonController
         $id = Yii::$app->request->get('id');
         House::updateAll(['is_del' => 1], ['id' => $id]);
         Yii::$app->session->setFlash("success", "删除成功");
-        return $this->redirect(['sec-hand/list']);
+        return $this->redirect(['lease/list']);
     }
 
     /**
