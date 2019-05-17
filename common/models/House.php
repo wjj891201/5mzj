@@ -118,7 +118,7 @@ class House extends ActiveRecord
             $temp = [];
             foreach ($this->lab as $key => $vo)
             {
-                $temp[$key] = ['tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
+                $temp[$key] = ['obj_type' => 102, 'tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
             }
             Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
             return true;
@@ -147,7 +147,7 @@ class House extends ActiveRecord
             Yii::$app->db->createCommand()->update("{{%house_type}}", ['type_hab' => $this->type_hab, 'type_hall' => $this->type_hall, 'type_toilet' => $this->type_toilet, 'cover_area' => $this->hou_area], ['id' => $this->house_type_id])->execute();
             # 对象标签
             $house_sales_id = HouseSales::find()->select('id')->where(['house_id' => $house_id])->scalar();
-            ObjLab::deleteAll(['tab_id' => $house_sales_id]);
+            ObjLab::deleteAll(['obj_type' => 102, 'tab_id' => $house_sales_id]);
             $temp = [];
             foreach ($this->lab as $key => $vo)
             {
@@ -202,7 +202,7 @@ class House extends ActiveRecord
             $temp = [];
             foreach ($this->lab as $key => $vo)
             {
-                $temp[$key] = ['tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
+                $temp[$key] = ['obj_type' => 102, 'tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
             }
             Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
             return true;
@@ -230,7 +230,7 @@ class House extends ActiveRecord
             Yii::$app->db->createCommand()->update("{{%house_type}}", ['type_hab' => $this->type_hab, 'type_hall' => $this->type_hall, 'type_toilet' => $this->type_toilet, 'cover_area' => $this->hou_area], ['id' => $this->house_type_id])->execute();
             # 对象标签
             $house_sales_id = HouseSales::find()->select('id')->where(['house_id' => $house_id])->scalar();
-            ObjLab::deleteAll(['tab_id' => $house_sales_id]);
+            ObjLab::deleteAll(['obj_type' => 102, 'tab_id' => $house_sales_id]);
             $temp = [];
             foreach ($this->lab as $key => $vo)
             {

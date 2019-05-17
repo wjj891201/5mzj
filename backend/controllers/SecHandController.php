@@ -139,7 +139,7 @@ class SecHandController extends CommonController
         $model->house_owner = $model['houseSalOwner']['house_owner'];
         $model->mob_phone = $model['houseSalOwner']['mob_phone'];
         // 5.0 房源标签
-        $model->lab = ObjLab::find()->select('obj_lab')->where(['tab_id' => $model['houseSales']['id']])->asArray()->column();
+        $model->lab = ObjLab::find()->select('obj_lab')->where(['obj_type' => 102, 'tab_id' => $model['houseSales']['id']])->asArray()->column();
         return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type, 'build_lab' => $build_lab]);
     }
 
