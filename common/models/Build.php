@@ -70,4 +70,28 @@ class Build extends ActiveRecord
         return false;
     }
 
+    /**
+     * 楼盘编辑方法
+     * @param type $data
+     * @return boolean
+     */
+    public function edit($data)
+    {
+        $this->mod_time = date('Y-m-d H:i:s');
+        if ($this->load($data) && $this->save())
+        {
+            # 对象标签
+            $build_id = $this->id;
+            ObjLab::deleteAll(['obj_type' => 100, 'tab_id' => $build_id]);
+            $temp = [];
+            foreach ($this->lab as $key => $vo)
+            {
+                $temp[$key] = ['obj_type' => 100, 'tab_id' => $build_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
+            }
+            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['obj_type', 'tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
+            return true;
+        }
+        return false;
+    }
+
 }

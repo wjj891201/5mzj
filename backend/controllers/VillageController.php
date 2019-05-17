@@ -25,7 +25,7 @@ class VillageController extends CommonController
                 ->leftJoin('{{%plate}} p', 'p.id=v.plate_id')
                 ->where(['v.is_del' => 0])
                 ->filterWhere(['LIKE', 'v.vill_name', $vill_name])
-                ->orderBy(['cre_time' => SORT_DESC]);
+                ->orderBy(['v.cre_time' => SORT_DESC]);
         $count = $model->count();
         $pageSize = 20;
         $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
