@@ -30,7 +30,7 @@ class BuildController extends CommonController
             if ($model->add($post))
             {
                 Yii::$app->session->setFlash("success", "添加成功");
-                return $this->redirect(['lease/list']);
+                return $this->redirect(['build/list']);
             }
         }
         # 用途类型

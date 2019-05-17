@@ -4,7 +4,6 @@ namespace common\models;
 
 use yii\db\ActiveRecord;
 use Yii;
-use yii\helpers\ArrayHelper;
 
 class House extends ActiveRecord
 {
@@ -120,7 +119,7 @@ class House extends ActiveRecord
             {
                 $temp[$key] = ['obj_type' => 102, 'tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
             }
-            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
+            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['obj_type', 'tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
             return true;
         }
         return false;
@@ -151,9 +150,9 @@ class House extends ActiveRecord
             $temp = [];
             foreach ($this->lab as $key => $vo)
             {
-                $temp[$key] = ['tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
+                $temp[$key] = ['obj_type' => 102, 'tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
             }
-            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
+            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['obj_type', 'tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
             return true;
         }
         return false;
@@ -204,7 +203,7 @@ class House extends ActiveRecord
             {
                 $temp[$key] = ['obj_type' => 102, 'tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
             }
-            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
+            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['obj_type', 'tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
             return true;
         }
         return false;
@@ -234,9 +233,9 @@ class House extends ActiveRecord
             $temp = [];
             foreach ($this->lab as $key => $vo)
             {
-                $temp[$key] = ['tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
+                $temp[$key] = ['obj_type' => 102, 'tab_id' => $house_sales_id, 'obj_lab' => $vo, 'cre_time' => date('Y-m-d H:i:s')];
             }
-            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
+            Yii::$app->db->createCommand()->batchInsert("{{%obj_lab}}", ['obj_type', 'tab_id', 'obj_lab', 'cre_time'], $temp)->execute();
             return true;
         }
         return false;
