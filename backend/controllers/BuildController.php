@@ -16,9 +16,11 @@ class BuildController extends CommonController
      */
     public function actionList()
     {
+        $build_name = Yii::$app->request->post('build_name');
         $model = Build::find()
                 ->select(['id', 'build_name', 'build_add', 'comp_name', 'build_area', 'build_years', 'build_usetype', 'cre_time'])
                 ->where(['is_del' => 0])
+                ->andFilterWhere(['LIKE', 'build_name', $build_name])
                 ->orderBy(['cre_time' => SORT_DESC]);
         $count = $model->count();
         $pageSize = 20;
@@ -26,7 +28,7 @@ class BuildController extends CommonController
         $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
         # 建筑类别
         $houUsetype = DicItem::getDicItem('houUsetype');
-        return $this->render("list", ['data' => $data, 'pages' => $pages, 'houUsetype' => $houUsetype]);
+        return $this->render("list", ['data' => $data, 'pages' => $pages, 'build_name' => $build_name, 'houUsetype' => $houUsetype]);
     }
 
     /**

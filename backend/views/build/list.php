@@ -7,15 +7,11 @@ use yii\widgets\LinkPager;
 <div class="page-container">
     <?= $this->render('../set/prompt.php'); ?>
     <div class="text-c">
-        <span class="select-box inline">
-            <select name="" class="select">
-                <option value="0">全部分类</option>
-                <option value="1">分类一</option>
-                <option value="2">分类二</option>
-            </select>
-        </span>
-        <input type="text" name="" id="" placeholder=" 资讯名称" style="width:250px" class="input-text">
-        <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+        <form action="<?= Url::to(['build/list']) ?>" method="post">
+            <input type="hidden" name="_csrf" id='csrf' value="<?= Yii::$app->request->csrfToken ?>">  
+            <input type="text" name="build_name" value="<?= $build_name ?>" placeholder="楼盘名称" style="width:250px" class="input-text">
+            <button class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+        </form>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20"> 
         <span class="l">

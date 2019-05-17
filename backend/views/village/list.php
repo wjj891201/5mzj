@@ -6,19 +6,19 @@ use yii\widgets\LinkPager;
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 房源管理 <span class="c-gray en">&gt;</span> 小区信息列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <?= $this->render('../set/prompt.php'); ?>
+    <div class="text-c">
+        <form action="<?= Url::to(['village/list']) ?>" method="post">
+            <input type="hidden" name="_csrf" id='csrf' value="<?= Yii::$app->request->csrfToken ?>">  
+            <input type="text" class="input-text" value="<?= $vill_name ?>" style="width:250px" placeholder="小区名称" name="vill_name">
+            <button type="submit" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+        </form>
+    </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l"> 
             <a class="btn btn-primary radius" data-title="新增小区" href="<?= Url::to(['village/add']) ?>">
                 <i class="Hui-iconfont">&#xe600;</i> 新增小区
             </a>
         </span>
-        <div class="text-r">
-            <form action="<?= Url::to(['village/list']) ?>" method="post">
-                <input type="hidden" name="_csrf" id='csrf' value="<?= Yii::$app->request->csrfToken ?>">  
-                <input type="text" class="input-text" value="<?= $vill_name ?>" style="width:250px" placeholder="小区名称" name="vill_name">
-                <button type="submit" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
-            </form>
-        </div>
     </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-hover table-bg table-sort">
