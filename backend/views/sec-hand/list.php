@@ -2,6 +2,7 @@
 
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+use common\models\HouseSales;
 ?>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 房源管理 <span class="c-gray en">&gt;</span> 二手房列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
@@ -13,6 +14,7 @@ use yii\widgets\LinkPager;
             所属小区：<input type="text" class="input-text" style="width:120px" name="vill_name" value="<?= $vill_name ?>">
             单价：<input type="text" class="input-text" style="width:80px;" name="price1_s" value="<?= $price1_s ?>">-<input type="text" class="input-text" style="width:80px;" name="price1_e" value="<?= $price1_e ?>">
             总价：<input type="text" class="input-text" style="width:80px;" name="to_price1_s" value="<?= $to_price1_s ?>">-<input type="text" class="input-text" style="width:80px;" name="to_price1_e" value="<?= $to_price1_e ?>">
+            <input type="hidden" name="pub_state" value="<?= $pub_state ?>">
             <button type="submit" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </form>
     </div>
@@ -22,17 +24,25 @@ use yii\widgets\LinkPager;
                 <i class="Hui-iconfont">&#xe600;</i> 新增房源
             </a>
         </span>
+        <span class="r">共有数据：<strong><?= $count ?></strong> 条</span>
     </div>
     <div class="mt-20">
         <div id="tab-system" class="HuiTab">
             <!--100未发布，101已发布，102下架，103待核实，104已核实，105不匹配-->
+            <?php
+            $pub_state_arr = [
+                '103' => '待核实',
+                '104' => '已核实',
+                '100' => '待发布',
+                '101' => '已发布',
+                '102' => '已下架',
+                '105' => '不匹配'
+            ];
+            ?>
             <div class="tabBar cl">
-                <span class="current" data-pub_state="103">待核实</span>
-                <span data-pub_state="104">已核实</span>
-                <span data-pub_state="100">待发布</span>
-                <span data-pub_state="101">已发布</span>
-                <span data-pub_state="102">已下架</span>
-                <span data-pub_state="105">不匹配</span>
+                <?php foreach ($pub_state_arr as $key => $vo): ?>
+                    <span <?php if ($key == $pub_state): ?>class="current"<?php endif; ?> data-pub_state="<?= $key ?>"><?= $vo ?></span>
+                <?php endforeach; ?>
             </div>
         </div>
         <table class="table table-border table-bordered table-hover table-bg table-sort">
@@ -61,7 +71,7 @@ use yii\widgets\LinkPager;
                         <td><?= $vo['hou_area'] ?></td>
                         <td><?= $vo['cre_time'] ?></td>
                         <td><?= $vo['mod_time'] ?></td>
-                        <td></td>
+                        <td class="td-status"><?= HouseSales::getHouPubState($vo['hou_pub_state']) ?></td>
                         <td class="f-14">
                             <a style="text-decoration:none" class="ml-5" href="<?= Url::to(['sec-hand/edit', 'id' => $vo['id']]) ?>" title="编辑">
                                 <i class="Hui-iconfont">&#xe6df;</i>
@@ -88,8 +98,15 @@ use yii\widgets\LinkPager;
 <script>
     $(function () {
         $('.tabBar>span').click(function () {
-            alert($(this).data('pub_state'));
-            return false;
+            var pub_state = $(this).data('pub_state');
+            var url = window.location.href;
+            if (url.indexOf("pub_state") >= 0) {
+                var suffix = url.substr(url.lastIndexOf("pub_state"));
+                url = url.replace(suffix, 'pub_state=' + pub_state);
+                self.location.href = url;
+            } else {
+                self.location.href = url + '?pub_state=' + pub_state;
+            }
         });
     });
 </script>

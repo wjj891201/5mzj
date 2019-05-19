@@ -24,6 +24,7 @@ class SecHandController extends CommonController
         $price1_e = Yii::$app->request->get('price1_e', '');
         $to_price1_s = Yii::$app->request->get('to_price1_s', '');
         $to_price1_e = Yii::$app->request->get('to_price1_e', '');
+        $pub_state = Yii::$app->request->get('pub_state', '103');
 
         $model = House::find()->alias('h')
                 ->select(['h.id', 'h.hou_account', 'h.hou_name', 'v.vill_name', 's.price1', 's.to_price1', 'h.hou_area', 's.hou_pub_state', 'h.cre_time', 'h.mod_time'])
@@ -38,15 +39,17 @@ class SecHandController extends CommonController
                 ->andFilterWhere(['<=', 's.price1', $price1_e])
                 ->andFilterWhere(['>=', 's.to_price1', $to_price1_s])
                 ->andFilterWhere(['<=', 's.to_price1', $to_price1_e])
+                ->andFilterWhere(['s.hou_pub_state' => $pub_state])
                 ->orderBy(['h.cre_time' => SORT_DESC]);
         $count = $model->count();
         $pageSize = 20;
         $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
         $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
         return $this->render("list", [
-                    'data' => $data, 'pages' => $pages,
+                    'data' => $data, 'pages' => $pages, 'count' => $count,
                     'mob_phone' => $mob_phone, 'hou_name' => $hou_name, 'vill_name' => $vill_name,
-                    'price1_s' => $price1_s, 'price1_e' => $price1_e, 'to_price1_s' => $to_price1_s, 'to_price1_e' => $to_price1_e
+                    'price1_s' => $price1_s, 'price1_e' => $price1_e, 'to_price1_s' => $to_price1_s, 'to_price1_e' => $to_price1_e,
+                    'pub_state' => $pub_state
         ]);
     }
 
