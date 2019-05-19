@@ -22,6 +22,7 @@ class LeaseController extends CommonController
         $price1_s = Yii::$app->request->post('price1_s', '');
         $price1_e = Yii::$app->request->post('price1_e', '');
         $sales_type = Yii::$app->request->post('sales_type', '');
+        $pub_state = Yii::$app->request->get('pub_state', '103');
         # 租赁方式
         $lease_type = DicItem::getDicItem('tenement');
         # 付款方式
@@ -39,15 +40,17 @@ class LeaseController extends CommonController
                 ->andFilterWhere(['>=', 's.price1', $price1_s])
                 ->andFilterWhere(['<=', 's.price1', $price1_e])
                 ->andFilterWhere(['s.sales_type' => $sales_type])
+                ->andFilterWhere(['s.hou_pub_state' => $pub_state])
                 ->orderBy(['h.cre_time' => SORT_DESC]);
         $count = $model->count();
         $pageSize = 20;
         $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
         $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
         return $this->render("list", [
-                    'data' => $data, 'pages' => $pages, 'lease_type' => $lease_type, 'pay_type' => $pay_type,
-                    'hou_name' => $hou_name, 'vill_name' => $vill_name,
-                    'price1_s' => $price1_s, 'price1_e' => $price1_e, 'sales_type' => $sales_type
+                    'data' => $data, 'pages' => $pages, 'count' => $count,
+                    'lease_type' => $lease_type, 'pay_type' => $pay_type,
+                    'hou_name' => $hou_name, 'vill_name' => $vill_name, 'price1_s' => $price1_s, 'price1_e' => $price1_e, 'sales_type' => $sales_type,
+                    'pub_state' => $pub_state
         ]);
     }
 
