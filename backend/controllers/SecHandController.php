@@ -17,13 +17,13 @@ class SecHandController extends CommonController
      */
     public function actionList()
     {
-        $mob_phone = Yii::$app->request->post('mob_phone', '');
-        $hou_name = Yii::$app->request->post('hou_name', '');
-        $vill_name = Yii::$app->request->post('vill_name', '');
-        $price1_s = Yii::$app->request->post('price1_s', '');
-        $price1_e = Yii::$app->request->post('price1_e', '');
-        $to_price1_s = Yii::$app->request->post('to_price1_s', '');
-        $to_price1_e = Yii::$app->request->post('to_price1_e', '');
+        $mob_phone = Yii::$app->request->get('mob_phone', '');
+        $hou_name = Yii::$app->request->get('hou_name', '');
+        $vill_name = Yii::$app->request->get('vill_name', '');
+        $price1_s = Yii::$app->request->get('price1_s', '');
+        $price1_e = Yii::$app->request->get('price1_e', '');
+        $to_price1_s = Yii::$app->request->get('to_price1_s', '');
+        $to_price1_e = Yii::$app->request->get('to_price1_e', '');
 
         $model = House::find()->alias('h')
                 ->select(['h.id', 'h.hou_account', 'h.hou_name', 'v.vill_name', 's.price1', 's.to_price1', 'h.hou_area', 's.hou_pub_state', 'h.cre_time', 'h.mod_time'])

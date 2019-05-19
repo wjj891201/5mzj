@@ -7,8 +7,7 @@ use yii\widgets\LinkPager;
 <div class="page-container">
     <?= $this->render('../set/prompt.php'); ?>
     <div class="text-c"> 
-        <form action="<?= Url::to(['sec-hand/list']) ?>" method="post">
-            <input type="hidden" name="_csrf" id='csrf' value="<?= Yii::$app->request->csrfToken ?>">  
+        <form action="<?= Url::to(['sec-hand/list']) ?>" method="get">
             联系方式：<input type="text" class="input-text" style="width:120px" name="mob_phone" value="<?= $mob_phone ?>">
             标题：<input type="text" class="input-text" style="width:120px" name="hou_name" value="<?= $hou_name ?>">
             所属小区：<input type="text" class="input-text" style="width:120px" name="vill_name" value="<?= $vill_name ?>">
@@ -25,6 +24,17 @@ use yii\widgets\LinkPager;
         </span>
     </div>
     <div class="mt-20">
+        <div id="tab-system" class="HuiTab">
+            <!--100未发布，101已发布，102下架，103待核实，104已核实，105不匹配-->
+            <div class="tabBar cl">
+                <span class="current" data-pub_state="103">待核实</span>
+                <span data-pub_state="104">已核实</span>
+                <span data-pub_state="100">待发布</span>
+                <span data-pub_state="101">已发布</span>
+                <span data-pub_state="102">已下架</span>
+                <span data-pub_state="105">不匹配</span>
+            </div>
+        </div>
         <table class="table table-border table-bordered table-hover table-bg table-sort">
             <thead>
                 <tr class="text-c">
@@ -75,3 +85,11 @@ use yii\widgets\LinkPager;
         ?>
     </div>
 </div>
+<script>
+    $(function () {
+        $('.tabBar>span').click(function () {
+            alert($(this).data('pub_state'));
+            return false;
+        });
+    });
+</script>
