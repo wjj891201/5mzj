@@ -7,6 +7,7 @@ use yii\data\Pagination;
 use common\models\Build;
 use common\models\DicItem;
 use common\models\ObjLab;
+use common\models\BuildHoutype;
 
 class BuildController extends CommonController
 {
@@ -108,6 +109,70 @@ class BuildController extends CommonController
         Build::updateAll(['is_del' => 1], ['id' => $id]);
         Yii::$app->session->setFlash("success", "删除成功");
         return $this->redirect(['build/list']);
+    }
+
+    /**
+     * 楼盘户型列表
+     */
+    public function actionHouseTypeList()
+    {
+
+        return $this->render("house-type-list");
+    }
+
+    /**
+     * 楼盘户型添加
+     */
+    public function actionHouseTypeAdd()
+    {
+        $model = new BuildHoutype;
+        if (Yii::$app->request->isPost)
+        {
+            $post = Yii::$app->request->post();
+            if ($model->add($post))
+            {
+                Yii::$app->session->setFlash("success", "添加成功");
+                return $this->redirect(['build/house-type-list']);
+            }
+        }
+        # 户型类别
+        $houRoomType = DicItem::getDicItem('houRoomType');
+        # 楼盘标签
+        $houseTypeLab = DicItem::getDicItem('houseTypeLab', false);
+        return $this->render("house-type-add", ['model' => $model, 'houRoomType' => $houRoomType, 'houseTypeLab' => $houseTypeLab]);
+    }
+
+    /**
+     * ajax获取楼盘
+     */
+    public function actionGetBuilds()
+    {
+        $params = Yii::$app->request->get('params');
+        $page = Yii::$app->request->get('page');
+        $limit = Yii::$app->request->get('limit');
+        $build = Build::find()->select(['id', 'build_name', 'build_add', 'comp_name'])
+                        ->where(['AND', ['LIKE', 'build_name', $params], ['is_del' => 0]])
+                        ->offset(($page - 1) * $limit)->limit($limit)->asArray()->all();
+        $count = Build::find()->where(['AND', ['LIKE', 'build_name', $params], ['is_del' => 0]])->count();
+        $data = [];
+        if ($count > 0)
+        {
+            foreach ($build as $key => $vo)
+            {
+                $data[] = [
+                    'build_name' => $vo['build_name'],
+                    'build_add' => $vo['build_add'],
+                    'comp_name' => $vo['comp_name']
+                ];
+            }
+        }
+        $result = [
+            'code' => 0,
+            'msg' => '',
+            'count' => $count,
+            'data' => $data
+        ];
+        return json_encode($result);
     }
 
 }
