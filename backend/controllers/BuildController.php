@@ -116,8 +116,21 @@ class BuildController extends CommonController
      */
     public function actionHouseTypeList()
     {
-
-        return $this->render("house-type-list");
+        $type_name = Yii::$app->request->get('type_name', '');
+        $cover_area = Yii::$app->request->get('cover_area', '');
+        $model = BuildHoutype::find()->alias('t')
+                ->select(['t.*', 'b.build_name'])
+                ->leftJoin('{{%build}} b', 'b.id=t.build_id')
+                ->where(['t.is_del' => 0])
+                ->filterWhere(['LIKE', 't.type_name', $type_name])
+                ->orderBy(['t.cre_time' => SORT_DESC]);
+        $count = $model->count();
+        $pageSize = 20;
+        $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
+        $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
+        # 户型类别
+        $houRoomType = DicItem::getDicItem('houRoomType');
+        return $this->render("house-type-list", ['data' => $data, 'pages' => $pages, 'type_name' => $type_name, 'houRoomType' => $houRoomType]);
     }
 
     /**
