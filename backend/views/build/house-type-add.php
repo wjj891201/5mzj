@@ -25,6 +25,12 @@ $this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\a
         </div>
     </div>
     <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">户型名称：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <?= $form->field($model, 'type_name', ['options' => ['class' => false]])->textInput(['class' => 'input-text', 'style' => 'width:90%;'])->label(false); ?>
+        </div>
+    </div>
+    <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">户型类别：</label>
         <div class="formControls col-xs-8 col-sm-9">
             <?= $form->field($model, 'type_cate', ['template' => "<span class=\"select-box\" style=\"width:90%;\">{input}</span>{error}", 'options' => ['class' => false]])->dropDownList($houRoomType, ['class' => 'select', 'id' => 'area_here'])->label(false); ?>

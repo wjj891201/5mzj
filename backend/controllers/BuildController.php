@@ -123,6 +123,7 @@ class BuildController extends CommonController
                 ->leftJoin('{{%build}} b', 'b.id=t.build_id')
                 ->where(['t.is_del' => 0])
                 ->filterWhere(['LIKE', 't.type_name', $type_name])
+                ->filterWhere(['<=', 't.cover_area', $cover_area])
                 ->orderBy(['t.cre_time' => SORT_DESC]);
         $count = $model->count();
         $pageSize = 20;
@@ -130,7 +131,10 @@ class BuildController extends CommonController
         $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
         # 户型类别
         $houRoomType = DicItem::getDicItem('houRoomType');
-        return $this->render("house-type-list", ['data' => $data, 'pages' => $pages, 'type_name' => $type_name, 'houRoomType' => $houRoomType]);
+        return $this->render("house-type-list", [
+                    'type_name' => $type_name, 'cover_area' => $cover_area,
+                    'data' => $data, 'pages' => $pages, 'type_name' => $type_name, 'houRoomType' => $houRoomType
+        ]);
     }
 
     /**
@@ -153,6 +157,44 @@ class BuildController extends CommonController
         # 楼盘标签
         $houseTypeLab = DicItem::getDicItem('houseTypeLab', false);
         return $this->render("house-type-add", ['model' => $model, 'houRoomType' => $houRoomType, 'houseTypeLab' => $houseTypeLab]);
+    }
+
+    /**
+     * 楼盘户型编辑
+     */
+    public function actionHouseTypeEdit()
+    {
+        $id = Yii::$app->request->get('id');
+        $model = BuildHoutype::find()->where(['id' => $id])->one();
+        if (Yii::$app->request->isPost)
+        {
+            $post = Yii::$app->request->post();
+            if ($model->edit($post))
+            {
+                Yii::$app->session->setFlash("success", "编辑成功");
+                return $this->redirect(['build/house-type-list']);
+            }
+        }
+        # 户型类别
+        $houRoomType = DicItem::getDicItem('houRoomType');
+        # 楼盘标签
+        $houseTypeLab = DicItem::getDicItem('houseTypeLab', false);
+        // 1.0 楼盘标签
+        $model->build_name = $model['build']['build_name'];
+        // 2.0 户型标签
+        $model->lab = ObjLab::find()->select('obj_lab')->where(['obj_type' => 103, 'tab_id' => $model->id])->asArray()->column();
+        return $this->render("house-type-add", ['model' => $model, 'houRoomType' => $houRoomType, 'houseTypeLab' => $houseTypeLab]);
+    }
+
+    /**
+     * 删除楼盘户型
+     */
+    public function actionHouseTypeDel()
+    {
+        $id = Yii::$app->request->get('id');
+        BuildHoutype::updateAll(['is_del' => 1], ['id' => $id]);
+        Yii::$app->session->setFlash("success", "删除成功");
+        return $this->redirect(['build/house-type-list']);
     }
 
     /**

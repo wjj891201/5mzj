@@ -5,10 +5,13 @@ use yii\widgets\LinkPager;
 ?>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 楼盘户型管理 <span class="c-gray en">&gt;</span> 户型列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
+    <?= $this->render('../set/prompt.php'); ?>
     <div class="text-c">
-        户型名称：<input type="text" name="type_name" style="width:250px" class="input-text">
-        建面：<input type="text" name="cover_area" style="width:250px" class="input-text">
-        <button class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+        <form action="<?= Url::to(['build/house-type-list']) ?>" method="get"> 
+            户型名称：<input type="text" name="type_name" value="<?= $type_name ?>" style="width:120px" class="input-text">
+            建面：<input type="text" name="cover_area" value="<?= $cover_area ?>" style="width:120px" class="input-text">
+            <button class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+        </form>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20"> 
         <span class="l">
@@ -16,7 +19,6 @@ use yii\widgets\LinkPager;
                 <i class="Hui-iconfont">&#xe600;</i> 添加户型
             </a>
         </span>
-        <span class="r">共有数据：<strong>54</strong> 条</span> 
     </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
@@ -47,10 +49,10 @@ use yii\widgets\LinkPager;
                         <td><?= $vo['total_price'] ?></td>
                         <td><?= $vo['cre_time'] ?></td>
                         <td class="f-14 td-manage">
-                            <a style="text-decoration:none" class="ml-5" href="<?= Url::to(['build/house-type-edit']) ?>" title="编辑">
+                            <a style="text-decoration:none" class="ml-5" href="<?= Url::to(['build/house-type-edit', 'id' => $vo['id']]) ?>" title="编辑">
                                 <i class="Hui-iconfont">&#xe6df;</i>
                             </a> 
-                            <a style="text-decoration:none" class="ml-5" onClick="article_del(this, '10001')" href="javascript:;" title="删除">
+                            <a style="text-decoration:none" class="ml-5" href="javascript:;"  onclick="operate_del('<?= Url::to(['build/house-type-del', 'id' => $vo['id']]) ?>')" title="删除">
                                 <i class="Hui-iconfont">&#xe6e2;</i>
                             </a>
                         </td>
