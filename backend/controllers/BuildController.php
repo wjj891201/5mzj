@@ -8,6 +8,7 @@ use common\models\Build;
 use common\models\DicItem;
 use common\models\ObjLab;
 use common\models\BuildHoutype;
+use common\models\BuildOpen;
 
 class BuildController extends CommonController
 {
@@ -133,7 +134,7 @@ class BuildController extends CommonController
         $houRoomType = DicItem::getDicItem('houRoomType');
         return $this->render("house-type-list", [
                     'type_name' => $type_name, 'cover_area' => $cover_area,
-                    'data' => $data, 'pages' => $pages, 'type_name' => $type_name, 'houRoomType' => $houRoomType
+                    'data' => $data, 'pages' => $pages, 'houRoomType' => $houRoomType
         ]);
     }
 
@@ -228,6 +229,97 @@ class BuildController extends CommonController
             'data' => $data
         ];
         return json_encode($result);
+    }
+
+    /**
+     * 楼盘开盘列表
+     */
+    public function actionOpenList()
+    {
+        $build_name = Yii::$app->request->get('build_name', '');
+        $model = BuildOpen::find()->alias('o')
+                ->select(['o.*', 'b.build_name'])
+                ->innerJoin('{{%build}} b', 'b.id=o.build_id')
+                ->where(['o.is_del' => 0])
+                ->filterWhere(['LIKE', 'b.build_name', $build_name])
+                ->orderBy(['o.cre_time' => SORT_DESC]);
+        $count = $model->count();
+        $pageSize = 20;
+        $pages = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
+        $data = $model->offset($pages->offset)->limit($pages->limit)->asArray()->all();
+        return $this->render("open-list", ['build_name' => $build_name, 'data' => $data, 'pages' => $pages]);
+    }
+
+    /**
+     * 新增开盘
+     */
+    public function actionOpenAdd()
+    {
+        $model = new BuildOpen;
+        if (Yii::$app->request->isPost)
+        {
+            $post = Yii::$app->request->post();
+            if ($model->add($post))
+            {
+                Yii::$app->session->setFlash("success", "添加成功");
+                return $this->redirect(['build/open-list']);
+            }
+        }
+        $model->high_quality = 0;
+        $model->recommend = 0;
+        return $this->render("open-add", ['model' => $model]);
+    }
+
+    /**
+     * 编辑开盘
+     */
+    public function actionOpenEdit()
+    {
+        $id = Yii::$app->request->get('id');
+        $model = BuildOpen::find()->where(['id' => $id])->one();
+        if (Yii::$app->request->isPost)
+        {
+            $post = Yii::$app->request->post();
+            if ($model->edit($post))
+            {
+                Yii::$app->session->setFlash("success", "编辑成功");
+                return $this->redirect(['build/open-list']);
+            }
+        }
+        // 1.0 楼盘名称
+        $model->build_name = $model['build']['build_name'];
+        // 2.0 单选控制
+        switch ($model->is_recomm)
+        {
+            case 0:
+                $model->recommend = 0;
+                $model->high_quality = 0;
+                break;
+            case 1:
+                $model->recommend = 1;
+                $model->high_quality = 0;
+                break;
+            case 2:
+                $model->recommend = 0;
+                $model->high_quality = 1;
+                break;
+            case 3:
+                $model->recommend = 1;
+                $model->high_quality = 1;
+                break;
+        }
+        return $this->render("open-add", ['model' => $model]);
+    }
+
+    /**
+     * 删除开盘
+     */
+    public function actionOpenDel()
+    {
+        $id = Yii::$app->request->get('id');
+        BuildOpen::updateAll(['is_del' => 1], ['id' => $id]);
+        Yii::$app->session->setFlash("success", "删除成功");
+        return $this->redirect(['build/open-list']);
     }
 
 }
