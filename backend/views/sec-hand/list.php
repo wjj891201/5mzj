@@ -32,11 +32,11 @@ use common\models\HouseSales;
             <?php
             $pub_state_arr = [
                 '103' => '待核实',
-                '104' => '已核实',
+//                '104' => '已核实',
                 '100' => '待发布',
                 '101' => '已发布',
                 '102' => '已下架',
-                '105' => '不匹配'
+//                '105' => '不匹配'
             ];
             ?>
             <div class="tabBar cl">
@@ -73,6 +73,7 @@ use common\models\HouseSales;
                         <td><?= $vo['mod_time'] ?></td>
                         <td class="td-status"><?= HouseSales::getHouPubState($vo['hou_pub_state']) ?></td>
                         <td class="f-14">
+                            <?= HouseSales::getStateOperate($vo['hou_pub_state'], $vo['id']) ?>
                             <a style="text-decoration:none" class="ml-5" href="<?= Url::to(['sec-hand/edit', 'id' => $vo['id']]) ?>" title="编辑">
                                 <i class="Hui-iconfont">&#xe6df;</i>
                             </a> 

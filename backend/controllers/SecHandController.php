@@ -8,6 +8,7 @@ use common\models\House;
 use common\models\DicItem;
 use common\models\ObjLab;
 use common\models\Village;
+use common\models\HouseSales;
 
 class SecHandController extends CommonController
 {
@@ -154,6 +155,18 @@ class SecHandController extends CommonController
         $id = Yii::$app->request->get('id');
         House::updateAll(['is_del' => 1], ['id' => $id]);
         Yii::$app->session->setFlash("success", "删除成功");
+        return $this->redirect(['sec-hand/list']);
+    }
+
+    /**
+     * 改变状态
+     */
+    public function actionChangeState()
+    {
+        $house_id = Yii::$app->request->get('id');
+        $next_state = Yii::$app->request->get('next_state');
+        HouseSales::updateAll(['hou_pub_state' => $next_state], ['house_id' => $house_id]);
+        Yii::$app->session->setFlash("success", "操作成功");
         return $this->redirect(['sec-hand/list']);
     }
 

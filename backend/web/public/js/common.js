@@ -30,3 +30,10 @@ $(function () {
         $(this).parent().hide();
     });
 });
+
+/*房源状态*/
+function house_operate(name, url) {
+    layer.confirm('确认要' + name + '该房源吗？', {icon: 3, title: '提示', offset: '200px'}, function (index) {
+        window.location.href = url;
+    });
+}
