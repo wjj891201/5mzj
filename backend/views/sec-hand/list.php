@@ -73,7 +73,7 @@ use common\models\HouseSales;
                         <td><?= $vo['mod_time'] ?></td>
                         <td class="td-status"><?= HouseSales::getHouPubState($vo['hou_pub_state']) ?></td>
                         <td class="f-14">
-                            <?= HouseSales::getStateOperate($vo['hou_pub_state'], $vo['id']) ?>
+                            <?= HouseSales::getStateOperate($vo['hou_pub_state'], $vo['id'], 'sec-hand') ?>
                             <a style="text-decoration:none" class="ml-5" href="<?= Url::to(['sec-hand/edit', 'id' => $vo['id']]) ?>" title="编辑">
                                 <i class="Hui-iconfont">&#xe6df;</i>
                             </a> 

@@ -77,6 +77,7 @@ use common\models\HouseSales;
                         <td><?= $vo['cre_time'] ?></td>
                         <td class="td-status"><?= HouseSales::getHouPubState($vo['hou_pub_state']) ?></td>
                         <td class="f-14">
+                            <?= HouseSales::getStateOperate($vo['hou_pub_state'], $vo['id'], 'lease') ?>
                             <a style="text-decoration:none" class="ml-5" href="<?= Url::to(['lease/edit', 'id' => $vo['id']]) ?>" title="编辑">
                                 <i class="Hui-iconfont">&#xe6df;</i>
                             </a> 
