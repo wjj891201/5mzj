@@ -9,6 +9,8 @@ use common\models\DicItem;
 use common\models\ObjLab;
 use common\models\Village;
 use common\models\HouseSales;
+use backend\libs\Upload;
+use backend\libs\Ftp;
 
 class SecHandController extends CommonController
 {
@@ -208,8 +210,51 @@ class SecHandController extends CommonController
 
     public function actionUpload()
     {
-        var_dump($_FILES);
+
+        $fileName = str_replace('\\', '/', __DIR__);
+        $fileName = dirname($fileName);
+//        $file = $_FILES['file'];
+        $conn = ftp_connect('47.110.236.17') or exit("Could not connect ftp");
+        ftp_login($conn, 'ftpuser', 'JUFangFtp123456');
+        ftp_pasv($conn, true);
+
+        $path = 'upload/uploadfiles/house_images/' . date('Y-m-d');
+
+
+        $path_arr = explode('/', $path); // 取目录数组
+//        $file_name = array_pop($path_arr); // 弹出文件名
+        $path_div = count($path_arr); // 取层数
+        foreach ($path_arr as $val) // 创建目录
+        {
+            if (ftp_chdir($conn, $val) == FALSE)
+            {
+                $tmp = ftp_mkdir($conn, $val);
+                if ($tmp == FALSE)
+                {
+                    echo "目录创建失败，请检查权限及路径是否正确！";
+                    exit;
+                }
+                ftp_chdir($conn, $val);
+            }
+        }
+        for ($i = 1; $i == $path_div; $i++) // 回退到根
+        {
+            ftp_cdup($conn);
+        }
+//        ftp_chdir($conn, 'backend');
+        $res = ftp_put($conn, '201905231420194935.png', $fileName . '/web/uploads/2019-05-23/201905231420194935.png', FTP_BINARY);
+        ftp_close($conn);
+        var_dump($res);
         exit;
+        //第一个参数必选  第二个设置上传目录 可选  第三个 设置允许上传的扩展名  第四个 设置允许上传文件的大小
+//        $upload = new Upload($file);
+//        $url = $upload->upload();
+//        $ftp = new Ftp('47.110.236.17', 21, 'ftpuser', 'JUFangFtp123456'); // 打开FTP连接
+//        $ftp->up_file($fileName . '/web/uploads/2019-05-23/201905231420194935.png', 'upload/uploadfiles/house_images/' . date('Y-m-d') . '/201905231420194935.png'); // 上传文件
+//        $ftp->move_file('a/b/c/cc.txt', 'a/cc.txt'); // 移动文件
+//        $ftp->copy_file('a/cc.txt', 'a/b/dd.txt'); // 复制文件
+//        $ftp->del_file('a/b/dd.txt'); // 删除文件
+//        $ftp->close(); // 关闭FTP连接
     }
 
 }
