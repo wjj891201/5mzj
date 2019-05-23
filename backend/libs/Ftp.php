@@ -108,7 +108,7 @@ class Ftp
     function dir_mkdirs($path)
     {
         $path_arr = explode('/', $path); // 取目录数组
-//        $file_name = array_pop($path_arr); // 弹出文件名
+        $file_name = array_pop($path_arr); // 弹出文件名
         $path_div = count($path_arr); // 取层数
         foreach ($path_arr as $val) // 创建目录
         {
