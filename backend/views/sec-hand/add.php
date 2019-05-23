@@ -6,7 +6,9 @@ use yii\helpers\Url;
 use yii\web\View;
 
 $this->registerCssFile('@web/public/js/layui/css/layui.css', ['depends' => ['backend\assets\BackendAsset']]);
+$this->registerCssFile('@web/public/lib/webuploader/0.1.5/webuploader.css', ['depends' => ['backend\assets\BackendAsset']]);
 $this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\assets\BackendAsset'], 'position' => View::POS_HEAD]);
+$this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['depends' => ['backend\assets\BackendAsset'], 'position' => View::POS_HEAD]);
 ?>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 二手房管理 <span class="c-gray en">&gt;</span> 添加二手房 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
@@ -102,6 +104,27 @@ $this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\a
         </div>
     </div>
     <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">缩略图：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <div class="uploader-thum-container">
+                <div id="filePicker">选择图片</div>
+                <span id="btn-star" class="btn btn-default btn-uploadstar radius ml-10">开始上传</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"></label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <div class="uploader-list-container"> 
+                <div class="queueList">
+                    <ul class="filelist" id="fileList"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row cl">
         <label class="form-label col-xs-4 col-sm-2">描述：</label>
         <div class="formControls col-xs-8 col-sm-9">
             <?= $form->field($model, 'hou_remark', ['options' => ['class' => false]])->textArea(['class' => 'textarea', 'style' => 'width:90%;'])->label(false); ?>
@@ -176,6 +199,74 @@ $this->registerJsFile('@web/public/js/layui/layui.js', ['depends' => ['backend\a
             checkboxClass: 'icheckbox-blue',
             radioClass: 'iradio-blue',
             increaseArea: '20%'
+        });
+        var $list = $("#fileList");
+        var $btn = $("#btn-star");
+        var thumbnailWidth = 100;
+        var thumbnailHeight = 100;
+        var uploader = WebUploader.create({
+            auto: false,
+            swf: '/public/lib/webuploader/0.1.5/Uploader.swf',
+            // 文件接收服务端。
+            server: '<?= Url::to(['sec-hand/upload']) ?>',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: {id: '#filePicker', innerHTML: '选择美女图片', multiple: true},
+            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+            resize: false,
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+        uploader.on('fileQueued', function (file) {
+            var $li = $(
+                    '<li style="height:auto;" id="' + file.id + '">' +
+                    '<p class="title">' + file.name + '</p>' +
+                    '<p class="imgWrap"><img src=""></p>' +
+                    '<p class="progress"><span></span></p>' +
+                    '<p class="del"><span>删除</span></p>' +
+                    '</li>'
+                    ),
+                    $img = $li.find('img');
+            $list.append($li);
+            // 创建缩略图
+            // 如果为非图片文件，可以不用调用此方法。
+            // thumbnailWidth x thumbnailHeight 为 100 x 100
+            uploader.makeThumb(file, function (error, src) {
+                if (error) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+                $img.attr('src', src);
+            }, thumbnailWidth, thumbnailHeight);
+        });
+        $btn.on('click', function () {
+            uploader.upload();
+        });
+        $list.on('click', '.del', function () {
+            var id = $(this).parent().attr('id');
+            $(this).parent().remove();
+            var quID = uploader.getFile(id);
+            uploader.removeFile(quID);
+        });
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on('uploadProgress', function (file, percentage) {
+
+        });
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on('uploadSuccess', function (file) {
+
+        });
+        // 文件上传失败，显示上传出错。
+        uploader.on('uploadError', function (file) {
+
+        });
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on('uploadComplete', function (file) {
+
         });
     });
     //引入自定义插件

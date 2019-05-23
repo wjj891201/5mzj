@@ -206,4 +206,10 @@ class SecHandController extends CommonController
         return json_encode($result);
     }
 
+    public function actionUpload()
+    {
+        var_dump($_FILES);
+        exit;
+    }
+
 }
