@@ -1,6 +1,8 @@
 <?php
 
 use yii\web\View;
+use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 $this->registerJsFile('@web/public/lib/My97DatePicker/4.8/WdatePicker.js', ['depends' => ['backend\assets\BackendAsset'], 'position' => View::POS_HEAD]);
 $this->registerJsFile('@web/public/lib/datatables/1.10.0/jquery.dataTables.min.js', ['depends' => ['backend\assets\BackendAsset'], 'position' => View::POS_HEAD]);
@@ -9,70 +11,67 @@ $this->registerJsFile('@web/public/lib/laypage/1.2/laypage.js', ['depends' => ['
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> 首页 
     <span class="c-gray en">&gt;</span> 管理员管理 
-    <span class="c-gray en">&gt;</span> 管理员列表 
+    <span class="c-gray en">&gt;</span> 账号列表 
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
         <i class="Hui-iconfont">&#xe68f;</i>
     </a>
 </nav>
 <div class="page-container">
-    <div class="text-c"> 日期范围：
-        <input type="text" onfocus="WdatePicker({maxDate: '#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
-        -
-        <input type="text" onfocus="WdatePicker({minDate: '#F{$dp.$D(\'datemin\')}', maxDate: '%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" id="" name="">
-        <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
-    </div>
+    <?= $this->render('../set/prompt.php'); ?>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
-            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
-                <i class="Hui-iconfont">&#xe6e2;</i> 批量删除
-            </a> 
-            <a href="javascript:;" onclick="admin_add('添加管理员', 'admin-add.html', '800', '500')" class="btn btn-primary radius">
-                <i class="Hui-iconfont">&#xe600;</i> 添加管理员
+            <a href="<?= Url::to(['manage/add']) ?>" class="btn btn-primary radius">
+                <i class="Hui-iconfont">&#xe600;</i> 添加账号
             </a>
         </span> 
-        <span class="r">共有数据：<strong>54</strong> 条</span> 
     </div>
-    <table class="table table-border table-bordered table-bg">
-        <thead>
-            <tr>
-                <th scope="col" colspan="9">员工列表</th>
-            </tr>
-            <tr class="text-c">
-                <th width="25"><input type="checkbox" name="" value=""></th>
-                <th width="40">ID</th>
-                <th width="150">登录名</th>
-                <th width="90">手机</th>
-                <th width="150">邮箱</th>
-                <th>角色</th>
-                <th width="130">加入时间</th>
-                <th width="100">是否已启用</th>
-                <th width="100">操作</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="text-c">
-                <td><input type="checkbox" value="1" name=""></td>
-                <td>1</td>
-                <td>admin</td>
-                <td>13000000000</td>
-                <td>admin@mail.com</td>
-                <td>超级管理员</td>
-                <td>2014-6-11 11:11:42</td>
-                <td class="td-status"><span class="label label-success radius">已启用</span></td>
-                <td class="td-manage"><a style="text-decoration:none" onClick="admin_stop(this, '10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑', 'admin-add.html', '1', '800', '500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_del(this, '1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-            </tr>
-            <tr class="text-c">
-                <td><input type="checkbox" value="2" name=""></td>
-                <td>2</td>
-                <td>zhangsan</td>
-                <td>13000000000</td>
-                <td>admin@mail.com</td>
-                <td>栏目编辑</td>
-                <td>2014-6-11 11:11:42</td>
-                <td class="td-status"><span class="label radius">已停用</span></td>
-                <td class="td-manage"><a style="text-decoration:none" onClick="admin_start(this, '10001')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a> <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑', 'admin-add.html', '2', '800', '500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_del(this, '1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="9">账号列表</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="10%">序号</th>
+                    <th width="10%">用户名</th>
+                    <th width="10%">姓名</th>
+                    <th width="10%">性别</th>
+                    <th>身份证号码</th>
+                    <th width="10%">手机号</th>
+                    <th width="15%">电子邮箱</th>
+                    <th width="10%">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($data as $key => $vo): ?>
+                    <tr class="text-c">
+                        <td><?= $key + 1 ?></td>
+                        <td><?= $vo['username'] ?></td>
+                        <td><?= $vo['real_name'] ?></td>
+                        <td><?= $vo['sex'] == 0 ? '女' : '男'; ?></td>
+                        <td><?= $vo['id_card'] ?></td>
+                        <td><?= $vo['telphone'] ?></td>
+                        <td><?= $vo['email'] ?></td>
+                        <td class="td-manage">
+                            <a title="编辑" href="<?= Url::to(['manage/edit', 'id' => $vo['id']]); ?>" class="ml-5" style="text-decoration:none">
+                                <i class="Hui-iconfont">&#xe6df;</i>
+                            </a>
+                            <a title="删除" href="javascript:;" onclick="operate_del('<?= Url::to(['manage/del', 'id' => $vo['id']]) ?>')" class="ml-5" style="text-decoration:none">
+                                <i class="Hui-iconfont">&#xe6e2;</i>
+                            </a>
+                        </td>
+                    </tr>  
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-c">
+        <?=
+        LinkPager::widget([
+            'pagination' => $pages,
+            'prevPageLabel' => '上一页',
+            'nextPageLabel' => '下一页'
+        ]);
+        ?>
+    </div>
 </div>

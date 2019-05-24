@@ -14,9 +14,11 @@ class SignupForm extends Model
 
     public $id;
     public $username;
-    public $belong;
-    public $email;
+    public $real_name;
+    public $sex;
+    public $id_card;
     public $telphone;
+    public $email;
     public $oldpass;
     public $password;
     public $re_password;
@@ -26,10 +28,12 @@ class SignupForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => '账号',
-            'belong' => '所属机构',
+            'username' => '用户名',
+            'real_name' => '姓名',
+            'sex' => '性别',
+            'id_card' => '身份证号码',
+            'telphone' => '手机号码',
             'email' => '邮箱',
-            'telphone' => '电话',
             'oldpass' => '原始密码',
             'password' => '密码',
             're_password' => '确认密码',
@@ -46,8 +50,8 @@ class SignupForm extends Model
                 [['username', 'email'], 'filter', 'filter' => 'trim', 'on' => ['signup', 'edit']],
                 ['username', 'unique', 'targetClass' => '\backend\models\BackendUser', 'message' => '{attribute}已存在', 'on' => 'signup'],
                 ['username', 'string', 'min' => 2, 'max' => 255, 'on' => ['signup', 'edit']],
-                [['username', 'belong', 'email', 'telphone'], 'required', 'message' => '{attribute}不可以为空', 'on' => ['signup', 'edit']],
-                ['email', 'email', 'on' => ['signup', 'edit']],
+                [['username', 'real_name', 'id_card', 'email', 'telphone'], 'required', 'message' => '{attribute}不可以为空', 'on' => ['signup', 'edit']],
+                ['email', 'email', 'message' => '{attribute}格式不正确', 'on' => ['signup', 'edit']],
                 ['email', 'unique', 'targetClass' => '\backend\models\BackendUser', 'message' => '{attribute}已经被设置了', 'on' => 'signup'],
                 ['telphone', 'match', 'pattern' => '/^[1][358][0-9]{9}$/', 'message' => '{attribute}号码格式错误', 'on' => ['signup', 'edit']],
                 ['oldpass', 'required', 'message' => '{attribute}不可以为空', 'on' => 'psw'],
@@ -56,7 +60,7 @@ class SignupForm extends Model
                 [['password', 're_password'], 'string', 'min' => 6, 'tooShort' => '{attribute}至少填写6位', 'on' => ['signup', 'psw']],
                 ['re_password', 'compare', 'compareAttribute' => 'password', 'message' => '两次密码输入不一致', 'on' => ['signup', 'psw']],
                 [['created_at', 'updated_at'], 'default', 'value' => time(), 'on' => 'signup'],
-                ['id', 'safe', 'on' => 'edit']
+                ['sex', 'safe', 'on' => ['signup', 'edit']]
         ];
     }
 
@@ -92,9 +96,11 @@ class SignupForm extends Model
         {
             $user = new BackendUser();
             $user->username = $this->username;
-            $user->belong = $this->belong;
-            $user->email = $this->email;
+            $user->real_name = $this->real_name;
+            $user->sex = $this->sex;
+            $user->id_card = $this->id_card;
             $user->telphone = $this->telphone;
+            $user->email = $this->email;
             $user->setPassword($this->password);
             $user->generateAuthKey();
             $user->created_at = $this->created_at;
@@ -106,16 +112,18 @@ class SignupForm extends Model
     /**
      * 编辑审批员
      */
-    public function edit($data)
+    public function edit($data, $id)
     {
         $this->scenario = 'edit';
         if ($this->load($data) && $this->validate())
         {
-            $user = BackendUser::findOne(['id' => $this->id]);
+            $user = BackendUser::findOne(['id' => $id]);
             $user->username = $this->username;
-            $user->belong = $this->belong;
-            $user->email = $this->email;
+            $user->real_name = $this->real_name;
+            $user->sex = $this->sex;
+            $user->id_card = $this->id_card;
             $user->telphone = $this->telphone;
+            $user->email = $this->email;
             return $user->save(false);
         }
     }
