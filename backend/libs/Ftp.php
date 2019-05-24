@@ -44,7 +44,10 @@ class Ftp
         {
             $this->dir_mkdirs($newpath);
         }
-        $this->off = @ftp_put($this->conn_id, $newpath, $path, FTP_BINARY);
+//        var_dump(ftp_pwd($this->conn_id));
+//        exit;
+        $real_name = basename($newpath);
+        $this->off = @ftp_put($this->conn_id, $real_name, $path, FTP_BINARY);
         if (!$this->off)
         {
             echo "文件上传失败，请检查权限及路径是否正确！";
