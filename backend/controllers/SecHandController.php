@@ -215,7 +215,7 @@ class SecHandController extends CommonController
         $upload = new Upload($file);
         $url = $upload->upload();
         $real_name = basename($url);
-        $ftp = new Ftp('47.92.24.78', 21, '5mzj_file', 'YiZnLfxX4C'); // 打开FTP连接
+        $ftp = new Ftp('47.110.236.17', 21, 'ftpuser', 'JUFangFtp123456'); // 打开FTP连接
         $ftp->up_file($url, 'upload/uploadfiles/house_images/' . date('Y-m-d') . '/' . $real_name); // 上传文件
 //        $ftp->move_file('a/b/c/cc.txt', 'a/cc.txt'); // 移动文件
 //        $ftp->copy_file('a/cc.txt', 'a/b/dd.txt'); // 复制文件
