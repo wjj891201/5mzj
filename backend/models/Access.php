@@ -24,7 +24,7 @@ class Access extends ActiveRecord
         ];
     }
 
-    public function getData()
+    public static function getData()
     {
         $all_role = self::find()->asArray()->orderBy('sort DESC')->all();
         return $all_role;
@@ -62,9 +62,9 @@ class Access extends ActiveRecord
 
     public function getOptions()
     {
-        $data = $this->getData();
-        $tree = $this->getTree($data);
-        $tree = $this->setPrefix($tree);
+        $data = self::getData();
+        $tree = self::getTree($data);
+        $tree = self::setPrefix($tree);
         $options = ['添加一级权限'];
         foreach ($tree as $v)
         {
@@ -73,7 +73,7 @@ class Access extends ActiveRecord
         return $options;
     }
 
-    public function getTree($node, $pid = 0)
+    public static function getTree($node, $pid = 0)
     {
         $tree = [];
         foreach ($node as $v)
@@ -81,13 +81,13 @@ class Access extends ActiveRecord
             if ($v['pid'] == $pid)
             {
                 $tree[] = $v;
-                $tree = array_merge($tree, $this->getTree($node, $v['id']));
+                $tree = array_merge($tree, self::getTree($node, $v['id']));
             }
         }
         return $tree;
     }
 
-    public function setPrefix($data, $p = "|----")
+    public static function setPrefix($data, $p = "|----")
     {
         $tree = [];
         $num = 1;
@@ -114,15 +114,15 @@ class Access extends ActiveRecord
         return $tree;
     }
 
-    public function getTreeList()
+    public static function getTreeList()
     {
-        $data = $this->getData();
-        $tree = $this->getTree($data);
-        return $tree = $this->setPrefix($tree);
+        $data = self::getData();
+        $tree = self::getTree($data);
+        return $tree = self::setPrefix($tree);
     }
 
     //节点合并
-    public function node_merge($node, $pid = 0)
+    public static function node_merge($node, $pid = 0)
     {
         $arr = array();
         foreach ($node as $v)
@@ -136,11 +136,11 @@ class Access extends ActiveRecord
         return $arr;
     }
 
-    public function getAccess()
+    public static function getAccess()
     {
-        $data = $this->getData();
-        $tree = $this->getTree($data);
-        return $tree = $this->node_merge($tree);
+        $data = self::getData();
+        $tree = self::getTree($data);
+        return $tree = self::node_merge($tree);
     }
 
 }
