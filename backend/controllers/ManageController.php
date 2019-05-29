@@ -7,6 +7,8 @@ use yii\helpers\Url;
 use yii\data\Pagination;
 use backend\models\SignupForm;
 use backend\models\BackendUser;
+use backend\models\BackendUserRoleRelation;
+use backend\models\Role;
 
 class ManageController extends CommonController
 {
@@ -100,6 +102,46 @@ class ManageController extends CommonController
         BackendUser::deleteAll('id=:id', [':id' => $id]);
         Yii::$app->session->setFlash("success", "删除成功");
         return $this->redirect(['manage/list']);
+    }
+
+    /**
+     * 管理员赋予角色
+     * @return type
+     */
+    public function actionMake()
+    {
+        $id = Yii::$app->request->get("id");
+        //查找该用户的角色
+        $have_role = BackendUserRoleRelation::find()->select('role_id')->where(['uid' => $id])->asArray()->column();
+        //用户信息
+        $userDetail = BackendUser::find()->where('id = :id', [':id' => $id])->one();
+        $role = Role::find()->all();
+        if (Yii::$app->request->isPost)
+        {
+            $role_ids = Yii::$app->request->post("role_id");
+            // 交集
+            $collection = array_intersect($have_role, $role_ids);
+            // 差集
+            $diff_1 = array_diff($have_role, $collection);
+            $diff_2 = array_diff($role_ids, $collection);
+            // $diff_1删除 $diff_2添加
+            if (!empty($diff_1))
+            {
+                BackendUserRoleRelation::deleteAll(['AND', ['uid' => $id], ['IN', 'role_id', $diff_1]]);
+            }
+            if (!empty($diff_2))
+            {
+                $temp = [];
+                foreach ($diff_2 as $key => $vo)
+                {
+                    $temp[$key] = ['uid' => $id, 'role_id' => $vo, 'created_time' => date('Y-m-d H:i:s')];
+                }
+                Yii::$app->db->createCommand()->batchInsert("{{%backend_user_role}}", ['uid', 'role_id', 'created_time'], $temp)->execute();
+            }
+            Yii::$app->session->setFlash('success', '角色分配成功！');
+            return $this->redirect(['manage/list']);
+        }
+        return $this->render('make', ['userDetail' => $userDetail, 'role' => $role, 'have_role' => $have_role]);
     }
 
 }

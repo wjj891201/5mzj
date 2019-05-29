@@ -59,6 +59,9 @@ $this->registerJsFile('@web/public/lib/laypage/1.2/laypage.js', ['depends' => ['
                             <a title="删除" href="javascript:;" onclick="operate_del('<?= Url::to(['manage/del', 'id' => $vo['id']]) ?>')" class="ml-5" style="text-decoration:none">
                                 <i class="Hui-iconfont">&#xe6e2;</i>
                             </a>
+                            <a title="分配角色" href="<?= Url::to(['manage/make', 'id' => $vo['id']]); ?>" class="ml-5" style="text-decoration:none">
+                                <i class="Hui-iconfont">&#xe725;</i>
+                            </a>
                         </td>
                     </tr>  
                 <?php endforeach; ?>

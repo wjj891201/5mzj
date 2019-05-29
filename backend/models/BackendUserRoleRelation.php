@@ -4,12 +4,12 @@ namespace backend\models;
 
 use yii\db\ActiveRecord;
 
-class UserRoleRelation extends ActiveRecord
+class BackendUserRoleRelation extends ActiveRecord
 {
 
     public static function tableName()
     {
-        return "{{%user_role}}";
+        return "{{%backend_user_role}}";
     }
 
 }
