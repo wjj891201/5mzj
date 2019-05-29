@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Access;
+use backend\models\RoleAccessRelation;
 
 class AccessController extends CommonController
 {
@@ -61,7 +62,7 @@ class AccessController extends CommonController
         $id = Yii::$app->request->get('id');
         if (Access::deleteAll('id = :id', [":id" => $id]))
         {
-//            RoleAccessRelation::deleteAll(['access_id' => $id]);
+            RoleAccessRelation::deleteAll(['access_id' => $id]);
             echo '1';
             exit;
         }

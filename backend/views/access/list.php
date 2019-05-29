@@ -79,7 +79,7 @@ $this->registerJsFile('@web/public/js/treeTable/jquery.treeTable.js', ['depends'
             $.ajax({
                 type: "GET",
                 url: "<?= URL::to(['access/del']); ?>",
-                data: "id=" + id,
+                data: {id: id},
                 dataType: "json",
                 success: function (data) {
                     if (data == 404) {
