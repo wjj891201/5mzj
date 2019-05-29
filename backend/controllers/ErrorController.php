@@ -10,7 +10,7 @@ class ErrorController extends Controller
     public function actionForbidden()
     {
 
-//        return $this->render('index');
+        return $this->render('index');
     }
 
 }
