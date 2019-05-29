@@ -118,7 +118,15 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
         <div class="formControls col-xs-8 col-sm-9">
             <div class="uploader-list-container"> 
                 <div class="queueList">
-                    <ul class="filelist" id="fileList"></ul>
+                    <ul class="filelist" id="fileList">
+                        <li style="height:auto;" id="555">
+                            <p class="title">qwqw</p>
+                            <p class="imgWrap"><img src=""></p>
+                            <p class="progress"><span></span></p>
+                            <p class="frist" style="height:25px;line-height: 25px;width:50%;float:left;cursor: pointer;font-size: 16px;" title="首图"><i class="Hui-iconfont">&#xe612;</i></p>
+                            <p class="del" style="height:25px;line-height: 25px;width:50%;float:left;cursor: pointer;font-size: 16px;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></p>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -227,6 +235,7 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
                     '<p class="title">' + file.name + '</p>' +
                     '<p class="imgWrap"><img src=""></p>' +
                     '<p class="progress"><span></span></p>' +
+                    '<p class="frist"><span>首图</span></p>' +
                     '<p class="del"><span>删除</span></p>' +
                     '</li>'
                     ),
