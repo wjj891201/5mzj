@@ -42,10 +42,32 @@ use yii\helpers\Url;
                     <td><?= $vo['created_time'] ?></td>
                     <td class="f-14">
                         <a title="编辑" href="<?= Url::to(['role/edit', 'id' => $vo['id']]) ?>" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-                        <a title="删除" href="javascript:;" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                        <a title="删除" href="javascript:;" onclick="role_del(this,<?= $vo['id'] ?>)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript">
+    function role_del(obj, id) {
+        layer.confirm('确认要删除吗？', {icon: 3, title: '提示', offset: '200px'}, function (index) {
+            $.ajax({
+                type: "GET",
+                url: "<?= URL::to(['role/del']); ?>",
+                data: {id: id},
+                dataType: "json",
+                success: function (data) {
+                    if (data == 404) {
+                        layer.msg('sorry，您没有权限！', {icon: 2, time: 1000});
+                    }
+                    if (data == 1) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已成功删除!', {icon: 1, time: 1000});
+                    }
+                }
+            });
+        });
+    }
+</script>

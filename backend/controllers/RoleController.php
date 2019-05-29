@@ -62,4 +62,18 @@ class RoleController extends CommonController
         return $this->render('add', ['model' => $model, 'access_list' => $access_list, 'have_access' => $have_access]);
     }
 
+    /**
+     * 删除角色
+     */
+    public function actionDel()
+    {
+        $id = Yii::$app->request->get('id');
+        if (Role::deleteAll('id = :id', [":id" => $id]))
+        {
+            RoleAccessRelation::deleteAll(['role_id' => $id]);
+            echo '1';
+            exit;
+        }
+    }
+
 }
