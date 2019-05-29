@@ -104,7 +104,7 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
         </div>
     </div>
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-2">缩略图：</label>
+        <label class="form-label col-xs-4 col-sm-2">房源图片：</label>
         <div class="formControls col-xs-8 col-sm-9">
             <div class="uploader-thum-container">
                 <div id="filePicker">选择图片</div>
@@ -211,7 +211,7 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
             server: '<?= Url::to(['sec-hand/upload']) ?>',
             // 选择文件的按钮。可选。
             // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-            pick: {id: '#filePicker', innerHTML: '选择美女图片', multiple: true},
+            pick: {id: '#filePicker', innerHTML: '选择图片', multiple: true},
             // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
             resize: false,
             // 只允许选择图片文件。
