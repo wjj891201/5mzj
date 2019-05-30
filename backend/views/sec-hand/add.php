@@ -127,7 +127,7 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
                                     <p class="progress"><span></span></p>
                                     <p class="frist pic_operate" title="首图"><i class="Hui-iconfont">&#xe612;</i></p>
                                     <p class="del pic_operate" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></p>
-                                    <input type="hidden" name="accach_path[]" value="<?= Yii::$app->params['file_domain'] . $vo['attach_path'] ?>">
+                                    <input type="hidden" name="attach_path[]" value="<?= Yii::$app->params['file_domain'] . $vo['attach_path'] ?>">
                                 </li>
                             <?php endforeach; ?>
                         <?php endif; ?>

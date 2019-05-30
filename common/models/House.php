@@ -147,6 +147,12 @@ class House extends ActiveRecord
         if ($this->load($data) && $this->save())
         {
             $house_id = $this->id;
+            # 房源图片
+            if (isset($data['attach_path']) && !empty($data['attach_path']))
+            {
+                var_dump($data['attach_path']);
+                exit;
+            }
             # 房源出售信息
             $is_recomm = self::handRecomm($this->recommend, $this->high_quality);
             Yii::$app->db->createCommand()->update("{{%house_sales}}", ['is_mortgage' => $this->is_mortgage, 'price1' => $this->price1, 'to_price1' => $this->to_price1, 'is_recomm' => $is_recomm, 'user_grade' => $this->user_grade, 'mod_time' => date('Y-m-d H:i:s')], ['house_id' => $house_id])->execute();
