@@ -118,7 +118,20 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
         <div class="formControls col-xs-8 col-sm-9">
             <div class="uploader-list-container"> 
                 <div class="queueList">
-                    <ul class="filelist" id="fileList"></ul>
+                    <ul class="filelist" id="fileList">
+                        <?php if (isset($attach) && !empty($attach)): ?>
+                            <?php foreach ($attach as $key => $vo): ?>
+                                <li style="height:auto;" id="">
+                                    <p class="title"></p>
+                                    <p class="imgWrap"><img src="<?= Yii::$app->params['file_domain'] . $vo['attach_path'] ?>"></p>
+                                    <p class="progress"><span></span></p>
+                                    <p class="frist pic_operate" title="首图"><i class="Hui-iconfont">&#xe612;</i></p>
+                                    <p class="del pic_operate" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></p>
+                                    <input type="hidden" name="accach_path[]" value="<?= Yii::$app->params['file_domain'] . $vo['attach_path'] ?>">
+                                </li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -251,8 +264,10 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
         $list.on('click', '.del', function () {
             var id = $(this).parent().attr('id');
             $(this).parent().remove();
-            var quID = uploader.getFile(id);
-            uploader.removeFile(quID);
+            if (id) {
+                var quID = uploader.getFile(id);
+                uploader.removeFile(quID);
+            }
         });
         // 文件上传过程中创建进度条实时显示。
         uploader.on('uploadProgress', function (file, percentage) {

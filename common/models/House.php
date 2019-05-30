@@ -283,4 +283,13 @@ class House extends ActiveRecord
         return $this->hasOne(HouseSalOwner::className(), ['house_id' => 'id']);
     }
 
+    /**
+     * 获取房源图片
+     * @return type
+     */
+    public function getAttach()
+    {
+        return $this->hasMany(HouseAttach::className(), ['tab_id' => 'id']);
+    }
+
 }

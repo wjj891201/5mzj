@@ -20,6 +20,7 @@ class SecHandController extends CommonController
      */
     public function actionList()
     {
+//        $file_domain = Yii::$app->params['file_domain'];
         $mob_phone = Yii::$app->request->get('mob_phone', '');
         $hou_name = Yii::$app->request->get('hou_name', '');
         $vill_name = Yii::$app->request->get('vill_name', '');
@@ -107,6 +108,8 @@ class SecHandController extends CommonController
         $decoration = DicItem::getDicItem('houFixState');
         # 房屋类别
         $house_type = DicItem::getDicItem('houUsetype');
+        # 房源图片
+        $attach = $model['attach'];
         # 房源标签
         $build_lab = DicItem::getDicItem('houseLab', false);
         # 初始数据
@@ -146,7 +149,7 @@ class SecHandController extends CommonController
         $model->mob_phone = $model['houseSalOwner']['mob_phone'];
         // 5.0 房源标签
         $model->lab = ObjLab::find()->select('obj_lab')->where(['obj_type' => 102, 'tab_id' => $model['houseSales']['id']])->asArray()->column();
-        return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type, 'build_lab' => $build_lab]);
+        return $this->render("add", ['model' => $model, 'direction' => $direction, 'decoration' => $decoration, 'house_type' => $house_type, 'attach' => $attach, 'build_lab' => $build_lab]);
     }
 
     /**
