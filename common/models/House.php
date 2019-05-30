@@ -103,6 +103,16 @@ class House extends ActiveRecord
         if ($this->load($data) && $this->save())
         {
             $house_id = Yii::$app->db->getLastInsertID();
+            # 房源图片
+            if (isset($data['attach_path']) && !empty($data['attach_path']))
+            {
+                $container = [];
+                foreach ($data['attach_path'] as $key => $vo)
+                {
+                    $container[$key] = ['attach_tab_type' => 102, 'tab_id' => $house_id, 'attach_type' => 100, 'attach_name' => basename($vo), 'attach_path' => $vo, 'cre_user' => Yii::$app->backend_user->identity->id, 'cre_time' => date('Y-m-d H:i:s')];
+                }
+                Yii::$app->db->createCommand()->batchInsert("{{%house_attach}}", ['attach_tab_type', 'tab_id', 'attach_type', 'attach_name', 'attach_path', 'cre_user', 'cre_time'], $container)->execute();
+            }
             # 房源出售信息
             $is_recomm = self::handRecomm($this->recommend, $this->high_quality);
             Yii::$app->db->createCommand()->insert("{{%house_sales}}", ['house_id' => $house_id, 'sales_type' => 100, 'is_mortgage' => $this->is_mortgage, 'price1' => $this->price1, 'to_price1' => $this->to_price1, 'is_recomm' => $is_recomm, 'user_grade' => $this->user_grade, 'cre_time' => date('Y-m-d H:i:s')])->execute();

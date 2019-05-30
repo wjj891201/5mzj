@@ -118,15 +118,7 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
         <div class="formControls col-xs-8 col-sm-9">
             <div class="uploader-list-container"> 
                 <div class="queueList">
-                    <ul class="filelist" id="fileList">
-                        <li style="height:auto;" id="555">
-                            <p class="title">qwqw</p>
-                            <p class="imgWrap"><img src=""></p>
-                            <p class="progress"><span></span></p>
-                            <p class="frist" style="height:25px;line-height: 25px;width:50%;float:left;cursor: pointer;font-size: 16px;" title="首图"><i class="Hui-iconfont">&#xe612;</i></p>
-                            <p class="del" style="height:25px;line-height: 25px;width:50%;float:left;cursor: pointer;font-size: 16px;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></p>
-                        </li>
-                    </ul>
+                    <ul class="filelist" id="fileList"></ul>
                 </div>
             </div>
         </div>
@@ -220,6 +212,7 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
             // 选择文件的按钮。可选。
             // 内部根据当前运行是创建，可能是input元素，也可能是flash.
             pick: {id: '#filePicker', innerHTML: '选择图片', multiple: true},
+            // fileVal: 'test',
             // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
             resize: false,
             // 只允许选择图片文件。
@@ -235,8 +228,8 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
                     '<p class="title">' + file.name + '</p>' +
                     '<p class="imgWrap"><img src=""></p>' +
                     '<p class="progress"><span></span></p>' +
-                    '<p class="frist"><span>首图</span></p>' +
-                    '<p class="del"><span>删除</span></p>' +
+                    '<p class="frist pic_operate" title="首图"><i class="Hui-iconfont">&#xe612;</i></p>' +
+                    '<p class="del pic_operate" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></p>' +
                     '</li>'
                     ),
                     $img = $li.find('img');
@@ -266,8 +259,9 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
 
         });
         // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-        uploader.on('uploadSuccess', function (file) {
-
+        uploader.on('uploadSuccess', function (file, data) {
+            $('#' + file.id).append('<input name="attach_path[]" type="hidden" value="' + data.attach_path + '">');
+            layer.tips('上传成功', '#' + file.id, {tips: [1, '#EA2000']});
         });
         // 文件上传失败，显示上传出错。
         uploader.on('uploadError', function (file) {
