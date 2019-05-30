@@ -109,9 +109,9 @@ class House extends ActiveRecord
                 $container = [];
                 foreach ($data['attach_path'] as $key => $vo)
                 {
-                    $container[$key] = ['attach_tab_type' => 102, 'tab_id' => $house_id, 'attach_type' => 100, 'attach_name' => basename($vo), 'attach_path' => $vo, 'cre_user' => Yii::$app->backend_user->identity->id, 'cre_time' => date('Y-m-d H:i:s')];
+                    $container[$key] = ['attach_tab_type' => 102, 'tab_id' => $house_id, 'attach_type' => 100, 'attach_code' => $data['attach_code'][$key], 'attach_name' => basename($vo), 'attach_path' => $vo, 'cre_user' => Yii::$app->backend_user->identity->id, 'cre_time' => date('Y-m-d H:i:s')];
                 }
-                Yii::$app->db->createCommand()->batchInsert("{{%house_attach}}", ['attach_tab_type', 'tab_id', 'attach_type', 'attach_name', 'attach_path', 'cre_user', 'cre_time'], $container)->execute();
+                Yii::$app->db->createCommand()->batchInsert("{{%house_attach}}", ['attach_tab_type', 'tab_id', 'attach_type', 'attach_code', 'attach_name', 'attach_path', 'cre_user', 'cre_time'], $container)->execute();
             }
             # 房源出售信息
             $is_recomm = self::handRecomm($this->recommend, $this->high_quality);
@@ -150,8 +150,26 @@ class House extends ActiveRecord
             # 房源图片
             if (isset($data['attach_path']) && !empty($data['attach_path']))
             {
-                var_dump($data['attach_path']);
-                exit;
+                $attach_path_arr = HouseAttach::find()->select('attach_path')->where(['attach_tab_type' => 102, 'tab_id' => $house_id])->asArray()->column();
+                // 交集
+                $collection = array_intersect($attach_path_arr, $data['attach_path']);
+                // 差集
+                $diff_1 = array_diff($attach_path_arr, $collection);
+                $diff_2 = array_diff($data['attach_path'], $collection);
+                // $diff_1删除 $diff_2添加
+                if (!empty($diff_1))
+                {
+                    HouseAttach::deleteAll(['IN', 'attach_path', $diff_1]);
+                }
+                if (!empty($diff_2))
+                {
+                    $container = [];
+                    foreach ($diff_2 as $key => $vo)
+                    {
+                        $container[$key] = ['attach_tab_type' => 102, 'tab_id' => $house_id, 'attach_type' => 100, 'attach_name' => basename($vo), 'attach_path' => $vo, 'cre_user' => Yii::$app->backend_user->identity->id, 'cre_time' => date('Y-m-d H:i:s')];
+                    }
+                    Yii::$app->db->createCommand()->batchInsert("{{%house_attach}}", ['attach_tab_type', 'tab_id', 'attach_type', 'attach_name', 'attach_path', 'cre_user', 'cre_time'], $container)->execute();
+                }
             }
             # 房源出售信息
             $is_recomm = self::handRecomm($this->recommend, $this->high_quality);

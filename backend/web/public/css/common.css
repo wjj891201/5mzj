@@ -10,3 +10,4 @@
 .pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus { background-color: #fff; border-color: #ddd; color: #777; cursor: not-allowed; }
 /*房源图片*/
 .pic_operate{height:25px;line-height: 25px;width:50%;float:left;cursor: pointer;font-size: 16px;}
+.cur_pic{color:#FF5722}
