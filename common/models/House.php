@@ -146,8 +146,6 @@ class House extends ActiveRecord
         $this->mod_time = date('Y-m-d H:i:s');
         if ($this->load($data) && $this->save())
         {
-//            var_dump($data['attach_code'] + $data['attach_path']);
-//            exit;
             $house_id = $this->id;
             # 房源图片
             if (isset($data['attach_path']) && !empty($data['attach_path']))
