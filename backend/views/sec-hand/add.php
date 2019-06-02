@@ -123,11 +123,11 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
                             <?php foreach ($attach as $key => $vo): ?>
                                 <li style="height:auto;" id="">
                                     <p class="title"></p>
-                                    <p class="imgWrap"><img src="<?= Yii::$app->params['file_domain'] . $vo['attach_path'] ?>"></p>
+                                    <p class="imgWrap"><img src="<?= Yii::$app->params['file_domain'] . $vo['attach_path'] . $vo['attach_name'] ?>"></p>
                                     <p class="progress"><span></span></p>
                                     <p class="first pic_operate <?php if ($vo['attach_code'] == 1): ?>cur_pic<?php endif; ?>" title="首图"><i class="Hui-iconfont">&#xe612;</i></p>
                                     <p class="del pic_operate" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></p>
-                                    <input type="hidden" name="attach_path[]" value="<?= $vo['attach_path'] ?>">
+                                    <input type="hidden" name="attach_path[]" value="<?= $vo['attach_path'] . $vo['attach_name'] ?>">
                                     <input type="hidden" name="attach_code[]" value="<?= $vo['attach_code'] ?>">
                                 </li>
                             <?php endforeach; ?>
@@ -284,7 +284,7 @@ $this->registerJsFile('@web/public/lib/webuploader/0.1.5/webuploader.min.js', ['
         });
         // 文件上传成功，给item添加成功class, 用样式标记上传成功。
         uploader.on('uploadSuccess', function (file, data) {
-            $('#' + file.id).append('<input name="attach_path[]" type="hidden" value="' + data.attach_path + '">');
+            $('#' + file.id).append('<input name="attach_path[]" type="hidden" value="' + data.attach_path + data.attach_name + '">');
             $('#' + file.id).append('<input name="attach_code[]" type="hidden" value="0">');
             layer.tips('上传成功', '#' + file.id, {tips: [1, '#EA2000']});
         });

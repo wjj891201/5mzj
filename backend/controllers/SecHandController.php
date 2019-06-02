@@ -224,7 +224,7 @@ class SecHandController extends CommonController
 //        $ftp->copy_file('a/cc.txt', 'a/b/dd.txt'); // 复制文件
 //        $ftp->del_file('a/b/dd.txt'); // 删除文件
         $ftp->close(); // 关闭FTP连接
-        echo json_encode(['status' => 1, 'attach_name' => $real_name, 'attach_path' => 'house_images/' . date('Y-m-d') . '/' . $real_name]);
+        echo json_encode(['status' => 1, 'attach_name' => $real_name, 'attach_path' => 'house_images/' . date('Y-m-d') . '/']);
     }
 
 }

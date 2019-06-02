@@ -109,7 +109,7 @@ class House extends ActiveRecord
                 $container = [];
                 foreach ($data['attach_path'] as $key => $vo)
                 {
-                    $container[$key] = ['attach_tab_type' => 102, 'tab_id' => $house_id, 'attach_type' => 100, 'attach_code' => $data['attach_code'][$key], 'attach_name' => basename($vo), 'attach_path' => $vo, 'cre_user' => Yii::$app->backend_user->identity->id, 'cre_time' => date('Y-m-d H:i:s')];
+                    $container[$key] = ['attach_tab_type' => 102, 'tab_id' => $house_id, 'attach_type' => 100, 'attach_code' => $data['attach_code'][$key], 'attach_name' => basename($vo), 'attach_path' => str_replace(basename($vo), '', $vo), 'cre_user' => Yii::$app->backend_user->identity->id, 'cre_time' => date('Y-m-d H:i:s')];
                 }
                 Yii::$app->db->createCommand()->batchInsert("{{%house_attach}}", ['attach_tab_type', 'tab_id', 'attach_type', 'attach_code', 'attach_name', 'attach_path', 'cre_user', 'cre_time'], $container)->execute();
             }
@@ -166,14 +166,14 @@ class House extends ActiveRecord
                     $container = [];
                     foreach ($diff_2 as $key => $vo)
                     {
-                        $container[$key] = ['attach_tab_type' => 102, 'tab_id' => $house_id, 'attach_type' => 100, 'attach_name' => basename($vo), 'attach_path' => $vo, 'cre_user' => Yii::$app->backend_user->identity->id, 'cre_time' => date('Y-m-d H:i:s')];
+                        $container[$key] = ['attach_tab_type' => 102, 'tab_id' => $house_id, 'attach_type' => 100, 'attach_name' => basename($vo), 'attach_path' => str_replace(basename($vo), '', $vo), 'cre_user' => Yii::$app->backend_user->identity->id, 'cre_time' => date('Y-m-d H:i:s')];
                     }
                     Yii::$app->db->createCommand()->batchInsert("{{%house_attach}}", ['attach_tab_type', 'tab_id', 'attach_type', 'attach_name', 'attach_path', 'cre_user', 'cre_time'], $container)->execute();
                 }
                 // 首图更改
                 foreach ($data['attach_path'] as $key => $vo)
                 {
-                    Yii::$app->db->createCommand()->update("{{%house_attach}}", ['attach_code' => $data['attach_code'][$key]], ['attach_name'=> basename($vo)])->execute();
+                    Yii::$app->db->createCommand()->update("{{%house_attach}}", ['attach_code' => $data['attach_code'][$key]], ['attach_name' => basename($vo)])->execute();
                 }
             }
             # 房源出售信息
