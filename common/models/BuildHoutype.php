@@ -40,6 +40,7 @@ class BuildHoutype extends ActiveRecord
                 [['build_name', 'type_name', 'cover_area', 'average_price', 'total_price', 'type_hab', 'type_hall', 'type_toilet', 'type_kit', 'lab', 'type_remark', 'type_dis'], 'required', 'message' => '{attribute}为必填项'],
                 [['type_cate'], 'required', 'message' => '{attribute}为必选项'],
                 [['build_name', 'type_name'], 'filter', 'filter' => 'trim'],
+                [['cover_area', 'type_hab', 'type_hall', 'type_toilet', 'type_kit'], 'number', 'message' => '请填写数字'],
                 ['build_name', 'validateBuildName']
         ];
     }

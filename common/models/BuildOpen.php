@@ -35,6 +35,7 @@ class BuildOpen extends ActiveRecord
                 [['build_name', 'open_time', 'price', 'to_price', 'turn_time', 'checkin_time', 'hou_type', 'open_remark'], 'required', 'message' => '{attribute}为必填项'],
                 ['build_name', 'filter', 'filter' => 'trim'],
                 ['build_name', 'validateBuildName'],
+                [['price', 'to_price'], 'number', 'message' => '请填写数字'],
                 [['high_quality', 'recommend'], 'safe']
         ];
     }
