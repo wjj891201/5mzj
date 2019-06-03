@@ -66,6 +66,8 @@ class House extends ActiveRecord
                 [['to_price1', 'user_grade'], 'required', 'message' => '{attribute}为必填项', 'on' => ['sec-hand']],
                 [['hou_floor', 'hou_floor_acc', 'house_owner', 'mob_phone', 'hou_remark', 'lab'], 'required', 'message' => '{attribute}为必填项', 'on' => ['sec-hand', 'lease']],
                 [['sales_type', 'price2_remark'], 'required', 'message' => '{attribute}为必填项', 'on' => ['lease']],
+                [['hou_building', 'hou_cell', 'hou_room', 'type_hab', 'type_hall', 'type_toilet', 'hou_floor', 'hou_floor_acc', 'user_grade'], 'number', 'message' => '请填写数字', 'on' => ['sec-hand', 'lease']],
+                ['mob_phone', 'match', 'pattern' => '/^[1][35678][0-9]{9}$/', 'message' => '{attribute}格式错误', 'on' => ['sec-hand', 'lease']],
                 [['is_mortgage', 'recommend', 'high_quality'], 'safe', 'on' => ['sec-hand']]
         ];
     }

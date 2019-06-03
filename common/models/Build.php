@@ -44,6 +44,8 @@ class Build extends ActiveRecord
                 ],
                 'required', 'message' => '{attribute}为必填项'
             ],
+                ['build_area', 'number', 'message' => '请填写数字'],
+                ['comp_tel', 'match', 'pattern' => '/^[1][35678][0-9]{9}$/', 'message' => '{attribute}格式错误'],
         ];
     }
 
