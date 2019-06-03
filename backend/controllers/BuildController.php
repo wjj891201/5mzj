@@ -18,6 +18,7 @@ class BuildController extends CommonController
      */
     public function actionList()
     {
+        
         $build_name = Yii::$app->request->post('build_name');
         $model = Build::find()
                 ->select(['id', 'build_name', 'build_add', 'comp_name', 'build_area', 'build_years', 'build_usetype', 'cre_time'])
